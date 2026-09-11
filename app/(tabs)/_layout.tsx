@@ -1,70 +1,112 @@
-import { SymbolView } from 'expo-symbols';
-import { Link, Tabs } from 'expo-router';
-import { Platform, Pressable } from 'react-native';
+import React from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+import { Tabs } from 'expo-router';
+import { Search, Heart, ShoppingCart, User } from 'lucide-react-native';
+import Svg, { Path } from 'react-native-svg';
+import { BottomTabBar } from '../../src/components/BottomTabBar';
+import { colors, typography } from '../../src/theme';
+import { useCartStore } from '../../src/store/useCartStore';
 
-import Colors from '@/constants/Colors';
-import { useColorScheme } from '@/components/useColorScheme';
-import { useClientOnlyValue } from '@/components/useClientOnlyValue';
+function HouseBlank({ color, size, strokeWidth }: any) {
+  return (
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round">
+      <Path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+    </Svg>
+  );
+}
 
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
+function CartIconWithBadge({ focused, color, size }: any) {
+  const cartItems = useCartStore((state) => state.items);
+  const cartQuantity = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
+    <View>
+      <ShoppingCart color={color} size={size} strokeWidth={2} />
+      {cartQuantity > 0 && (
+        <View style={[styles.badgeContainer, focused && styles.badgeContainerFocused]}>
+          <Text style={styles.badgeText}>{cartQuantity > 99 ? '99+' : cartQuantity}</Text>
+        </View>
+      )}
+    </View>
+  );
+}
+
+export default function TabLayout() {
+  return (
     <Tabs
+      tabBar={props => <BottomTabBar {...(props as any)} />}
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme].tint,
-        // Disable the static render of the header on web
-        // to prevent a hydration error in React Navigation v6.
-        headerShown: useClientOnlyValue(false, true),
+        headerShown: false,
       }}>
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Tab One',
-          tabBarIcon: ({ color }) => (
-            <SymbolView
-              name={{
-                ios: 'chevron.left.forwardslash.chevron.right',
-                android: 'code',
-                web: 'code',
-              }}
-              tintColor={color}
-              size={28}
-            />
-          ),
-          headerRight: () => (
-            <Link href="/modal" asChild>
-              <Pressable style={{ marginRight: 15 }}>
-                {({ pressed }) => (
-                  <SymbolView
-                    name={{ ios: 'info.circle', android: 'info', web: 'info' }}
-                    size={25}
-                    tintColor={Colors[colorScheme].text}
-                    style={{ opacity: pressed ? 0.5 : 1 }}
-                  />
-                )}
-              </Pressable>
-            </Link>
-          ),
+          title: 'Home',
+          tabBarIcon: ({ color, size }) => (
+            <HouseBlank color={color} size={size} strokeWidth={2} />
+          )
         }}
       />
       <Tabs.Screen
-        name="two"
+        name="discover"
         options={{
-          title: 'Tab Two',
-          tabBarIcon: ({ color }) => (
-            <SymbolView
-              name={{
-                ios: 'chevron.left.forwardslash.chevron.right',
-                android: 'code',
-                web: 'code',
-              }}
-              tintColor={color}
-              size={28}
-            />
-          ),
+          title: 'Discover',
+          tabBarIcon: ({ color, size }) => (
+            <Search color={color} size={size} strokeWidth={1.5} />
+          )
+        }}
+      />
+      <Tabs.Screen
+        name="wishlist"
+        options={{
+          title: 'Wishlist',
+          tabBarIcon: ({ color, size }) => (
+            <Heart color={color} size={size} strokeWidth={2} />
+          )
+        }}
+      />
+      <Tabs.Screen
+        name="cart"
+        options={{
+          title: 'Cart',
+          tabBarIcon: CartIconWithBadge,
+        }}
+      />
+      <Tabs.Screen
+        name="profile"
+        options={{
+          title: 'Profile',
+          tabBarIcon: ({ color, size }) => (
+            <User color={color} size={size} strokeWidth={2} />
+          )
         }}
       />
     </Tabs>
   );
 }
+
+const styles = StyleSheet.create({
+  badgeContainer: {
+    position: 'absolute',
+    top: -6,
+    right: -8,
+    backgroundColor: colors.accent,
+    borderRadius: 10,
+    minWidth: 18,
+    height: 18,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 4,
+    borderWidth: 1.5,
+    borderColor: colors.surface,
+  },
+  badgeContainerFocused: {
+    borderColor: colors.primary,
+  },
+  badgeText: {
+    color: colors.textInverse,
+    fontFamily: typography.families.semibold,
+    fontSize: 9,
+    lineHeight: 11,
+  },
+});

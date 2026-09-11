@@ -1,56 +1,74 @@
-import { useFonts } from 'expo-font';
-import { DarkTheme, DefaultTheme, Stack, ThemeProvider } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import { useEffect } from 'react';
-import 'react-native-reanimated';
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { useFonts } from "expo-font";
+import { Stack } from "expo-router";
+import * as SplashScreen from "expo-splash-screen";
+import { StatusBar } from "expo-status-bar";
+import { useEffect } from "react";
+import { ToastOverlay } from "../src/components/ToastOverlay";
+import { OfflineBanner } from "../src/components/OfflineBanner";
+import { GlobalErrorBoundary } from "../src/components/GlobalErrorBoundary";
+import { useAuthStore } from "../src/store/useAuthStore";
+import { View } from "react-native";
+import * as SystemUI from 'expo-system-ui';
 
-import { useColorScheme } from '@/components/useColorScheme';
-
-export {
-  // Catch any errors thrown by the Layout component.
-  ErrorBoundary,
-} from 'expo-router';
-
-export const unstable_settings = {
-  // Ensure that reloading on `/modal` keeps a back button present.
-  initialRouteName: '(tabs)',
-};
-
-// Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 2,
+      staleTime: 1000 * 60 * 5, // 5 minutes
+    },
+  },
+});
 
 export default function RootLayout() {
   const [loaded, error] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
+    "font-regular": require("../assets/fonts/font-regular.ttf"),
+    "font-semibold": require("../assets/fonts/font-semibold.ttf"),
+    "font-extrabold": require("../assets/fonts/font-extrabold.ttf"),
   });
 
-  // Expo Router uses Error Boundaries to catch errors in the navigation tree.
+  const { initializeAuth } = useAuthStore();
+  
   useEffect(() => {
-    if (error) throw error;
-  }, [error]);
+    initializeAuth();
+    SystemUI.setBackgroundColorAsync('#FAFAFA');
+  }, []);
 
   useEffect(() => {
-    if (loaded) {
+    if (loaded || error) {
       SplashScreen.hideAsync();
     }
-  }, [loaded]);
+  }, [loaded, error]);
 
-  if (!loaded) {
+  if (!loaded && !error) {
     return null;
   }
 
-  return <RootLayoutNav />;
-}
-
-function RootLayoutNav() {
-  const colorScheme = useColorScheme();
-
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
-      </Stack>
-    </ThemeProvider>
+    <View style={{ flex: 1, backgroundColor: '#FAFAFA' }}>
+      <GlobalErrorBoundary>
+        <QueryClientProvider client={queryClient}>
+          <StatusBar style="auto" />
+          <OfflineBanner />
+        <Stack
+          screenOptions={{ 
+            headerShown: false, 
+            animation: "slide_from_right",
+            contentStyle: { backgroundColor: '#1a100c' } 
+          }}
+        >
+          <Stack.Screen name="index" />
+          <Stack.Screen name="(tabs)" />
+          <Stack.Screen name="details/[id]" />
+          <Stack.Screen name="search" />
+          <Stack.Screen name="checkout/index" />
+          <Stack.Screen name="orders/index" />
+        </Stack>
+        <ToastOverlay />
+      </QueryClientProvider>
+    </GlobalErrorBoundary>
+    </View>
   );
 }

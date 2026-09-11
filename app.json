@@ -17,7 +17,9 @@
         "backgroundImage": "./assets/images/android-icon-background.png",
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "package": "com.heisclm.Kicks",
+      "backgroundColor": "#FAFAFA"
     },
     "web": {
       "bundler": "metro",
@@ -31,12 +33,21 @@
         {
           "image": "./assets/images/splash-icon.png",
           "resizeMode": "contain",
-          "backgroundColor": "#ffffff"
+          "backgroundColor": "#FAFAFA"
         }
-      ]
+      ],
+      "expo-secure-store",
+      "expo-image"
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "283e3ccc-d4bd-4187-8ee0-17d8f01cb329"
+      }
+    },
+    "backgroundColor": "#FAFAFA"
   }
 }
