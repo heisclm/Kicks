@@ -1,4 +1,4 @@
-﻿import { KicksRole } from "./roles";
+import { KicksRole } from "./roles";
 
 export type KicksPermission =
   | "dashboard.view"
@@ -10,6 +10,7 @@ export type KicksPermission =
   | "categories.view" | "categories.create" | "categories.update" | "categories.delete"
   | "promotions.manage"
   | "reviews.manage"
+  | "notifications.send"
   | "settings.manage"
   | "staff.manage";
 
@@ -22,7 +23,7 @@ const ROLE_PERMISSIONS: Record<KicksRole, Set<KicksPermission>> = {
     "customers.view", "customers.manage",
     "brands.view", "brands.create", "brands.update", "brands.delete",
     "categories.view", "categories.create", "categories.update", "categories.delete",
-    "promotions.manage", "reviews.manage", "settings.manage", "staff.manage"
+    "promotions.manage", "reviews.manage", "notifications.send", "settings.manage", "staff.manage"
   ]),
   admin: new Set([
     "dashboard.view", 
@@ -32,7 +33,7 @@ const ROLE_PERMISSIONS: Record<KicksRole, Set<KicksPermission>> = {
     "customers.view", "customers.manage",
     "brands.view", "brands.create", "brands.update", "brands.delete",
     "categories.view", "categories.create", "categories.update", "categories.delete",
-    "promotions.manage", "reviews.manage", "settings.manage"
+    "promotions.manage", "reviews.manage", "notifications.send", "settings.manage"
   ]),
   inventory_manager: new Set([
     "dashboard.view", 
@@ -45,7 +46,7 @@ const ROLE_PERMISSIONS: Record<KicksRole, Set<KicksPermission>> = {
     "dashboard.view", "orders.view", "orders.manage", "customers.view", "products.view", "inventory.view", "brands.view", "categories.view"
   ]),
   support: new Set([
-    "dashboard.view", "orders.view", "customers.view", "customers.manage", "products.view", "reviews.manage", "brands.view", "categories.view"
+    "dashboard.view", "orders.view", "customers.view", "customers.manage", "products.view", "reviews.manage", "notifications.send", "brands.view", "categories.view"
   ]),
   customer: new Set([]) 
 };
@@ -66,6 +67,7 @@ export function canAccessRoute(role: KicksRole, pathname: string): boolean {
   if (pathname.startsWith('/categories')) return hasPermission(role, 'categories.view');
   if (pathname.startsWith('/promotions')) return hasPermission(role, 'promotions.manage');
   if (pathname.startsWith('/reviews')) return hasPermission(role, 'reviews.manage');
+  if (pathname.startsWith('/notifications')) return hasPermission(role, 'notifications.send');
   if (pathname.startsWith('/staff')) return hasPermission(role, 'staff.manage');
   if (pathname.startsWith('/settings')) return hasPermission(role, 'settings.manage');
 

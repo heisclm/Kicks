@@ -1,20 +1,18 @@
-import { Card } from "../../../components/ui/card";
+﻿import { Card } from "../../../components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../../../components/ui/table";
 import { Button } from "../../../components/ui/button";
-import { Plus, MoreHorizontal, ShieldCheck, ShieldAlert } from "lucide-react";
+import { Plus, MoreHorizontal, ShieldCheck, User } from "lucide-react";
 import { requirePermission } from "../../../lib/auth/guards";
-
-const MOCK_STAFF = [
-  { id: 'usr-1', name: 'Chris Miller', email: 'chris@kicks.com', role: 'Super Admin', mfa: true, lastActive: 'Active now' },
-  { id: 'usr-2', name: 'Sarah Jenkins', email: 'sarah@kicks.com', role: 'Store Manager', mfa: true, lastActive: '2 hours ago' },
-  { id: 'usr-3', name: 'Marcus Doe', email: 'marcus@kicks.com', role: 'Inventory Editor', mfa: false, lastActive: '1 day ago' },
-  { id: 'usr-4', name: 'Elena Gilbert', email: 'elena@kicks.com', role: 'Customer Support', mfa: true, lastActive: '3 mins ago' },
-];
+import { StaffRepository } from "../../../features/staff/staff-repository";
+import { AssignRoleSelect } from "../../../components/staff/AssignRoleSelect";
 
 export default async function StaffPage() {
   await requirePermission("staff.manage");
+  
+  const staff = await StaffRepository.getStaff();
+
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 max-w-7xl mx-auto pb-12">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 animate-fade-in-up" style={{ animationDelay: '0ms', opacity: 0 }}>
         <div>
           <h1 className="text-2xl font-bold tracking-tight text-foreground">Staff & Roles</h1>
@@ -31,48 +29,37 @@ export default async function StaffPage() {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>User</TableHead>
+                <TableHead>Staff Member</TableHead>
                 <TableHead>Role</TableHead>
-                <TableHead className="text-center">2FA Security</TableHead>
-                <TableHead className="text-right">Last Active</TableHead>
-                <TableHead className="text-right"></TableHead>
+                <TableHead>Email</TableHead>
+                <TableHead className="text-right">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {MOCK_STAFF.map((staff, index) => (
-                <TableRow key={staff.id} className="group hover:bg-muted/30 transition-colors animate-fade-in-up" style={{ animationDelay: `${200 + (index * 50)}ms`, opacity: 0 }}>
-                  <TableCell>
-                    <div className="flex items-center gap-3">
-                      <div className="h-10 w-10 rounded-full bg-foreground text-background flex items-center justify-center font-bold text-sm shrink-0">
-                        {staff.name.split(' ').map(n => n[0]).join('')}
+              {staff.length === 0 ? (
+                <TableRow>
+                  <TableCell colSpan={4} className="text-center py-10 text-muted-foreground">
+                    No staff found.
+                  </TableCell>
+                </TableRow>
+              ) : staff.map((member) => (
+                <TableRow key={member.id}>
+                  <TableCell className="font-medium">
+                    <div className="flex items-center gap-2">
+                      <div className="h-8 w-8 rounded-full bg-brand-primary/10 text-brand-primary flex items-center justify-center font-semibold text-xs shrink-0">
+                        {member.first_name ? member.first_name[0].toUpperCase() : <User size={14} />}
                       </div>
-                      <div>
-                        <div className="font-medium text-sm text-foreground">{staff.name}</div>
-                        <div className="text-xs text-muted-foreground mt-0.5">{staff.email}</div>
-                      </div>
+                      {member.first_name} {member.last_name}
                     </div>
                   </TableCell>
                   <TableCell>
-                    <span className="inline-flex items-center px-2 py-1 rounded bg-muted text-foreground text-[11px] font-medium">
-                      {staff.role}
-                    </span>
+                    <AssignRoleSelect userId={member.id} currentRole={member.role} />
                   </TableCell>
-                  <TableCell className="text-center">
-                    <div className="flex justify-center">
-                      {staff.mfa ? (
-                        <div className="flex items-center gap-1.5 text-xs font-medium text-emerald-600 dark:text-emerald-500">
-                          <ShieldCheck size={14} /> Enabled
-                        </div>
-                      ) : (
-                        <div className="flex items-center gap-1.5 text-xs font-medium text-amber-600 dark:text-amber-500">
-                          <ShieldAlert size={14} /> Disabled
-                        </div>
-                      )}
-                    </div>
+                  <TableCell className="text-muted-foreground text-sm">
+                    {member.email}
                   </TableCell>
-                  <TableCell className="text-right text-sm text-muted-foreground">{staff.lastActive}</TableCell>
                   <TableCell className="text-right">
-                    <Button variant="ghost" size="icon" className="h-8 w-8 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground">
                       <MoreHorizontal size={16} />
                     </Button>
                   </TableCell>

@@ -27,7 +27,7 @@ export async function createPromotionAction(formData: FormData) {
     revalidatePath('/promotions');
     return { success: true };
   } catch (err: unknown) {
-    const error = err as any;
+    const error = err as { errors?: { message: string }[] };
     if (error && error.errors && Array.isArray(error.errors)) {
       return { success: false, error: error.errors[0].message };
     }

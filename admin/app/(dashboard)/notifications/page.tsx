@@ -1,70 +1,67 @@
-import { Card } from "../../../components/ui/card";
-import { Button } from "../../../components/ui/button";
-import { Bell, Check, ShoppingCart, AlertTriangle, Star, UserPlus } from "lucide-react";
+﻿import { Card } from "../../../components/ui/card";
+import { Bell, Check, ShoppingCart, AlertTriangle, Star, UserPlus, Users } from "lucide-react";
+import { NotificationRepository } from "../../../features/notifications/notification-repository";
+import { CreateNotificationDialog } from "../../../components/ui/CreateNotificationDialog";
+import { DeleteNotificationButton } from "../../../components/ui/DeleteNotificationButton";
+import { requirePermission } from "../../../lib/auth/guards";
 
-const MOCK_NOTIFICATIONS = [
-  { id: 'notif-1', title: 'New Order Received', message: 'Order #ORD-8832 was just placed by Alexander Wright.', time: '2 mins ago', type: 'order', read: false },
-  { id: 'notif-2', title: 'Low Stock Alert', message: 'Nike Air Max Pulse (US 9.5 / Black) has fallen below the 15 unit threshold.', time: '1 hour ago', type: 'alert', read: false },
-  { id: 'notif-3', title: 'New 1-Star Review', message: 'A new 1-star review was left on "Nike Air Max Pulse". Review requires moderation.', time: '3 hours ago', type: 'review', read: true },
-  { id: 'notif-4', title: 'New VIP Customer', message: 'David Kim has reached VIP tier status ($4,890 total spent).', time: 'Yesterday', type: 'customer', read: true },
-  { id: 'notif-5', title: 'System Update', message: 'Scheduled maintenance will occur on Sunday at 2:00 AM EST.', time: '2 days ago', type: 'system', read: true },
-];
+export default async function NotificationsPage() {
+  await requirePermission("notifications.send");
+  const notifications = await NotificationRepository.getNotifications();
 
-export default function NotificationsPage() {
-  const getIcon = (type: string) => {
-    switch (type) {
-      case 'order': return <ShoppingCart size={18} className="text-blue-500" />;
-      case 'alert': return <AlertTriangle size={18} className="text-amber-500" />;
-      case 'review': return <Star size={18} className="text-rose-500" />;
-      case 'customer': return <UserPlus size={18} className="text-emerald-500" />;
-      default: return <Bell size={18} className="text-muted-foreground" />;
-    }
+  const getIcon = () => {
+    return <Bell size={18} className="text-brand-primary" />;
   };
 
   return (
-    <div className="space-y-6 max-w-4xl mx-auto">
-      <div className="flex justify-between items-end gap-4 animate-fade-in-up" style={{ animationDelay: '0ms', opacity: 0 }}>
+    <div className="space-y-6 max-w-4xl mx-auto pb-12">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 animate-fade-in-up" style={{ animationDelay: '0ms', opacity: 0 }}>
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-foreground">Notifications</h1>
-          <p className="text-sm text-muted-foreground mt-1">Stay updated on system alerts and store activity.</p>
+          <h1 className="text-2xl font-bold tracking-tight text-foreground">System Notifications</h1>
+          <p className="text-sm text-muted-foreground mt-1">Manage broadcasts and alerts sent to users.</p>
         </div>
-        <Button variant="outline" size="sm" className="h-9 gap-2">
-          <Check size={14} />
-          Mark all as read
-        </Button>
+        <CreateNotificationDialog />
       </div>
 
-      <Card className="animate-fade-in-up overflow-hidden" style={{ animationDelay: '100ms', opacity: 0 }}>
-        <div className="divide-y divide-border/50">
-          {MOCK_NOTIFICATIONS.map((notif, index) => (
-            <div 
-              key={notif.id} 
-              className={`p-4 flex gap-4 transition-colors hover:bg-muted/20 animate-fade-in-up ${notif.read ? 'opacity-70' : 'bg-muted/10'}`}
-              style={{ animationDelay: `${200 + (index * 50)}ms`, opacity: 0 }}
-            >
-              <div className="shrink-0 mt-0.5">
-                <div className={`h-10 w-10 rounded-full flex items-center justify-center ${notif.read ? 'bg-muted' : 'bg-background shadow-sm ring-1 ring-border/50'}`}>
-                  {getIcon(notif.type)}
+      <div className="animate-fade-in-up space-y-4" style={{ animationDelay: '100ms', opacity: 0 }}>
+        {notifications.length === 0 ? (
+          <Card className="p-12 text-center text-muted-foreground border-dashed">
+            <Bell className="mx-auto h-8 w-8 mb-3 opacity-20" />
+            <p>No notifications have been sent yet.</p>
+          </Card>
+        ) : (
+          notifications.map((notif) => (
+            <Card key={notif.id} className={`p-4 flex gap-4 ${notif.is_read ? 'opacity-70' : 'bg-card'}`}>
+              <div className="mt-1 shrink-0">
+                <div className={`p-2 rounded-full ${notif.user_id ? 'bg-amber-500/10 text-amber-500' : 'bg-brand-primary/10 text-brand-primary'}`}>
+                  {notif.user_id ? <Bell size={18} /> : <Users size={18} />}
                 </div>
               </div>
-              <div className="flex-1 space-y-1">
-                <div className="flex justify-between items-start">
-                  <h4 className={`text-sm ${notif.read ? 'font-medium text-foreground/80' : 'font-bold text-foreground'}`}>
+              <div className="flex-1">
+                <div className="flex justify-between items-start mb-1">
+                  <h3 className={`font-medium ${!notif.is_read && 'text-foreground'}`}>
                     {notif.title}
-                  </h4>
-                  <span className="text-xs text-muted-foreground whitespace-nowrap ml-4">{notif.time}</span>
+                  </h3>
+                  <span className="text-xs text-muted-foreground whitespace-nowrap ml-4">
+                    {new Date(notif.created_at).toLocaleDateString()} {new Date(notif.created_at).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
+                  </span>
                 </div>
-                <p className="text-sm text-muted-foreground leading-relaxed">{notif.message}</p>
+                <p className="text-sm text-muted-foreground mb-2">
+                  {notif.message}
+                </p>
+                <div className="flex justify-between items-center mt-3 pt-3 border-t border-border/50">
+                  <div className="text-[11px] font-medium text-muted-foreground px-2 py-1 bg-muted rounded-md uppercase tracking-wide">
+                    {notif.user_id ? `Targeted User: ${notif.user_id.substring(0,8)}...` : 'Broadcast to All'}
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <DeleteNotificationButton id={notif.id} />
+                  </div>
+                </div>
               </div>
-              {!notif.read && (
-                <div className="shrink-0 flex items-center">
-                  <div className="h-2 w-2 rounded-full bg-brand-primary" />
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
-      </Card>
+            </Card>
+          ))
+        )}
+      </div>
     </div>
   );
 }
