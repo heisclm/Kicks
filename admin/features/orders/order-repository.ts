@@ -9,7 +9,7 @@ export class OrderRepository {
       .from('orders')
       .select(`
         *,
-        customer:profiles(id, first_name, last_name, email),
+        customer:profiles(id, first_name, last_name),
         items:order_items(id)
       `)
       .order('created_at', { ascending: false });
@@ -42,7 +42,6 @@ export class OrderRepository {
     if (filters?.search && !/^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/.test(filters.search)) {
       const s = filters.search.toLowerCase();
       results = results.filter(r => 
-        r.customer?.email?.toLowerCase().includes(s) ||
         r.customer?.first_name?.toLowerCase().includes(s) ||
         r.customer?.last_name?.toLowerCase().includes(s)
       );
@@ -58,7 +57,7 @@ export class OrderRepository {
       .from('orders')
       .select(`
         *,
-        customer:profiles(id, first_name, last_name, email),
+        customer:profiles(id, first_name, last_name),
         items:order_items(*)
       `)
       .eq('id', id)

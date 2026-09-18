@@ -1,4 +1,4 @@
-﻿export type OrderStatus = 'pending' | 'confirmed' | 'processing' | 'shipped' | 'delivered' | 'cancelled';
+export type OrderStatus = 'pending' | 'confirmed' | 'processing' | 'shipped' | 'delivered' | 'cancelled';
 export type PaymentStatus = 'pending' | 'paid' | 'failed' | 'refunded' | 'partially_refunded';
 
 export interface OrderItem {
@@ -18,7 +18,7 @@ export interface CustomerSummary {
   id: string;
   first_name: string;
   last_name: string;
-  email: string;
+  email?: string;
 }
 
 export interface Order {

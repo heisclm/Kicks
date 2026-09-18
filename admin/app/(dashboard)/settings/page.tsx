@@ -21,7 +21,7 @@ export default function SettingsPage() {
         <Card className="animate-fade-in-up" style={{ animationDelay: '100ms', opacity: 0 }}>
           <CardHeader>
             <CardTitle className="text-lg">Store Details</CardTitle>
-            <p className="text-sm text-muted-foreground">Your store's public-facing information.</p>
+            <p className="text-sm text-muted-foreground">Your store&apos;s public-facing information.</p>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
