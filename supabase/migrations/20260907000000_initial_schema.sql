@@ -1,4 +1,4 @@
--- KICKS Initial Database Schema
+﻿-- KICKS Initial Database Schema
 
 -- 1. Create Enums
 CREATE TYPE app_role AS ENUM ('customer', 'admin', 'owner', 'inventory_manager', 'order_manager', 'support');

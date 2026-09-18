@@ -43,7 +43,7 @@
   "devDependencies": {
     "@react-native/jest-preset": "^0.86.3",
     "@testing-library/react-native": "^13.3.3",
-    "@types/jest": "29.5.14",
+    "@types/jest": "^29.5.14",
     "@types/node": "^26.5.0",
     "@types/react": "~19.2.2",
     "dotenv": "^17.4.2",

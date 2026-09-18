@@ -1,4 +1,4 @@
--- Create Notifications table
+﻿-- Create Notifications table
 CREATE TABLE notifications (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id UUID NOT NULL REFERENCES profiles(id) ON DELETE CASCADE,

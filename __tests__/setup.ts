@@ -1,3 +1,16 @@
+import mockAsyncStorage from '@react-native-async-storage/async-storage/jest/async-storage-mock';
+
+jest.mock('@react-native-async-storage/async-storage', () => mockAsyncStorage);
+
+jest.mock('../src/api/supabase', () => ({
+  supabase: {
+    auth: {
+      getSession: jest.fn().mockResolvedValue({ data: { session: null } }),
+      onAuthStateChange: jest.fn().mockReturnValue({ data: { subscription: { unsubscribe: jest.fn() } } }),
+    }
+  }
+}));
+
 // Mock AsyncStorage if used (via expo-secure-store in this app)
 jest.mock('expo-secure-store', () => ({
   getItemAsync: jest.fn(),

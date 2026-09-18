@@ -1,4 +1,4 @@
--- Create a trigger function to create a notification when an order is placed
+﻿-- Create a trigger function to create a notification when an order is placed
 CREATE OR REPLACE FUNCTION handle_new_order_notification()
 RETURNS TRIGGER AS $$
 BEGIN
