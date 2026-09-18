@@ -1,4 +1,4 @@
-import { Download, Search, Filter, MoreHorizontal, ArrowUpDown, Eye } from 'lucide-react';
+﻿import { Download, Search, Filter, ArrowUpDown, Eye } from 'lucide-react';
 import { OrderRepository } from '../../../features/orders/order-repository';
 import { OrderStatus } from '../../../features/orders/order-types';
 import { Card } from '../../../components/ui/card';
@@ -12,20 +12,20 @@ import {
   TableHeader, 
   TableRow 
 } from '../../../components/ui/table';
+import Link from 'next/link';
 
 function getOrderStatusBadge(status: OrderStatus) {
   switch (status) {
-    case 'DELIVERED':
+    case 'delivered':
       return <Badge variant="success">Delivered</Badge>;
-    case 'SHIPPED':
+    case 'shipped':
       return <Badge className="bg-brand-secondary text-white dark:bg-brand-secondary/80">Shipped</Badge>;
-    case 'PROCESSING':
+    case 'processing':
       return <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-500/10 dark:text-blue-400">Processing</Badge>;
-    case 'PENDING':
+    case 'pending':
       return <Badge variant="warning">Pending</Badge>;
-    case 'CANCELLED':
-    case 'RETURNED':
-      return <Badge variant="destructive">{status === 'CANCELLED' ? 'Cancelled' : 'Returned'}</Badge>;
+    case 'cancelled':
+      return <Badge variant="destructive">Cancelled</Badge>;
     default:
       return <Badge variant="outline">{status}</Badge>;
   }
@@ -103,56 +103,67 @@ export default async function OrdersPage() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {orders.map((order, index) => (
-              <TableRow 
-                key={order.id} 
-                className="group cursor-pointer animate-fade-in-up hover:bg-muted/30 transition-colors"
-                style={{ animationDelay: `${index * 50}ms`, opacity: 0 }}
-              >
-                <TableCell className="font-semibold text-foreground text-sm tracking-tight">
-                  {order.orderNumber}
-                </TableCell>
-                <TableCell>
-                  <div className="flex items-center gap-3">
-                    <div className="h-8 w-8 rounded-full bg-brand-primary/10 text-brand-primary flex items-center justify-center text-[11px] font-bold shrink-0">
-                      {order.customer.name.split(' ').map(n => n[0]).join('')}
-                    </div>
-                    <div>
-                      <div className="font-medium text-sm text-foreground">{order.customer.name}</div>
-                      <div className="text-[11px] text-muted-foreground mt-0.5">{order.customer.email}</div>
-                    </div>
-                  </div>
-                </TableCell>
-                <TableCell className="text-sm text-muted-foreground tabular-nums">
-                  {formatDate(order.createdAt)}
-                </TableCell>
-                <TableCell className="text-right font-medium text-sm tabular-nums text-foreground">
-                  ${order.totalAmount.toFixed(2)}
-                  <div className="text-[10px] text-muted-foreground mt-0.5 font-normal tracking-wide uppercase">
-                    {order.items.length} {order.items.length === 1 ? 'item' : 'items'}
-                  </div>
-                </TableCell>
-                <TableCell className="text-center">
-                  {getOrderStatusBadge(order.status)}
-                </TableCell>
-                <TableCell className="text-right">
-                  <div className="flex items-center justify-end gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                    <Button variant="ghost" size="icon" className="h-7 w-7 text-muted-foreground hover:text-foreground">
-                      <Eye size={14} />
-                    </Button>
-                    <Button variant="ghost" size="icon" className="h-7 w-7 text-muted-foreground hover:text-foreground">
-                      <MoreHorizontal size={14} />
-                    </Button>
-                  </div>
+            {orders.length === 0 ? (
+              <TableRow>
+                <TableCell colSpan={6} className="text-center py-10 text-muted-foreground">
+                  No orders found.
                 </TableCell>
               </TableRow>
-            ))}
+            ) : orders.map((order, index) => {
+              const customerName = order.customer ? `${order.customer.first_name} ${order.customer.last_name}` : 'Unknown';
+              const customerInitials = customerName.split(' ').map(n => n[0]).join('').substring(0, 2);
+              const itemCount = order.items?.length || 0;
+
+              return (
+                <TableRow 
+                  key={order.id} 
+                  className="group animate-fade-in-up hover:bg-muted/30 transition-colors"
+                  style={{ animationDelay: `${index * 50}ms`, opacity: 0 }}
+                >
+                  <TableCell className="font-semibold text-foreground text-sm tracking-tight">
+                    {order.id.split('-')[0].toUpperCase()}
+                  </TableCell>
+                  <TableCell>
+                    <div className="flex items-center gap-3">
+                      <div className="h-8 w-8 rounded-full bg-brand-primary/10 text-brand-primary flex items-center justify-center text-[11px] font-bold shrink-0">
+                        {customerInitials}
+                      </div>
+                      <div>
+                        <div className="font-medium text-sm text-foreground">{customerName}</div>
+                        <div className="text-[11px] text-muted-foreground mt-0.5">{order.customer?.email || 'N/A'}</div>
+                      </div>
+                    </div>
+                  </TableCell>
+                  <TableCell className="text-sm text-muted-foreground tabular-nums">
+                    {formatDate(order.created_at)}
+                  </TableCell>
+                  <TableCell className="text-right font-medium text-sm tabular-nums text-foreground">
+                    ${order.total_amount.toFixed(2)}
+                    <div className="text-[10px] text-muted-foreground mt-0.5 font-normal tracking-wide uppercase">
+                      {itemCount} {itemCount === 1 ? 'item' : 'items'}
+                    </div>
+                  </TableCell>
+                  <TableCell className="text-center">
+                    {getOrderStatusBadge(order.status)}
+                  </TableCell>
+                  <TableCell className="text-right">
+                    <div className="flex items-center justify-end gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <Link href={`/orders/${order.id}`}>
+                        <Button variant="ghost" size="icon" className="h-7 w-7 text-muted-foreground hover:text-foreground">
+                          <Eye size={14} />
+                        </Button>
+                      </Link>
+                    </div>
+                  </TableCell>
+                </TableRow>
+              );
+            })}
           </TableBody>
         </Table>
 
         <div className="p-3 border-t border-border bg-card flex items-center justify-between text-xs text-muted-foreground">
           <div>
-            Showing <span className="font-medium text-foreground tabular-nums">1</span> to <span className="font-medium text-foreground tabular-nums">{orders.length}</span> of <span className="font-medium text-foreground tabular-nums">{orders.length}</span> orders
+            Showing <span className="font-medium text-foreground tabular-nums">{orders.length > 0 ? 1 : 0}</span> to <span className="font-medium text-foreground tabular-nums">{orders.length}</span> of <span className="font-medium text-foreground tabular-nums">{orders.length}</span> orders
           </div>
           <div className="flex gap-1.5">
             <Button variant="outline" size="sm" disabled className="h-7 text-[11px]">Previous</Button>
