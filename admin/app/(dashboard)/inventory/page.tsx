@@ -1,13 +1,13 @@
-﻿import { Download, Plus } from "lucide-react";
+﻿import { Download, Plus, History } from "lucide-react";
 import { Button } from "../../../components/ui/button";
 import { InventoryRepository } from "../../../features/inventory/inventory-repository";
 import { InventoryTable } from "../../../components/inventory/InventoryTable";
+import Link from "next/link";
 
 export default async function InventoryPage() {
   const inventory = await InventoryRepository.getInventory();
 
   // Summary metrics
-  const totalVariants = inventory.length;
   const inStockVariants = inventory.filter(i => i.status === 'IN_STOCK').length;
   const lowStockVariants = inventory.filter(i => i.status === 'LOW_STOCK').length;
   const outOfStockVariants = inventory.filter(i => i.status === 'OUT_OF_STOCK').length;
@@ -22,13 +22,15 @@ export default async function InventoryPage() {
           <p className="text-sm text-muted-foreground mt-1">Manage sneaker stock, variants, and availability across the catalog.</p>
         </div>
         <div className="flex gap-2 w-full sm:w-auto">
+          <Link href="/inventory/history" passHref>
+            <Button variant="outline" className="flex-1 sm:flex-none h-10 gap-2">
+              <History size={16} />
+              History
+            </Button>
+          </Link>
           <Button variant="outline" className="flex-1 sm:flex-none h-10 gap-2">
             <Download size={16} />
             Export
-          </Button>
-          <Button className="flex-1 sm:flex-none h-10 gap-2 bg-foreground text-background hover:bg-foreground/90">
-            <Plus size={16} />
-            Receive Stock
           </Button>
         </div>
       </div>
