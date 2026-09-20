@@ -46,9 +46,10 @@ interface SidebarProps {
   isOpen?: boolean;
   onClose?: () => void;
   userRole?: KicksRole;
+  pendingOrdersCount?: number;
 }
 
-export function Sidebar({ isOpen = false, onClose, userRole = 'admin' }: SidebarProps) {
+export function Sidebar({ isOpen = false, onClose, userRole = 'admin', pendingOrdersCount = 0 }: SidebarProps) {
   const pathname = usePathname();
 
   const allowedPrimaryLinks = PRIMARY_LINKS.filter(link => canAccessRoute(userRole, link.href === '/' ? '/dashboard' : link.href));
@@ -118,12 +119,12 @@ export function Sidebar({ isOpen = false, onClose, userRole = 'admin' }: Sidebar
                   </div>
                   
                   {/* Fake badge on Tasks/Orders to match Donezo design */}
-                  {link.name === 'Orders' && (
+                  {link.name === 'Orders' && pendingOrdersCount > 0 && (
                     <span className={cn(
                       "text-[9px] font-bold px-1.5 py-0.5 rounded-md",
                       isActive ? "bg-brand-primary text-white" : "bg-muted text-muted-foreground group-hover:bg-brand-primary/10 group-hover:text-brand-primary"
                     )}>
-                      12+
+                      {pendingOrdersCount > 99 ? '99+' : pendingOrdersCount}
                     </span>
                   )}
 

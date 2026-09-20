@@ -1,10 +1,22 @@
-'use client';
+﻿'use client';
 
 import { Search, Bell, ChevronDown, Menu, Sun, Moon } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
 
-export function Topbar({ onMenuClick }: { onMenuClick?: () => void }) {
+interface TopbarProps {
+  onMenuClick?: () => void;
+  userName?: string;
+  userInitials?: string;
+  roleName?: string;
+}
+
+export function Topbar({ 
+  onMenuClick, 
+  userName = "Admin User", 
+  userInitials = "AU", 
+  roleName = "Admin" 
+}: TopbarProps) {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
@@ -56,11 +68,11 @@ export function Topbar({ onMenuClick }: { onMenuClick?: () => void }) {
         
         <div className="flex items-center gap-3 cursor-pointer pl-1 md:pl-2">
           <div className="hidden lg:flex flex-col items-end">
-            <p className="text-sm font-semibold text-foreground leading-tight">Shiena C.</p>
-            <p className="text-[11px] text-muted-foreground">Admin</p>
+            <p className="text-sm font-semibold text-foreground leading-tight">{userName}</p>
+            <p className="text-[11px] text-muted-foreground">{roleName}</p>
           </div>
-          <div className="h-10 w-10 rounded-full bg-brand-primary/10 flex items-center justify-center text-brand-primary font-bold text-sm overflow-hidden border border-border/50">
-            SC
+          <div className="h-10 w-10 rounded-full bg-brand-primary/10 flex items-center justify-center text-brand-primary font-bold text-sm overflow-hidden border border-border/50 uppercase">
+            {userInitials}
           </div>
         </div>
       </div>
