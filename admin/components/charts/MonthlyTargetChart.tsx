@@ -1,9 +1,10 @@
-"use client";
+﻿"use client";
 
-import { ArrowUp } from "lucide-react";
+import { ArrowUp, ArrowDown } from "lucide-react";
 import { useEffect, useState } from "react";
+import { cn } from "../../lib/utils";
 
-export function MonthlyTargetChart({ value }: { value: number }) {
+export function MonthlyTargetChart({ value, trend = 0 }: { value: number; trend?: number }) {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -17,6 +18,8 @@ export function MonthlyTargetChart({ value }: { value: number }) {
   const strokeDashoffset = mounted
     ? circumference - (value / 100) * circumference
     : circumference;
+
+  const isPositive = trend >= 0;
 
   return (
     <div className="relative w-full max-w-[280px] mx-auto mt-2 mb-4">
@@ -50,8 +53,18 @@ export function MonthlyTargetChart({ value }: { value: number }) {
         <div className="text-3xl font-bold tabular-nums text-foreground tracking-tight leading-none mb-1.5">
           {value.toFixed(2)}%
         </div>
-        <div className="text-[10px] font-bold text-emerald-700 bg-emerald-50 dark:text-emerald-400 dark:bg-emerald-500/10 px-2 py-0.5 rounded inline-flex items-center tracking-wide">
-          <ArrowUp size={12} className="mr-0.5" strokeWidth={2.5} /> 24.92%
+        <div className={cn(
+          "text-[10px] font-bold px-2 py-0.5 rounded inline-flex items-center tracking-wide",
+          isPositive 
+            ? "text-emerald-700 bg-emerald-50 dark:text-emerald-400 dark:bg-emerald-500/10" 
+            : "text-rose-700 bg-rose-50 dark:text-rose-400 dark:bg-rose-500/10"
+        )}>
+          {isPositive ? (
+            <ArrowUp size={12} className="mr-0.5" strokeWidth={2.5} />
+          ) : (
+            <ArrowDown size={12} className="mr-0.5" strokeWidth={2.5} />
+          )}
+          {Math.abs(trend).toFixed(2)}%
         </div>
       </div>
     </div>

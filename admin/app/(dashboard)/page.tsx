@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/card';
+﻿import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/card';
 import { ArrowUpRight, Users, ShoppingBag, DollarSign } from 'lucide-react';
 import { RevenueChart } from '../../components/charts/RevenueChart';
 import { MonthlyTargetChart } from '../../components/charts/MonthlyTargetChart';
@@ -13,8 +13,16 @@ export default async function DashboardPage() {
     target: 0 // Mock target
   }));
 
-  // Prevent divide by zero if needed (though it's a dummy gauge for now)
+  // Current and previous month revenue for tracking
   const currentMonthRevenue = chartData.length > 0 ? chartData[chartData.length - 1].revenue : 0;
+  const previousMonthRevenue = chartData.length > 1 ? chartData[chartData.length - 2].revenue : 0;
+
+  let trend = 0;
+  if (previousMonthRevenue > 0) {
+    trend = ((currentMonthRevenue - previousMonthRevenue) / previousMonthRevenue) * 100;
+  } else if (currentMonthRevenue > 0 && previousMonthRevenue === 0) {
+    trend = 100;
+  }
   
   return (
     <div className="space-y-6 pb-12 max-w-7xl mx-auto">
@@ -99,7 +107,7 @@ export default async function DashboardPage() {
             <p className="text-xs text-muted-foreground">Current month tracking</p>
           </CardHeader>
           <CardContent className="pt-6 flex flex-col items-center justify-center h-[300px]">
-            <MonthlyTargetChart value={(currentMonthRevenue / 10000) * 100} />
+            <MonthlyTargetChart value={(currentMonthRevenue / 10000) * 100} trend={trend} />
             <div className="mt-6 text-center">
               <p className="text-2xl font-bold tracking-tight">${currentMonthRevenue.toLocaleString()}</p>
               <p className="text-sm text-muted-foreground mt-1">of $10,000 target</p>
