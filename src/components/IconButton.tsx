@@ -1,5 +1,6 @@
 import React from 'react';
-import { Pressable, StyleSheet, StyleProp, ViewStyle } from 'react-native';
+import { Pressable, StyleProp, ViewStyle } from 'react-native';
+import { StyleSheet, useStyles } from 'react-native-unistyles';
 import { colors, radius, shadows } from '../theme';
 
 interface IconButtonProps {
@@ -10,6 +11,7 @@ interface IconButtonProps {
 }
 
 export function IconButton({ icon, onPress, style, accessibilityLabel }: IconButtonProps) {
+    const { theme } = useStyles();
   return (
     <Pressable 
       style={[styles.container, style]}
@@ -22,13 +24,13 @@ export function IconButton({ icon, onPress, style, accessibilityLabel }: IconBut
   );
 }
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create((theme) => ({
   container: {
     padding: 10,
-    backgroundColor: colors.surface,
-    borderRadius: radius.round,
-    ...shadows.soft,
+    backgroundColor: theme.colors.surface,
+    borderRadius: theme.radius.round,
+    ...theme.shadows.soft,
     alignItems: 'center',
     justifyContent: 'center',
   },
-});
+}));

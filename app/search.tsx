@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
-import { View, Text, StyleSheet, TextInput, Pressable, FlatList, KeyboardAvoidingView, Platform, useWindowDimensions } from 'react-native';
+import { View, Text, TextInput, Pressable, FlatList, KeyboardAvoidingView, Platform, useWindowDimensions } from 'react-native';
+import { StyleSheet, useStyles } from 'react-native-unistyles';
 import { useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Search, X, Clock } from 'lucide-react-native';
@@ -12,6 +13,7 @@ import { useToastStore } from '../src/store/useToastStore';
 const RECENT_SEARCHES = ['Nike Air Max', 'Jordan', 'Running Shoes', 'Yeezy'];
 
 export default function SearchScreen() {
+    const { theme } = useStyles();
   const insets = useSafeAreaInsets();
   const router = useRouter();
   const addToCart = useCartStore(state => state.addToCart);
@@ -34,13 +36,13 @@ export default function SearchScreen() {
       style={styles.container} 
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
     >
-      <View style={[styles.header, { paddingTop: insets.top + spacing.sm }]}>
+      <View style={[styles.header, { paddingTop: insets.top + theme.spacing.sm }]}>
         <View style={styles.searchBar}>
-          <Search color={colors.textMuted} size={20} strokeWidth={2} />
+          <Search color={theme.colors.textMuted} size={20} strokeWidth={2} />
           <TextInput
             style={styles.input}
             placeholder="Search for sneakers..."
-            placeholderTextColor={colors.textMuted}
+            placeholderTextColor={theme.colors.textMuted}
             value={query}
             onChangeText={setQuery}
             autoFocus
@@ -49,7 +51,7 @@ export default function SearchScreen() {
           />
           {query.length > 0 && (
             <Pressable onPress={() => setQuery('')} hitSlop={10}>
-              <X color={colors.textMuted} size={18} strokeWidth={2} />
+              <X color={theme.colors.textMuted} size={18} strokeWidth={2} />
             </Pressable>
           )}
         </View>
@@ -67,7 +69,7 @@ export default function SearchScreen() {
               style={styles.recentItem}
               onPress={() => setQuery(item)}
             >
-              <Clock color={colors.textMuted} size={16} strokeWidth={2} />
+              <Clock color={theme.colors.textMuted} size={16} strokeWidth={2} />
               <Text style={styles.recentItemText}>{item}</Text>
             </Pressable>
           ))}
@@ -83,7 +85,7 @@ export default function SearchScreen() {
           keyboardShouldPersistTaps="handled"
           ListEmptyComponent={
             <View style={styles.emptyContainer}>
-              <Search color={colors.textMuted} size={40} strokeWidth={1.5} />
+              <Search color={theme.colors.textMuted} size={40} strokeWidth={1.5} />
               <Text style={styles.emptyText}>No results found for "{query}"</Text>
             </View>
           }
@@ -101,89 +103,89 @@ export default function SearchScreen() {
   );
 }
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create((theme) => ({
   container: {
     flex: 1,
-    backgroundColor: colors.backgroundLight,
+    backgroundColor: theme.colors.backgroundLight,
   },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: spacing.md,
-    paddingBottom: spacing.md,
+    paddingHorizontal: theme.spacing.md,
+    paddingBottom: theme.spacing.md,
     borderBottomWidth: 1,
-    borderBottomColor: colors.border,
+    borderBottomColor: theme.colors.border,
   },
   searchBar: {
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: colors.surface,
-    paddingHorizontal: spacing.md,
+    backgroundColor: theme.colors.surface,
+    paddingHorizontal: theme.spacing.md,
     height: 44,
-    borderRadius: radius.round,
+    borderRadius: theme.radius.round,
   },
   input: {
     flex: 1,
-    marginLeft: spacing.sm,
-    fontFamily: typography.families.semibold,
-    fontSize: typography.sizes.md,
-    color: colors.textPrimary,
+    marginLeft: theme.spacing.sm,
+    fontFamily: theme.typography.families.semibold,
+    fontSize: theme.typography.sizes.md,
+    color: theme.colors.textPrimary,
   },
   cancelButton: {
-    marginLeft: spacing.md,
-    paddingVertical: spacing.sm,
+    marginLeft: theme.spacing.md,
+    paddingVertical: theme.spacing.sm,
   },
   cancelText: {
-    fontFamily: typography.families.semibold,
-    fontSize: typography.sizes.sm,
-    color: colors.textPrimary,
+    fontFamily: theme.typography.families.semibold,
+    fontSize: theme.typography.sizes.sm,
+    color: theme.colors.textPrimary,
   },
   recentContainer: {
-    padding: spacing.xl,
+    padding: theme.spacing.xl,
   },
   recentTitle: {
-    fontFamily: typography.families.semibold,
+    fontFamily: theme.typography.families.semibold,
     fontSize: 10,
-    color: colors.textMuted,
+    color: theme.colors.textMuted,
     letterSpacing: 2,
-    marginBottom: spacing.lg,
+    marginBottom: theme.spacing.lg,
   },
   recentItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: spacing.md,
+    paddingVertical: theme.spacing.md,
     borderBottomWidth: 1,
-    borderBottomColor: colors.border,
+    borderBottomColor: theme.colors.border,
   },
   recentItemText: {
-    fontFamily: typography.families.regular,
-    fontSize: typography.sizes.md,
-    color: colors.textPrimary,
-    marginLeft: spacing.md,
+    fontFamily: theme.typography.families.regular,
+    fontSize: theme.typography.sizes.md,
+    color: theme.colors.textPrimary,
+    marginLeft: theme.spacing.md,
   },
   resultsList: {
-    paddingHorizontal: spacing.sm,
-    paddingTop: spacing.md,
-    paddingBottom: spacing.xxxl,
+    paddingHorizontal: theme.spacing.sm,
+    paddingTop: theme.spacing.md,
+    paddingBottom: theme.spacing.xxxl,
   },
   row: {
     justifyContent: 'space-between',
-    paddingHorizontal: spacing.xs,
-    marginBottom: spacing.md,
+    paddingHorizontal: theme.spacing.xs,
+    marginBottom: theme.spacing.md,
   },
   cardWrapper: {
     flex: 1,
-    paddingHorizontal: spacing.xs,
+    paddingHorizontal: theme.spacing.xs,
   },
   emptyContainer: {
     alignItems: 'center',
     marginTop: 80,
   },
   emptyText: {
-    fontFamily: typography.families.regular,
-    fontSize: typography.sizes.md,
-    color: colors.textMuted,
-    marginTop: spacing.md,
+    fontFamily: theme.typography.families.regular,
+    fontSize: theme.typography.sizes.md,
+    color: theme.colors.textMuted,
+    marginTop: theme.spacing.md,
   }
-});
+}));

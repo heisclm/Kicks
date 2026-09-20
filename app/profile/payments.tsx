@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, Pressable, Image } from 'react-native';
+import { View, Text, ScrollView, Pressable, Image } from 'react-native';
+import { StyleSheet, useStyles } from 'react-native-unistyles';
 import { useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ChevronLeft, Plus, CheckCircle, CreditCard } from 'lucide-react-native';
@@ -21,10 +22,11 @@ function renderLogo(id: string) {
   if (id === 'google') return <GooglePayLogo size={36} />;
   if (id === 'mastercard') return <MastercardLogo size={36} />;
   if (id === 'visa') return <VisaLogo size={36} />;
-  return <CreditCard color={colors.textPrimary} size={20} strokeWidth={2} />;
+  return <CreditCard color={theme.colors.textPrimary} size={20} strokeWidth={2} />;
 }
 
 export default function PaymentMethodsScreen() {
+    const { theme } = useStyles();
   const insets = useSafeAreaInsets();
   const router = useRouter();
   const { showToast } = useToastStore();
@@ -33,13 +35,13 @@ export default function PaymentMethodsScreen() {
     <View style={[styles.container, { paddingTop: insets.top }]}>
       <View style={styles.header}>
         <IconButton 
-          icon={<ChevronLeft color={colors.textPrimary} size={24} strokeWidth={2.5} />} 
+          icon={<ChevronLeft color={theme.colors.textPrimary} size={24} strokeWidth={2.5} />} 
           onPress={() => router.back()} 
           style={styles.backButton}
         />
         <Text style={styles.headerTitle}>Payments</Text>
         <IconButton 
-          icon={<Plus color={colors.textPrimary} size={24} strokeWidth={2.5} />} 
+          icon={<Plus color={theme.colors.textPrimary} size={24} strokeWidth={2.5} />} 
           style={styles.backButton}
         />
       </View>
@@ -61,7 +63,7 @@ export default function PaymentMethodsScreen() {
                   {method.last4 && <Text style={styles.subtitle}>**** **** **** {method.last4}</Text>}
                 </View>
               </View>
-              {method.isDefault && <CheckCircle color={colors.primary} size={20} strokeWidth={2.5} />}
+              {method.isDefault && <CheckCircle color={theme.colors.primary} size={20} strokeWidth={2.5} />}
             </View>
           </Pressable>
         ))}
@@ -70,17 +72,17 @@ export default function PaymentMethodsScreen() {
   );
 }
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create((theme) => ({
   container: {
     flex: 1,
-    backgroundColor: colors.backgroundLight,
+    backgroundColor: theme.colors.backgroundLight,
   },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingHorizontal: spacing.sm,
-    paddingVertical: spacing.md,
+    paddingHorizontal: theme.spacing.sm,
+    paddingVertical: theme.spacing.md,
   },
   backButton: {
     backgroundColor: 'transparent',
@@ -88,25 +90,25 @@ const styles = StyleSheet.create({
     elevation: 0,
   },
   headerTitle: {
-    fontFamily: typography.families.extrabold,
-    fontSize: typography.sizes.lg,
-    color: colors.textPrimary,
+    fontFamily: theme.typography.families.extrabold,
+    fontSize: theme.typography.sizes.lg,
+    color: theme.colors.textPrimary,
   },
   scrollContent: {
-    padding: spacing.md,
-    paddingBottom: spacing.xxxl,
+    padding: theme.spacing.md,
+    paddingBottom: theme.spacing.xxxl,
   },
   card: {
-    backgroundColor: colors.surface,
-    borderRadius: radius.xxl,
-    padding: spacing.lg,
-    marginBottom: spacing.md,
+    backgroundColor: theme.colors.surface,
+    borderRadius: theme.radius.xxl,
+    padding: theme.spacing.lg,
+    marginBottom: theme.spacing.md,
     borderWidth: 2,
     borderColor: 'transparent',
-    ...shadows.soft,
+    ...theme.shadows.soft,
   },
   cardActive: {
-    borderColor: colors.primary,
+    borderColor: theme.colors.primary,
   },
   cardHeader: {
     flexDirection: 'row',
@@ -116,25 +118,25 @@ const styles = StyleSheet.create({
   titleRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: spacing.md,
+    gap: theme.spacing.md,
   },
   iconWrapper: {
     width: 48,
     height: 48,
-    borderRadius: radius.lg,
-    backgroundColor: colors.backgroundLight,
+    borderRadius: theme.radius.lg,
+    backgroundColor: theme.colors.backgroundLight,
     justifyContent: 'center',
     alignItems: 'center',
   },
   name: {
-    fontFamily: typography.families.extrabold,
-    fontSize: typography.sizes.md,
-    color: colors.textPrimary,
+    fontFamily: theme.typography.families.extrabold,
+    fontSize: theme.typography.sizes.md,
+    color: theme.colors.textPrimary,
   },
   subtitle: {
-    fontFamily: typography.families.semibold,
-    fontSize: typography.sizes.xs,
-    color: colors.textMuted,
+    fontFamily: theme.typography.families.semibold,
+    fontSize: theme.typography.sizes.xs,
+    color: theme.colors.textMuted,
     marginTop: 2,
   }
-});
+}));

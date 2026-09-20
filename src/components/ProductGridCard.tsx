@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text, StyleSheet, Pressable } from 'react-native';
+import { View, Text, Pressable } from 'react-native';
+import { StyleSheet, useStyles } from 'react-native-unistyles';
 import { Heart } from 'lucide-react-native';
 import Animated from 'react-native-reanimated';
 import { Image as ExpoImage } from 'expo-image';
@@ -16,6 +17,7 @@ interface ProductGridCardProps {
 }
 
 export function ProductGridCard({ item, onPress }: ProductGridCardProps) {
+    const { theme } = useStyles();
   const isInWishlist = useWishlistStore((state) => state.isInWishlist(item.id));
   const toggleWishlist = useWishlistStore((state) => state.toggleWishlist);
 
@@ -27,7 +29,7 @@ export function ProductGridCard({ item, onPress }: ProductGridCardProps) {
 
   return (
     <Pressable 
-      style={[styles.card, shadows.soft]} 
+      style={[styles.card, theme.shadows.soft]} 
       onPress={onPress}
       accessibilityRole="button"
       accessibilityLabel={`View ${item.name}`}
@@ -72,10 +74,10 @@ export function ProductGridCard({ item, onPress }: ProductGridCardProps) {
             accessibilityLabel={`${isInWishlist ? 'Remove' : 'Add'} ${item.name} from wishlist`}
           >
             <Heart 
-              color={isInWishlist ? colors.primary : colors.textMuted} 
+              color={isInWishlist ? theme.colors.primary : theme.colors.textMuted} 
               size={16} 
               strokeWidth={2} 
-              fill={isInWishlist ? colors.primary : 'transparent'}
+              fill={isInWishlist ? theme.colors.primary : 'transparent'}
             />
           </Pressable>
         </View>
@@ -84,11 +86,11 @@ export function ProductGridCard({ item, onPress }: ProductGridCardProps) {
   );
 }
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create((theme) => ({
   card: {
-    backgroundColor: colors.surface,
-    borderRadius: radius.xl,
-    padding: spacing.sm,
+    backgroundColor: theme.colors.surface,
+    borderRadius: theme.radius.xl,
+    padding: theme.spacing.sm,
     flex: 1,
     position: 'relative',
   },
@@ -99,14 +101,14 @@ const styles = StyleSheet.create({
     zIndex: 2,
   },
   newBadge: {
-    backgroundColor: colors.primary,
+    backgroundColor: theme.colors.primary,
     paddingHorizontal: 6,
     paddingVertical: 2,
-    borderRadius: radius.sm,
+    borderRadius: theme.radius.sm,
   },
   newText: {
-    color: colors.textInverse,
-    fontFamily: typography.families.extrabold,
+    color: theme.colors.textInverse,
+    fontFamily: theme.typography.families.extrabold,
     fontSize: 8,
   },
   imageContainer: {
@@ -114,7 +116,7 @@ const styles = StyleSheet.create({
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-    marginVertical: spacing.xs,
+    marginVertical: theme.spacing.xs,
   },
   image: {
     width: '100%',
@@ -122,20 +124,20 @@ const styles = StyleSheet.create({
     transform: [{ rotate: '-15deg' }, { scale: 1.1 }],
   },
   details: {
-    paddingTop: spacing.xs,
+    paddingTop: theme.spacing.xs,
   },
   brand: {
-    fontFamily: typography.families.semibold,
+    fontFamily: theme.typography.families.semibold,
     fontSize: 9,
-    color: colors.textMuted,
+    color: theme.colors.textMuted,
     letterSpacing: 0.5,
     marginBottom: 2,
   },
   name: {
-    fontFamily: typography.families.semibold,
-    fontSize: typography.sizes.sm,
-    color: colors.textPrimary,
-    marginBottom: spacing.sm,
+    fontFamily: theme.typography.families.semibold,
+    fontSize: theme.typography.sizes.sm,
+    color: theme.colors.textPrimary,
+    marginBottom: theme.spacing.sm,
   },
   bottomRow: {
     flexDirection: 'row',
@@ -143,31 +145,31 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   price: {
-    fontFamily: typography.families.extrabold,
-    fontSize: typography.sizes.sm,
-    color: colors.textPrimary,
+    fontFamily: theme.typography.families.extrabold,
+    fontSize: theme.typography.sizes.sm,
+    color: theme.colors.textPrimary,
   },
   wishlistButton: {
     padding: 4,
-    backgroundColor: colors.backgroundLight,
-    borderRadius: radius.round,
+    backgroundColor: theme.colors.backgroundLight,
+    borderRadius: theme.radius.round,
   },
   discountBadge: {
     backgroundColor: 'rgba(255,255,255,0.8)',
     paddingHorizontal: 6,
     paddingVertical: 2,
-    borderRadius: radius.sm,
+    borderRadius: theme.radius.sm,
   },
   discountText: {
-    fontFamily: typography.families.extrabold,
+    fontFamily: theme.typography.families.extrabold,
     fontSize: 9,
-    color: colors.textPrimary,
+    color: theme.colors.textPrimary,
   },
   gender: {
-    fontFamily: typography.families.semibold,
+    fontFamily: theme.typography.families.semibold,
     fontSize: 10,
-    color: colors.textMuted,
+    color: theme.colors.textMuted,
     letterSpacing: 1,
     marginBottom: 4,
   }
-});
+}));

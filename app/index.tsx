@@ -25,8 +25,10 @@ import Svg, {
 } from "react-native-svg";
 
 import { useOnboardingStore } from "../src/store/useOnboardingStore";
+import { useStyles } from "react-native-unistyles";
 
 export default function OnboardingScreen() {
+    const { theme } = useStyles();
   const router = useRouter();
   const insets = useSafeAreaInsets();
 
@@ -97,7 +99,7 @@ export default function OnboardingScreen() {
   if (!isHydrated || hasSeenOnboarding) {
     return (
       <View
-        style={[styles.container, { backgroundColor: colors.backgroundDark }]}
+        style={[styles.container, { backgroundColor: theme.colors.backgroundDark }]}
       />
     );
   }
@@ -178,10 +180,10 @@ export default function OnboardingScreen() {
   );
 }
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create((theme) => ({
   container: {
     flex: 1,
-    backgroundColor: colors.backgroundDark,
+    backgroundColor: theme.colors.backgroundDark,
   },
   background: {
     position: "absolute",
@@ -213,19 +215,19 @@ const styles = StyleSheet.create({
   contentContainer: {
     flex: 0.3,
     alignItems: "center",
-    paddingHorizontal: spacing.xxxl,
+    paddingHorizontal: theme.spacing.xxxl,
   },
   title: {
-    fontSize: typography.sizes.huge,
-    fontFamily: typography.families.extrabold,
-    color: colors.textInverse,
+    fontSize: theme.typography.sizes.huge,
+    fontFamily: theme.typography.families.extrabold,
+    color: theme.colors.textInverse,
     textAlign: "center",
     lineHeight: 40,
-    marginBottom: spacing.lg,
+    marginBottom: theme.spacing.lg,
   },
   subtitle: {
-    fontSize: typography.sizes.sm,
-    color: colors.textMuted,
+    fontSize: theme.typography.sizes.sm,
+    color: theme.colors.textMuted,
     textAlign: "center",
     lineHeight: 22,
   },
@@ -235,9 +237,9 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
   },
   buttonText: {
-    color: colors.textInverse,
-    fontSize: typography.sizes.md,
-    fontFamily: typography.families.semibold,
-    marginTop: spacing.sm,
+    color: theme.colors.textInverse,
+    fontSize: theme.typography.sizes.md,
+    fontFamily: theme.typography.families.semibold,
+    marginTop: theme.spacing.sm,
   },
-});
+}));

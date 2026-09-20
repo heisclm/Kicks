@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, Pressable } from 'react-native';
+import { View, Text, ScrollView, Pressable } from 'react-native';
+import { StyleSheet, useStyles } from 'react-native-unistyles';
 import { useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ChevronLeft, MapPin, Plus, CheckCircle } from 'lucide-react-native';
@@ -13,6 +14,7 @@ const addresses = [
 ];
 
 export default function ShippingAddressesScreen() {
+    const { theme } = useStyles();
   const insets = useSafeAreaInsets();
   const router = useRouter();
   const { showToast } = useToastStore();
@@ -21,13 +23,13 @@ export default function ShippingAddressesScreen() {
     <View style={[styles.container, { paddingTop: insets.top }]}>
       <View style={styles.header}>
         <IconButton 
-          icon={<ChevronLeft color={colors.textPrimary} size={24} strokeWidth={2.5} />} 
+          icon={<ChevronLeft color={theme.colors.textPrimary} size={24} strokeWidth={2.5} />} 
           onPress={() => router.back()} 
           style={styles.backButton}
         />
         <Text style={styles.headerTitle}>Addresses</Text>
         <IconButton 
-          icon={<Plus color={colors.textPrimary} size={24} strokeWidth={2.5} />} 
+          icon={<Plus color={theme.colors.textPrimary} size={24} strokeWidth={2.5} />} 
           style={styles.backButton}
         />
       </View>
@@ -41,10 +43,10 @@ export default function ShippingAddressesScreen() {
           >
             <View style={styles.cardHeader}>
               <View style={styles.titleRow}>
-                <MapPin color={addr.isDefault ? colors.primary : colors.textMuted} size={20} strokeWidth={2.5} />
+                <MapPin color={addr.isDefault ? theme.colors.primary : theme.colors.textMuted} size={20} strokeWidth={2.5} />
                 <Text style={styles.name}>{addr.name}</Text>
               </View>
-              {addr.isDefault && <CheckCircle color={colors.primary} size={20} strokeWidth={2.5} />}
+              {addr.isDefault && <CheckCircle color={theme.colors.primary} size={20} strokeWidth={2.5} />}
             </View>
             <Text style={styles.address}>{addr.address}</Text>
             <Text style={styles.editLink}>Edit Address</Text>
@@ -55,17 +57,17 @@ export default function ShippingAddressesScreen() {
   );
 }
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create((theme) => ({
   container: {
     flex: 1,
-    backgroundColor: colors.backgroundLight,
+    backgroundColor: theme.colors.backgroundLight,
   },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingHorizontal: spacing.sm,
-    paddingVertical: spacing.md,
+    paddingHorizontal: theme.spacing.sm,
+    paddingVertical: theme.spacing.md,
   },
   backButton: {
     backgroundColor: 'transparent',
@@ -73,54 +75,54 @@ const styles = StyleSheet.create({
     elevation: 0,
   },
   headerTitle: {
-    fontFamily: typography.families.extrabold,
-    fontSize: typography.sizes.lg,
-    color: colors.textPrimary,
+    fontFamily: theme.typography.families.extrabold,
+    fontSize: theme.typography.sizes.lg,
+    color: theme.colors.textPrimary,
   },
   scrollContent: {
-    padding: spacing.md,
-    paddingBottom: spacing.xxxl,
+    padding: theme.spacing.md,
+    paddingBottom: theme.spacing.xxxl,
   },
   card: {
-    backgroundColor: colors.surface,
-    borderRadius: radius.xxl,
-    padding: spacing.lg,
-    marginBottom: spacing.md,
+    backgroundColor: theme.colors.surface,
+    borderRadius: theme.radius.xxl,
+    padding: theme.spacing.lg,
+    marginBottom: theme.spacing.md,
     borderWidth: 2,
     borderColor: 'transparent',
-    ...shadows.soft,
+    ...theme.shadows.soft,
   },
   cardActive: {
-    borderColor: colors.primary,
+    borderColor: theme.colors.primary,
   },
   cardHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: spacing.sm,
+    marginBottom: theme.spacing.sm,
   },
   titleRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: spacing.sm,
+    gap: theme.spacing.sm,
   },
   name: {
-    fontFamily: typography.families.extrabold,
-    fontSize: typography.sizes.md,
-    color: colors.textPrimary,
+    fontFamily: theme.typography.families.extrabold,
+    fontSize: theme.typography.sizes.md,
+    color: theme.colors.textPrimary,
   },
   address: {
-    fontFamily: typography.families.regular,
-    fontSize: typography.sizes.sm,
-    color: colors.textMuted,
+    fontFamily: theme.typography.families.regular,
+    fontSize: theme.typography.sizes.sm,
+    color: theme.colors.textMuted,
     lineHeight: 20,
-    marginBottom: spacing.md,
+    marginBottom: theme.spacing.md,
   },
   editLink: {
-    fontFamily: typography.families.semibold,
-    fontSize: typography.sizes.xs,
-    color: colors.primary,
+    fontFamily: theme.typography.families.semibold,
+    fontSize: theme.typography.sizes.xs,
+    color: theme.colors.primary,
     textTransform: 'uppercase',
     letterSpacing: 1,
   }
-});
+}));

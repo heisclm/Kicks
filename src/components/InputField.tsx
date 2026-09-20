@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text, TextInput, StyleSheet, TextInputProps } from 'react-native';
+import { View, Text, TextInput, TextInputProps } from 'react-native';
+import { StyleSheet, useStyles } from 'react-native-unistyles';
 import { colors, typography, radius, spacing } from '../theme';
 
 export interface InputFieldProps extends TextInputProps {
@@ -7,37 +8,38 @@ export interface InputFieldProps extends TextInputProps {
 }
 
 export function InputField({ label, ...props }: InputFieldProps) {
+    const { theme } = useStyles();
   return (
     <View style={styles.inputContainer}>
       <Text style={styles.inputLabel}>{label}</Text>
       <TextInput 
         style={styles.input}
-        placeholderTextColor={colors.textMuted}
+        placeholderTextColor={theme.colors.textMuted}
         {...props}
       />
     </View>
   );
 }
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create((theme) => ({
   inputContainer: {
-    marginBottom: spacing.md,
+    marginBottom: theme.spacing.md,
   },
   inputLabel: {
-    fontSize: typography.sizes.sm,
-    fontFamily: typography.families.semibold,
-    color: colors.textPrimary,
-    marginBottom: spacing.xs,
+    fontSize: theme.typography.sizes.sm,
+    fontFamily: theme.typography.families.semibold,
+    color: theme.colors.textPrimary,
+    marginBottom: theme.spacing.xs,
   },
   input: {
-    backgroundColor: colors.backgroundLight,
+    backgroundColor: theme.colors.backgroundLight,
     borderWidth: 1,
-    borderColor: colors.border,
-    borderRadius: radius.md,
-    paddingHorizontal: spacing.md,
-    paddingVertical: spacing.md,
-    fontSize: typography.sizes.md,
-    fontFamily: typography.families.regular,
-    color: colors.textPrimary,
+    borderColor: theme.colors.border,
+    borderRadius: theme.radius.md,
+    paddingHorizontal: theme.spacing.md,
+    paddingVertical: theme.spacing.md,
+    fontSize: theme.typography.sizes.md,
+    fontFamily: theme.typography.families.regular,
+    color: theme.colors.textPrimary,
   },
-});
+}));

@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
-import { View, Text, StyleSheet, Dimensions } from 'react-native';
+import { View, Text, Dimensions } from 'react-native';
+import { StyleSheet, useStyles } from 'react-native-unistyles';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -20,6 +21,7 @@ interface SneakerLoaderProps {
 const { width } = Dimensions.get('window');
 
 export function SneakerLoader({ label = "Lacing up...", transparent = false }: SneakerLoaderProps) {
+    const { theme } = useStyles();
   const floatAnim = useSharedValue(0);
   const pulseAnim = useSharedValue(0.8);
   const glowAnim = useSharedValue(0.5);
@@ -95,14 +97,14 @@ export function SneakerLoader({ label = "Lacing up...", transparent = false }: S
   );
 }
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create((theme) => ({
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
   containerSolid: {
-    backgroundColor: colors.backgroundLight,
+    backgroundColor: theme.colors.backgroundLight,
   },
   animationContainer: {
     width: 200,
@@ -116,7 +118,7 @@ const styles = StyleSheet.create({
     width: 120,
     height: 120,
     borderRadius: 60,
-    backgroundColor: colors.primary,
+    backgroundColor: theme.colors.primary,
     opacity: 0.15,
     filter: 'blur(20px)', // Web/New Arch
   },
@@ -141,11 +143,11 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   label: {
-    fontFamily: typography.families.semibold,
+    fontFamily: theme.typography.families.semibold,
     fontSize: 16,
-    color: colors.textSecondary,
+    color: theme.colors.textSecondary,
     letterSpacing: 2,
     marginTop: 20,
     textTransform: 'uppercase',
   },
-});
+}));

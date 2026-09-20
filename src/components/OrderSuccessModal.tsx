@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
-import { View, Text, StyleSheet, Modal, Animated, Easing, Pressable } from 'react-native';
+import { View, Text, Modal, Animated, Easing, Pressable } from 'react-native';
+import { StyleSheet, useStyles } from 'react-native-unistyles';
 import { CheckCircle, Package } from 'lucide-react-native';
 import { colors, spacing, typography, radius, shadows } from '../theme';
 
@@ -9,6 +10,7 @@ interface OrderSuccessModalProps {
 }
 
 export function OrderSuccessModal({ visible, onClose }: OrderSuccessModalProps) {
+    const { theme } = useStyles();
   const scaleAnim = useRef(new Animated.Value(0)).current;
   const opacityAnim = useRef(new Animated.Value(0)).current;
 
@@ -52,7 +54,7 @@ export function OrderSuccessModal({ visible, onClose }: OrderSuccessModalProps) 
         >
           <View style={styles.iconContainer}>
             <View style={styles.iconCircle}>
-              <CheckCircle color={colors.primary} size={48} strokeWidth={2.5} />
+              <CheckCircle color={theme.colors.primary} size={48} strokeWidth={2.5} />
             </View>
           </View>
           
@@ -62,7 +64,7 @@ export function OrderSuccessModal({ visible, onClose }: OrderSuccessModalProps) 
           </Text>
 
           <View style={styles.detailBox}>
-            <Package color={colors.textPrimary} size={20} strokeWidth={2} />
+            <Package color={theme.colors.textPrimary} size={20} strokeWidth={2} />
             <Text style={styles.detailText}>Estimated delivery: 2-3 business days</Text>
           </View>
 
@@ -75,77 +77,77 @@ export function OrderSuccessModal({ visible, onClose }: OrderSuccessModalProps) 
   );
 }
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create((theme) => ({
   overlay: {
     flex: 1,
     backgroundColor: 'rgba(0,0,0,0.4)',
     justifyContent: 'center',
     alignItems: 'center',
-    padding: spacing.xl,
+    padding: theme.spacing.xl,
   },
   modalContent: {
-    backgroundColor: colors.surface,
-    borderRadius: radius.xxxl,
-    padding: spacing.xxl,
+    backgroundColor: theme.colors.surface,
+    borderRadius: theme.radius.xxxl,
+    padding: theme.spacing.xxl,
     width: '100%',
     alignItems: 'center',
-    ...shadows.medium,
+    ...theme.shadows.medium,
   },
   iconContainer: {
-    marginBottom: spacing.xl,
+    marginBottom: theme.spacing.xl,
   },
   iconCircle: {
     width: 96,
     height: 96,
     borderRadius: 48,
-    backgroundColor: `${colors.primary}15`,
+    backgroundColor: `${theme.colors.primary}15`,
     justifyContent: 'center',
     alignItems: 'center',
   },
   title: {
-    fontFamily: typography.families.extrabold,
-    fontSize: typography.sizes.xl,
-    color: colors.textPrimary,
-    marginBottom: spacing.sm,
+    fontFamily: theme.typography.families.extrabold,
+    fontSize: theme.typography.sizes.xl,
+    color: theme.colors.textPrimary,
+    marginBottom: theme.spacing.sm,
     textAlign: 'center',
   },
   message: {
-    fontFamily: typography.families.regular,
-    fontSize: typography.sizes.md,
-    color: colors.textMuted,
+    fontFamily: theme.typography.families.regular,
+    fontSize: theme.typography.sizes.md,
+    color: theme.colors.textMuted,
     textAlign: 'center',
     lineHeight: 24,
-    marginBottom: spacing.xl,
-    paddingHorizontal: spacing.sm,
+    marginBottom: theme.spacing.xl,
+    paddingHorizontal: theme.spacing.sm,
   },
   detailBox: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: colors.backgroundLight,
-    padding: spacing.md,
-    borderRadius: radius.lg,
-    marginBottom: spacing.xxxl,
+    backgroundColor: theme.colors.backgroundLight,
+    padding: theme.spacing.md,
+    borderRadius: theme.radius.lg,
+    marginBottom: theme.spacing.xxxl,
     width: '100%',
     justifyContent: 'center',
     gap: 10,
   },
   detailText: {
-    fontFamily: typography.families.semibold,
-    fontSize: typography.sizes.sm,
-    color: colors.textPrimary,
+    fontFamily: theme.typography.families.semibold,
+    fontSize: theme.typography.sizes.sm,
+    color: theme.colors.textPrimary,
   },
   button: {
-    backgroundColor: colors.textPrimary,
-    paddingVertical: spacing.lg,
-    paddingHorizontal: spacing.xl,
-    borderRadius: radius.round,
+    backgroundColor: theme.colors.textPrimary,
+    paddingVertical: theme.spacing.lg,
+    paddingHorizontal: theme.spacing.xl,
+    borderRadius: theme.radius.round,
     width: '100%',
     alignItems: 'center',
   },
   buttonText: {
-    fontFamily: typography.families.extrabold,
-    fontSize: typography.sizes.md,
-    color: colors.textInverse,
+    fontFamily: theme.typography.families.extrabold,
+    fontSize: theme.typography.sizes.md,
+    color: theme.colors.textInverse,
     letterSpacing: 1,
   }
-});
+}));

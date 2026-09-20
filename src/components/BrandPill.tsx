@@ -1,5 +1,6 @@
 import React from 'react';
-import { Pressable, Text, StyleSheet } from 'react-native';
+import { Pressable, Text } from 'react-native';
+import { StyleSheet, useStyles } from 'react-native-unistyles';
 import { Brand } from '../types';
 import { colors, spacing, radius, typography } from '../theme';
 
@@ -12,7 +13,8 @@ interface BrandPillProps {
 import { NikeLogo, AdidasLogo, PumaLogo, ReebokLogo, NewBalanceLogo } from './BrandLogos';
 
 export function BrandPill({ brand, isSelected, onPress }: BrandPillProps) {
-  const iconColor = isSelected ? colors.surface : colors.textPrimary;
+    const { theme } = useStyles();
+  const iconColor = isSelected ? theme.colors.surface : theme.colors.textPrimary;
   return (
     <Pressable 
       style={[
@@ -27,39 +29,39 @@ export function BrandPill({ brand, isSelected, onPress }: BrandPillProps) {
       {brand.name === 'Reebok' && <ReebokLogo color={iconColor} size={20} />}
       {brand.name === 'New Balance' && <NewBalanceLogo color={iconColor} size={20} />}
       
-      <Text style={[styles.text, isSelected && styles.textSelected, { marginLeft: brand.name === 'All' ? 0 : spacing.sm }]}>
+      <Text style={[styles.text, isSelected && styles.textSelected, { marginLeft: brand.name === 'All' ? 0 : theme.spacing.sm }]}>
         {brand.name}
       </Text>
     </Pressable>
   );
 }
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create((theme) => ({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: spacing.xl,
-    paddingVertical: spacing.md,
-    borderRadius: radius.xxxl,
-    backgroundColor: colors.surface,
-    marginRight: spacing.md,
+    paddingHorizontal: theme.spacing.xl,
+    paddingVertical: theme.spacing.md,
+    borderRadius: theme.radius.xxxl,
+    backgroundColor: theme.colors.surface,
+    marginRight: theme.spacing.md,
     borderWidth: 1,
-    borderColor: colors.border,
+    borderColor: theme.colors.border,
   },
   containerSelected: {
-    backgroundColor: colors.primary,
-    borderColor: colors.primary,
+    backgroundColor: theme.colors.primary,
+    borderColor: theme.colors.primary,
   },
   text: {
-    fontSize: typography.sizes.sm,
-    fontFamily: typography.families.semibold,
-    color: colors.textSecondary,
+    fontSize: theme.typography.sizes.sm,
+    fontFamily: theme.typography.families.semibold,
+    color: theme.colors.textSecondary,
   },
   textSelected: {
-    color: colors.surface,
+    color: theme.colors.surface,
   },
   iconFallback: {
-    fontWeight: typography.weights.black,
-    marginRight: spacing.sm,
+    fontWeight: theme.typography.weights.black,
+    marginRight: theme.spacing.sm,
   }
-});
+}));

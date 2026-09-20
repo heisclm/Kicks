@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text, StyleSheet, FlatList, Pressable, useWindowDimensions } from 'react-native';
+import { View, Text, FlatList, Pressable, useWindowDimensions } from 'react-native';
+import { StyleSheet, useStyles } from 'react-native-unistyles';
 import { useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Heart } from 'lucide-react-native';
@@ -10,6 +11,7 @@ import { useCartStore } from '../../src/store/useCartStore';
 import { useProducts } from '../../src/hooks/useProducts';
 
 export default function WishlistScreen() {
+    const { theme } = useStyles();
   const insets = useSafeAreaInsets();
   const router = useRouter();
   
@@ -24,7 +26,7 @@ export default function WishlistScreen() {
   const renderEmptyState = () => (
     <View style={styles.emptyContainer}>
       <View style={styles.emptyIconWrapper}>
-        <Heart color={colors.textInverse} size={40} strokeWidth={2} fill={colors.textInverse} />
+        <Heart color={theme.colors.textInverse} size={40} strokeWidth={2} fill={theme.colors.textInverse} />
       </View>
       <Text style={styles.emptyTitle}>Your Wishlist is Empty</Text>
       <Text style={styles.emptySubtitle}>
@@ -59,7 +61,7 @@ export default function WishlistScreen() {
   const numColumns = width > 1000 ? 4 : width > 600 ? 3 : 2;
 
   return (
-    <View style={[styles.container, { paddingTop: insets.top + spacing.md }]}>
+    <View style={[styles.container, { paddingTop: insets.top + theme.spacing.md }]}>
       {savedProducts.length === 0 ? (
         <View style={styles.emptyWrapper}>
           {renderHeader()}
@@ -89,44 +91,44 @@ export default function WishlistScreen() {
   );
 }
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create((theme) => ({
   container: {
     flex: 1,
-    backgroundColor: colors.backgroundLight,
+    backgroundColor: theme.colors.backgroundLight,
   },
   emptyWrapper: {
     flex: 1,
-    paddingHorizontal: spacing.md,
+    paddingHorizontal: theme.spacing.md,
   },
   scrollContent: {
-    paddingHorizontal: spacing.md,
+    paddingHorizontal: theme.spacing.md,
   },
   header: {
-    marginBottom: spacing.xl,
+    marginBottom: theme.spacing.xl,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: spacing.sm,
+    paddingHorizontal: theme.spacing.sm,
   },
   headerSubtitle: {
-    fontFamily: typography.families.semibold,
+    fontFamily: theme.typography.families.semibold,
     fontSize: 11,
-    color: colors.textMuted,
+    color: theme.colors.textMuted,
     letterSpacing: 3,
     marginBottom: 6,
     textTransform: 'uppercase',
   },
   title: {
     fontSize: 34,
-    fontFamily: typography.families.extrabold,
-    color: colors.textPrimary,
+    fontFamily: theme.typography.families.extrabold,
+    color: theme.colors.textPrimary,
     letterSpacing: -1.5,
   },
   itemCountPill: {
-    backgroundColor: colors.surface,
-    paddingHorizontal: spacing.md,
+    backgroundColor: theme.colors.surface,
+    paddingHorizontal: theme.spacing.md,
     paddingVertical: 6,
-    borderRadius: radius.round,
+    borderRadius: theme.radius.round,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.05,
@@ -135,62 +137,62 @@ const styles = StyleSheet.create({
   },
   itemCountText: {
     fontSize: 10,
-    fontFamily: typography.families.extrabold,
-    color: colors.textPrimary,
+    fontFamily: theme.typography.families.extrabold,
+    color: theme.colors.textPrimary,
     letterSpacing: 1,
   },
   row: {
     justifyContent: 'space-between',
-    paddingHorizontal: spacing.sm,
-    marginBottom: spacing.md,
+    paddingHorizontal: theme.spacing.sm,
+    marginBottom: theme.spacing.md,
   },
   cardWrapper: {
     flex: 1,
-    paddingHorizontal: spacing.xs,
+    paddingHorizontal: theme.spacing.xs,
   },
   emptyContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: spacing.xl,
+    paddingHorizontal: theme.spacing.xl,
     marginTop: -40, // Reduced offset
   },
   emptyIconWrapper: {
     width: 100,
     height: 100,
     borderRadius: 50,
-    backgroundColor: colors.textPrimary,
+    backgroundColor: theme.colors.textPrimary,
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: spacing.xxl,
-    shadowColor: colors.textPrimary,
+    marginBottom: theme.spacing.xxl,
+    shadowColor: theme.colors.textPrimary,
     shadowOffset: { width: 0, height: 15 },
     shadowOpacity: 0.15,
     shadowRadius: 20,
     elevation: 10,
   },
   emptyTitle: {
-    fontFamily: typography.families.extrabold,
+    fontFamily: theme.typography.families.extrabold,
     fontSize: 28,
-    color: colors.textPrimary,
-    marginBottom: spacing.md,
+    color: theme.colors.textPrimary,
+    marginBottom: theme.spacing.md,
     textAlign: 'center',
     letterSpacing: -0.5,
   },
   emptySubtitle: {
-    fontFamily: typography.families.regular,
-    fontSize: typography.sizes.md,
-    color: colors.textMuted,
+    fontFamily: theme.typography.families.regular,
+    fontSize: theme.typography.sizes.md,
+    color: theme.colors.textMuted,
     textAlign: 'center',
     lineHeight: 24,
-    marginBottom: spacing.xxxl,
-    paddingHorizontal: spacing.lg,
+    marginBottom: theme.spacing.xxxl,
+    paddingHorizontal: theme.spacing.lg,
   },
   exploreButton: {
-    backgroundColor: colors.textPrimary,
-    paddingHorizontal: spacing.xxxl,
-    paddingVertical: spacing.lg,
-    borderRadius: radius.round,
+    backgroundColor: theme.colors.textPrimary,
+    paddingHorizontal: theme.spacing.xxxl,
+    paddingVertical: theme.spacing.lg,
+    borderRadius: theme.radius.round,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 8 },
     shadowOpacity: 0.15,
@@ -198,9 +200,9 @@ const styles = StyleSheet.create({
     elevation: 8,
   },
   exploreButtonText: {
-    fontFamily: typography.families.extrabold,
+    fontFamily: theme.typography.families.extrabold,
     fontSize: 12,
-    color: colors.textInverse,
+    color: theme.colors.textInverse,
     letterSpacing: 1.5,
   }
-});
+}));

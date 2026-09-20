@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text } from 'react-native';
+import { StyleSheet, useStyles } from 'react-native-unistyles';
 import { AlertCircle } from 'lucide-react-native';
 import { Button } from './Button';
 import { colors, spacing, typography, radius } from '../theme';
@@ -15,10 +16,11 @@ export function ErrorState({
   message = "Please check your connection and try again.", 
   onRetry 
 }: ErrorStateProps) {
+    const { theme } = useStyles();
   return (
     <View style={styles.container}>
       <View style={styles.iconContainer}>
-        <AlertCircle color={colors.error} size={48} strokeWidth={1.5} />
+        <AlertCircle color={theme.colors.error} size={48} strokeWidth={1.5} />
       </View>
       <Text style={styles.title}>{title}</Text>
       <Text style={styles.message}>{message}</Text>
@@ -34,38 +36,38 @@ export function ErrorState({
   );
 }
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create((theme) => ({
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: spacing.xxl,
+    padding: theme.spacing.xxl,
   },
   iconContainer: {
     width: 80,
     height: 80,
     borderRadius: 40,
-    backgroundColor: colors.errorLight,
+    backgroundColor: theme.colors.errorLight,
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: spacing.xl,
+    marginBottom: theme.spacing.xl,
   },
   title: {
-    fontFamily: typography.families.extrabold,
-    fontSize: typography.sizes.xl,
-    color: colors.textPrimary,
-    marginBottom: spacing.sm,
+    fontFamily: theme.typography.families.extrabold,
+    fontSize: theme.typography.sizes.xl,
+    color: theme.colors.textPrimary,
+    marginBottom: theme.spacing.sm,
     textAlign: 'center',
   },
   message: {
-    fontFamily: typography.families.regular,
-    fontSize: typography.sizes.md,
-    color: colors.textMuted,
+    fontFamily: theme.typography.families.regular,
+    fontSize: theme.typography.sizes.md,
+    color: theme.colors.textMuted,
     textAlign: 'center',
-    marginBottom: spacing.xxl,
+    marginBottom: theme.spacing.xxl,
     lineHeight: 24,
   },
   retryButton: {
     minWidth: 160,
   },
-});
+}));

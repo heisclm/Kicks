@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text, StyleSheet, Modal, Pressable, ScrollView } from 'react-native';
+import { View, Text, Modal, Pressable, ScrollView } from 'react-native';
+import { StyleSheet, useStyles } from 'react-native-unistyles';
 import { X } from 'lucide-react-native';
 import { colors, spacing, typography, radius, shadows } from '../theme';
 
@@ -22,6 +23,7 @@ const sizeData = [
 ];
 
 export function SizeGuideModal({ visible, onClose }: SizeGuideModalProps) {
+    const { theme } = useStyles();
   return (
     <Modal
       visible={visible}
@@ -38,7 +40,7 @@ export function SizeGuideModal({ visible, onClose }: SizeGuideModalProps) {
               <Text style={styles.headerSubtitle}>Men's Footwear</Text>
             </View>
             <Pressable onPress={onClose} style={styles.closeButton}>
-              <X color={colors.textPrimary} size={24} />
+              <X color={theme.colors.textPrimary} size={24} />
             </Pressable>
           </View>
 
@@ -72,55 +74,55 @@ export function SizeGuideModal({ visible, onClose }: SizeGuideModalProps) {
   );
 }
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create((theme) => ({
   overlay: {
     flex: 1,
     backgroundColor: 'rgba(0, 0, 0, 0.4)',
     justifyContent: 'flex-end',
   },
   modalContent: {
-    backgroundColor: colors.surface,
-    borderTopLeftRadius: radius.xxxl,
-    borderTopRightRadius: radius.xxxl,
+    backgroundColor: theme.colors.surface,
+    borderTopLeftRadius: theme.radius.xxxl,
+    borderTopRightRadius: theme.radius.xxxl,
     height: '70%',
-    paddingTop: spacing.xl,
-    paddingBottom: spacing.xxxl,
-    ...shadows.medium,
+    paddingTop: theme.spacing.xl,
+    paddingBottom: theme.spacing.xxxl,
+    ...theme.shadows.medium,
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: spacing.xxl,
-    marginBottom: spacing.xl,
+    paddingHorizontal: theme.spacing.xxl,
+    marginBottom: theme.spacing.xl,
   },
   headerTitle: {
-    fontFamily: typography.families.extrabold,
-    fontSize: typography.sizes.xl,
-    color: colors.textPrimary,
+    fontFamily: theme.typography.families.extrabold,
+    fontSize: theme.typography.sizes.xl,
+    color: theme.colors.textPrimary,
   },
   headerSubtitle: {
-    fontFamily: typography.families.semibold,
-    fontSize: typography.sizes.sm,
-    color: colors.textMuted,
+    fontFamily: theme.typography.families.semibold,
+    fontSize: theme.typography.sizes.sm,
+    color: theme.colors.textMuted,
     marginTop: 2,
   },
   closeButton: {
-    padding: spacing.sm,
-    backgroundColor: colors.backgroundLight,
-    borderRadius: radius.round,
+    padding: theme.spacing.sm,
+    backgroundColor: theme.colors.backgroundLight,
+    borderRadius: theme.radius.round,
   },
   tableHeader: {
     flexDirection: 'row',
-    paddingHorizontal: spacing.xxl,
-    paddingVertical: spacing.md,
+    paddingHorizontal: theme.spacing.xxl,
+    paddingVertical: theme.spacing.md,
     borderBottomWidth: 1,
-    borderBottomColor: colors.border,
+    borderBottomColor: theme.colors.border,
   },
   columnHeader: {
-    fontFamily: typography.families.semibold,
-    fontSize: typography.sizes.sm,
-    color: colors.textMuted,
+    fontFamily: theme.typography.families.semibold,
+    fontSize: theme.typography.sizes.sm,
+    color: theme.colors.textMuted,
   },
   col: {
     flex: 1,
@@ -131,28 +133,28 @@ const styles = StyleSheet.create({
   },
   tableRow: {
     flexDirection: 'row',
-    paddingHorizontal: spacing.xxl,
-    paddingVertical: spacing.lg,
+    paddingHorizontal: theme.spacing.xxl,
+    paddingVertical: theme.spacing.lg,
   },
   tableRowAlt: {
-    backgroundColor: colors.backgroundLight,
+    backgroundColor: theme.colors.backgroundLight,
   },
   cell: {
-    fontFamily: typography.families.regular,
-    fontSize: typography.sizes.md,
-    color: colors.textPrimary,
+    fontFamily: theme.typography.families.regular,
+    fontSize: theme.typography.sizes.md,
+    color: theme.colors.textPrimary,
   },
   usCell: {
-    fontFamily: typography.families.semibold,
+    fontFamily: theme.typography.families.semibold,
   },
   footer: {
-    paddingHorizontal: spacing.xxl,
-    paddingTop: spacing.xl,
+    paddingHorizontal: theme.spacing.xxl,
+    paddingTop: theme.spacing.xl,
     alignItems: 'center',
   },
   footerText: {
-    fontFamily: typography.families.regular,
-    fontSize: typography.sizes.sm,
-    color: colors.textMuted,
+    fontFamily: theme.typography.families.regular,
+    fontSize: theme.typography.sizes.sm,
+    color: theme.colors.textMuted,
   }
-});
+}));

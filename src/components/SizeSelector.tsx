@@ -1,5 +1,6 @@
 import React from 'react';
-import { Pressable, Text, StyleSheet } from 'react-native';
+import { Pressable, Text } from 'react-native';
+import { StyleSheet, useStyles } from 'react-native-unistyles';
 import { colors, radius, typography } from '../theme';
 
 interface SizeSelectorProps {
@@ -9,6 +10,7 @@ interface SizeSelectorProps {
 }
 
 export function SizeSelector({ size, isSelected, onPress }: SizeSelectorProps) {
+    const { theme } = useStyles();
   return (
     <Pressable 
       style={[styles.container, isSelected && styles.containerSelected]}
@@ -24,27 +26,27 @@ export function SizeSelector({ size, isSelected, onPress }: SizeSelectorProps) {
   );
 }
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create((theme) => ({
   container: {
     width: 45,
     height: 45,
-    borderRadius: radius.round,
-    backgroundColor: colors.surface,
+    borderRadius: theme.radius.round,
+    backgroundColor: theme.colors.surface,
     alignItems: 'center',
     justifyContent: 'center',
     borderWidth: 1,
-    borderColor: colors.border,
+    borderColor: theme.colors.border,
   },
   containerSelected: {
     backgroundColor: '#7D4734', // Custom specific brown from the details screen design
     borderColor: '#7D4734',
   },
   text: {
-    fontSize: typography.sizes.md,
-    fontFamily: typography.families.semibold,
-    color: colors.textPrimary,
+    fontSize: theme.typography.sizes.md,
+    fontFamily: theme.typography.families.semibold,
+    color: theme.colors.textPrimary,
   },
   textSelected: {
-    color: colors.surface,
+    color: theme.colors.surface,
   }
-});
+}));

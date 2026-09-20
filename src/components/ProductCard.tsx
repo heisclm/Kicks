@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text, StyleSheet, Pressable } from 'react-native';
+import { View, Text, Pressable } from 'react-native';
+import { StyleSheet, useStyles } from 'react-native-unistyles';
 import Animated from 'react-native-reanimated';
 import { Image as ExpoImage } from 'expo-image';
 import { Product } from '../types';
@@ -13,10 +14,11 @@ interface ProductCardProps {
 }
 
 export function ProductCard({ item, onPress }: ProductCardProps) {
+    const { theme } = useStyles();
   // Determine background color based on product color/brand from mock
-  let bgColor = colors.cardPeach;
-  if (item.color === '#E04A3A') bgColor = colors.cardRed;
-  if (item.color === '#7AC06D') bgColor = colors.cardGreen;
+  let bgColor = theme.colors.cardPeach;
+  if (item.color === '#E04A3A') bgColor = theme.colors.cardRed;
+  if (item.color === '#7AC06D') bgColor = theme.colors.cardGreen;
 
   return (
     <Pressable 
@@ -52,11 +54,11 @@ export function ProductCard({ item, onPress }: ProductCardProps) {
   );
 }
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create((theme) => ({
   card: {
-    borderRadius: radius.xxxl,
-    padding: spacing.xxl,
-    marginBottom: spacing.xl,
+    borderRadius: theme.radius.xxxl,
+    padding: theme.spacing.xxl,
+    marginBottom: theme.spacing.xl,
     flexDirection: 'row',
     height: 200,
     position: 'relative',
@@ -67,23 +69,23 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   name: {
-    fontSize: typography.sizes.xl,
-    fontFamily: typography.families.extrabold,
-    color: colors.textPrimary,
-    marginBottom: spacing.md,
+    fontSize: theme.typography.sizes.xl,
+    fontFamily: theme.typography.families.extrabold,
+    color: theme.colors.textPrimary,
+    marginBottom: theme.spacing.md,
     width: '60%',
   },
   priceContainer: {
-    backgroundColor: colors.surface,
-    paddingHorizontal: spacing.md,
-    paddingVertical: spacing.sm,
-    borderRadius: radius.xl,
+    backgroundColor: theme.colors.surface,
+    paddingHorizontal: theme.spacing.md,
+    paddingVertical: theme.spacing.sm,
+    borderRadius: theme.radius.xl,
     alignSelf: 'flex-start',
   },
   price: {
-    fontFamily: typography.families.semibold,
-    fontSize: typography.sizes.sm,
-    color: colors.textPrimary,
+    fontFamily: theme.typography.families.semibold,
+    fontSize: theme.typography.sizes.sm,
+    color: theme.colors.textPrimary,
   },
   image: {
     position: 'absolute',
@@ -95,25 +97,25 @@ const styles = StyleSheet.create({
   },
   bagIconContainer: {
     position: 'absolute',
-    top: spacing.lg,
-    right: spacing.lg,
+    top: theme.spacing.lg,
+    right: theme.spacing.lg,
     width: 60,
     height: 30,
     backgroundColor: 'rgba(255,255,255,0.3)',
-    borderRadius: radius.md,
+    borderRadius: theme.radius.md,
     justifyContent: 'center',
     alignItems: 'center',
   },
   discountText: {
-    fontFamily: typography.families.extrabold,
+    fontFamily: theme.typography.families.extrabold,
     fontSize: 10,
-    color: colors.textPrimary,
+    color: theme.colors.textPrimary,
   },
   gender: {
-    fontFamily: typography.families.semibold,
+    fontFamily: theme.typography.families.semibold,
     fontSize: 10,
     color: 'rgba(0,0,0,0.6)',
     letterSpacing: 1,
     marginBottom: 4,
   }
-});
+}));
