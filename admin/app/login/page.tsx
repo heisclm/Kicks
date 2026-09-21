@@ -42,8 +42,8 @@ export default function LoginPage() {
         
         {/* KICKS Branding */}
         <div className="flex flex-col items-center text-center mb-10">
-          <div className="h-16 w-16 mb-6 shadow-md ring-1 ring-border/10 rounded-2xl overflow-hidden bg-brand-primary">
-            <Image src="/logo.png" alt="Kicks Logo" width={64} height={64} className="w-full h-full object-cover" />
+          <div className="h-16 w-16 mb-6 shadow-md ring-1 ring-border/10 rounded-2xl overflow-hidden bg-transparent">
+            <Image src="/brand-logo.svg" alt="Kicks Logo" width={64} height={64} className="w-full h-full object-cover" />
           </div>
           <h1 className="text-3xl font-extrabold tracking-tight text-foreground mb-2">
             Welcome back

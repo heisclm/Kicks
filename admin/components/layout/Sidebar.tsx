@@ -76,7 +76,7 @@ export function Sidebar({ isOpen = false, onClose, userRole = 'admin', pendingOr
       )}>
         <div className="h-20 flex items-center justify-between px-8">
           <Link href="/" className="font-extrabold text-xl tracking-tighter text-foreground flex items-center gap-2">
-            <Image src="/logo.png" alt="Kicks Logo" width={32} height={32} className="rounded-xl object-cover" />
+            <Image src="/brand-logo.svg" alt="Kicks Logo" width={32} height={32} className="rounded-xl object-cover" />
             KICKS<span className="text-brand-primary">.</span>
           </Link>
           

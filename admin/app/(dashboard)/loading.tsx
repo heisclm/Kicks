@@ -8,7 +8,7 @@ export default function Loading() {
           <div className="absolute inset-0 bg-white/20 animate-[wave_2s_ease-in-out_infinite] translate-y-full" style={{
             animation: 'slideUp 2s cubic-bezier(0.4, 0, 0.2, 1) infinite'
           }} />
-          <img src="/logo.png" alt="Loading" className="w-full h-full object-cover relative z-10" />
+          <img src="/brand-logo.svg" alt="Loading" className="w-full h-full object-cover relative z-10" />
         </div>
       </div>
       <p className="text-[10px] font-bold text-muted-foreground tracking-[0.2em] uppercase mt-6">
