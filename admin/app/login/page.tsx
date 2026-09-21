@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Image from 'next/image'
 import { login } from './actions'
 import { Input } from '../../components/ui/input'
 import { Button } from '../../components/ui/button'
@@ -41,10 +42,10 @@ export default function LoginPage() {
         
         {/* KICKS Branding */}
         <div className="flex flex-col items-center text-center mb-10">
-          <div className="h-14 w-14 bg-brand-primary text-white rounded-2xl flex items-center justify-center mb-6 shadow-md ring-1 ring-border/10">
-            <span className="font-black text-2xl tracking-tighter">K</span>
+          <div className="h-16 w-16 mb-6 shadow-md ring-1 ring-border/10 rounded-2xl overflow-hidden bg-brand-primary">
+            <Image src="/logo.png" alt="Kicks Logo" width={64} height={64} className="w-full h-full object-cover" />
           </div>
-          <h1 className="text-[28px] font-semibold tracking-tight text-foreground mb-2">
+          <h1 className="text-3xl font-extrabold tracking-tight text-foreground mb-2">
             Welcome back
           </h1>
           <p className="text-[15px] text-muted-foreground">
