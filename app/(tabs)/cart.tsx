@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, FlatList, Pressable } from 'react-native';
 import { StyleSheet, useStyles } from 'react-native-unistyles';
-import { useRouter } from 'expo-router';
+import { useRouter, Head } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ShoppingBag, MoreHorizontal } from 'lucide-react-native';
 import { colors, spacing, typography, radius } from '../../src/theme';
@@ -12,6 +12,17 @@ import { Button } from '../../src/components/Button';
 import { useCartStore } from '../../src/store/useCartStore';
 
 export default function CartScreen() {
+  return (
+    <>
+      <Head>
+        <title>Cart - Kicks</title>
+      </Head>
+      <CartScreenContent />
+    </>
+  );
+}
+
+function CartScreenContent() {
     const { theme } = useStyles();
   const insets = useSafeAreaInsets();
   const router = useRouter();
@@ -97,7 +108,7 @@ export default function CartScreen() {
         </View>
       ) : (
         <>
-          <FlatList
+          <FlashList estimatedItemSize={120}
             data={items}
             keyExtractor={(item) => item.id}
             ListHeaderComponent={renderHeader}

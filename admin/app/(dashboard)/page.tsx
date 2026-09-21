@@ -1,8 +1,10 @@
-﻿import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/card';
 import { ArrowUpRight, Users, ShoppingBag, DollarSign } from 'lucide-react';
 import { RevenueChart } from '../../components/charts/RevenueChart';
 import { MonthlyTargetChart } from '../../components/charts/MonthlyTargetChart';
 import { AnalyticsRepository } from '../../features/analytics/analytics-repository';
+export const metadata = { title: 'Overview - Kicks Admin' };
+
 
 export default async function DashboardPage() {
   const analytics = await AnalyticsRepository.getSummary();

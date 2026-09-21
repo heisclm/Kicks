@@ -1,4 +1,4 @@
-﻿import { SettingsRepository } from '../../../features/settings/settings-repository';
+import { SettingsRepository } from '../../../features/settings/settings-repository';
 import { SettingsForm } from './SettingsForm';
 
 export default async function SettingsPage() {

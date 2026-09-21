@@ -1,7 +1,8 @@
 import React, { useState, useCallback } from 'react';
 import { View, Text, FlatList, Pressable, useWindowDimensions } from 'react-native';
+import { FlashList } from '@shopify/flash-list';
 import { StyleSheet, useStyles } from 'react-native-unistyles';
-import { useRouter } from 'expo-router';
+import { useRouter, Head } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Search, SlidersHorizontal } from 'lucide-react-native';
 import { colors, spacing, typography, radius } from '../../src/theme';
@@ -15,6 +16,17 @@ import { useToastStore } from '../../src/store/useToastStore';
 import { useProducts } from '../../src/hooks/useProducts';
 
 export default function DiscoverScreen() {
+  return (
+    <>
+      <Head>
+        <title>Discover - Kicks</title>
+      </Head>
+      <DiscoverScreenContent />
+    </>
+  );
+}
+
+function DiscoverScreenContent() {
     const { theme } = useStyles();
   const insets = useSafeAreaInsets();
   const router = useRouter();

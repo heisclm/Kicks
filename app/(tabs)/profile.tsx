@@ -67,6 +67,17 @@ import { useAuthStore } from "../../src/store/useAuthStore";
 import { useStyles } from "react-native-unistyles";
 
 export default function ProfileScreen() {
+  return (
+    <>
+      <Head>
+        <title>Profile - Kicks</title>
+      </Head>
+      <ProfileScreenContent />
+    </>
+  );
+}
+
+function ProfileScreenContent() {
     const { theme } = useStyles();
   const insets = useSafeAreaInsets();
   const router = useRouter();

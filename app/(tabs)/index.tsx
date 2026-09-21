@@ -3,7 +3,7 @@ import { View, Text, ScrollView, Pressable, Image } from 'react-native';
 import { StyleSheet, useStyles } from 'react-native-unistyles';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Search, Bell } from 'lucide-react-native';
-import { useRouter } from 'expo-router';
+import { useRouter, Head } from 'expo-router';
 import { brands } from '../../src/data';
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -18,6 +18,18 @@ import { useProducts } from '../../src/hooks/useProducts';
 import { useNotifications } from '../../src/hooks/useNotifications';
 
 export default function HomeScreen() {
+  return (
+    <>
+      <Head>
+        <title>Home - Kicks</title>
+        <meta name="description" content="Explore the latest premium sneakers." />
+      </Head>
+      <HomeScreenContent />
+    </>
+  );
+}
+
+function HomeScreenContent() {
     const { theme } = useStyles();
   const router = useRouter();
   const [selectedBrand, setSelectedBrand] = useState('all');

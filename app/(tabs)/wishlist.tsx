@@ -1,7 +1,8 @@
 import React from 'react';
 import { View, Text, FlatList, Pressable, useWindowDimensions } from 'react-native';
+import { FlashList } from '@shopify/flash-list';
 import { StyleSheet, useStyles } from 'react-native-unistyles';
-import { useRouter } from 'expo-router';
+import { useRouter, Head } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Heart } from 'lucide-react-native';
 import { colors, spacing, typography, radius } from '../../src/theme';
@@ -11,6 +12,17 @@ import { useCartStore } from '../../src/store/useCartStore';
 import { useProducts } from '../../src/hooks/useProducts';
 
 export default function WishlistScreen() {
+  return (
+    <>
+      <Head>
+        <title>Wishlist - Kicks</title>
+      </Head>
+      <WishlistScreenContent />
+    </>
+  );
+}
+
+function WishlistScreenContent() {
     const { theme } = useStyles();
   const insets = useSafeAreaInsets();
   const router = useRouter();
@@ -68,12 +80,12 @@ export default function WishlistScreen() {
           {renderEmptyState()}
         </View>
       ) : (
-        <FlatList
+        <FlashList estimatedItemSize={250}
           key={numColumns}
           data={savedProducts}
           keyExtractor={(item) => item.id}
           numColumns={numColumns}
-          columnWrapperStyle={styles.row}
+          
           ListHeaderComponent={renderHeader}
           contentContainerStyle={[styles.scrollContent, { paddingBottom: 100 }]} // Space for tab bar
           showsVerticalScrollIndicator={false}

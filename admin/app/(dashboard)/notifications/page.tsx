@@ -1,4 +1,4 @@
-﻿import { Card } from "../../../components/ui/card";
+import { Card } from "../../../components/ui/card";
 import { Bell, Check, ShoppingCart, AlertTriangle, Star, UserPlus, Users } from "lucide-react";
 import { NotificationRepository } from "../../../features/notifications/notification-repository";
 import { CreateNotificationDialog } from "../../../components/ui/CreateNotificationDialog";

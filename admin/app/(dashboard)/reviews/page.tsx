@@ -1,4 +1,4 @@
-﻿import { Card } from "../../../components/ui/card";
+import { Card } from "../../../components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../../../components/ui/table";
 import { Search, Star } from "lucide-react";
 import { ReviewRepository } from "../../../features/reviews/review-repository";
