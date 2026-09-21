@@ -1,10 +1,11 @@
-﻿'use client';
+'use client';
 
 import { useState } from 'react';
 import { Sidebar } from '../../components/layout/Sidebar';
 import { Topbar } from '../../components/layout/Topbar';
 
 import { KicksRole } from '../../lib/auth/roles';
+import { useRealtimeOrders } from '../../hooks/useRealtimeOrders';
 
 interface DashboardShellProps {
   children: React.ReactNode;
@@ -24,6 +25,7 @@ export function DashboardShell({
   pendingOrdersCount
 }: DashboardShellProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  useRealtimeOrders();
 
   return (
     <div className="flex h-screen w-full bg-[#f0f4f8] dark:bg-[#0a0a0a] p-0 sm:p-2 lg:p-3 overflow-hidden">
