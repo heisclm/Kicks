@@ -59,7 +59,7 @@ export function SneakerLoader({ label = "Lacing up...", transparent = false }: S
   }, []);
 
   const sneakerStyle = useAnimatedStyle(() => ({
-    transform: [{ translateY: floatAnim.value }, { rotate: '-5deg' }],
+    transform: [{ translateY: floatAnim.value }],
   }));
 
   const shadowStyle = useAnimatedStyle(() => ({
@@ -81,7 +81,7 @@ export function SneakerLoader({ label = "Lacing up...", transparent = false }: S
         {/* Floating Sneaker */}
         <Animated.View style={[styles.sneakerWrapper, sneakerStyle]}>
           <ExpoImage 
-            source={require('../../assets/shoe-air-zoom.png')} 
+            source={require('../../assets/images/icon.png')} 
             style={styles.sneakerImage} 
             contentFit="contain" 
             priority="high"
