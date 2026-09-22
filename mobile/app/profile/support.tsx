@@ -1,10 +1,10 @@
 import React from 'react';
 import { View, Text, ScrollView, Pressable } from 'react-native';
-import { StyleSheet, useStyles } from 'react-native-unistyles';
+import { StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ChevronLeft, ChevronRight, MessageCircle, PhoneCall, Mail, FileText } from 'lucide-react-native';
-import { colors, spacing, typography, radius, shadows } from '../../src/theme';
+import { colors, spacing, radius, typography } from '../src/theme';
 import { IconButton } from '../../src/components/IconButton';
 import { useToastStore } from '../../src/store/useToastStore';
 
@@ -16,7 +16,7 @@ const faq = [
 ];
 
 function ContactItem({ icon, title, subtitle, onPress }: any) {
-    const { theme } = useStyles();
+    const theme = { colors, spacing, radius, typography };
   return (
     <Pressable 
       style={styles.contactItem}
@@ -27,13 +27,13 @@ function ContactItem({ icon, title, subtitle, onPress }: any) {
         <Text style={styles.contactTitle}>{title}</Text>
         <Text style={styles.contactSubtitle}>{subtitle}</Text>
       </View>
-      <ChevronRight color={theme.colors.textMuted} size={20} strokeWidth={2} />
+      <ChevronRight color={colors.textMuted} size={20} strokeWidth={2} />
     </Pressable>
   );
 }
 
 export default function SupportScreen() {
-    const { theme } = useStyles();
+    const theme = { colors, spacing, radius, typography };
   const insets = useSafeAreaInsets();
   const router = useRouter();
   const { showToast } = useToastStore();
@@ -42,7 +42,7 @@ export default function SupportScreen() {
     <View style={[styles.container, { paddingTop: insets.top }]}>
       <View style={styles.header}>
         <IconButton 
-          icon={<ChevronLeft color={theme.colors.textPrimary} size={24} strokeWidth={2.5} />} 
+          icon={<ChevronLeft color={colors.textPrimary} size={24} strokeWidth={2.5} />} 
           onPress={() => router.back()} 
           style={styles.backButton}
         />
@@ -56,21 +56,21 @@ export default function SupportScreen() {
           <Text style={styles.sectionTitle}>CONTACT US</Text>
           <View style={styles.card}>
             <ContactItem 
-              icon={<MessageCircle color={theme.colors.textPrimary} size={20} />} 
+              icon={<MessageCircle color={colors.textPrimary} size={20} />} 
               title="Live Chat" 
               subtitle="Usually replies in 5 minutes" 
               onPress={() => showToast('Opening Live Chat...', 'Connecting to an agent', 'info')}
             />
             <View style={styles.divider} />
             <ContactItem 
-              icon={<PhoneCall color={theme.colors.textPrimary} size={20} />} 
+              icon={<PhoneCall color={colors.textPrimary} size={20} />} 
               title="Phone Support" 
               subtitle="+1 (800) 123-KICKS" 
               onPress={() => showToast('Calling Support...', '+1 (800) 123-KICKS', 'info')}
             />
             <View style={styles.divider} />
             <ContactItem 
-              icon={<Mail color={theme.colors.textPrimary} size={20} />} 
+              icon={<Mail color={colors.textPrimary} size={20} />} 
               title="Email Us" 
               subtitle="support@kicks.com" 
               onPress={() => showToast('Composing Email...', 'support@kicks.com', 'info')}
@@ -88,10 +88,10 @@ export default function SupportScreen() {
                   onPress={() => showToast('FAQ Selected', q, 'info')}
                 >
                   <View style={styles.faqIconWrapper}>
-                    <FileText color={theme.colors.textMuted} size={18} />
+                    <FileText color={colors.textMuted} size={18} />
                   </View>
                   <Text style={styles.faqText}>{q}</Text>
-                  <ChevronRight color={theme.colors.border} size={20} />
+                  <ChevronRight color={colors.border} size={20} />
                 </Pressable>
                 {i < faq.length - 1 && <View style={styles.divider} />}
               </React.Fragment>
@@ -104,17 +104,17 @@ export default function SupportScreen() {
   );
 }
 
-const styles = StyleSheet.create((theme) => ({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: theme.colors.backgroundLight,
+    backgroundColor: colors.backgroundLight,
   },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingHorizontal: theme.spacing.sm,
-    paddingVertical: theme.spacing.md,
+    paddingHorizontal: spacing.sm,
+    paddingVertical: spacing.md,
   },
   backButton: {
     backgroundColor: 'transparent',
@@ -122,28 +122,28 @@ const styles = StyleSheet.create((theme) => ({
     elevation: 0,
   },
   headerTitle: {
-    fontFamily: theme.typography.families.extrabold,
-    fontSize: theme.typography.sizes.lg,
-    color: theme.colors.textPrimary,
+    fontFamily: typography.families.extrabold,
+    fontSize: typography.sizes.lg,
+    color: colors.textPrimary,
   },
   scrollContent: {
-    padding: theme.spacing.md,
-    paddingBottom: theme.spacing.xxxl,
+    padding: spacing.md,
+    paddingBottom: spacing.xxxl,
   },
   section: {
-    marginBottom: theme.spacing.xxxl,
+    marginBottom: spacing.xxxl,
   },
   sectionTitle: {
-    fontFamily: theme.typography.families.semibold,
+    fontFamily: typography.families.semibold,
     fontSize: 10,
-    color: theme.colors.textMuted,
+    color: colors.textMuted,
     letterSpacing: 2,
-    marginBottom: theme.spacing.md,
-    paddingHorizontal: theme.spacing.sm,
+    marginBottom: spacing.md,
+    paddingHorizontal: spacing.sm,
   },
   card: {
-    backgroundColor: theme.colors.surface,
-    borderRadius: theme.radius.xxl,
+    backgroundColor: colors.surface,
+    borderRadius: radius.xxl,
     overflow: 'hidden',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
@@ -154,52 +154,52 @@ const styles = StyleSheet.create((theme) => ({
   contactItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: theme.spacing.lg,
-    backgroundColor: theme.colors.surface,
+    padding: spacing.lg,
+    backgroundColor: colors.surface,
   },
   iconWrapper: {
     width: 44,
     height: 44,
     borderRadius: 22,
-    backgroundColor: theme.colors.backgroundLight,
+    backgroundColor: colors.backgroundLight,
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: theme.spacing.lg,
+    marginRight: spacing.lg,
   },
   contactTextContainer: {
     flex: 1,
-    marginRight: theme.spacing.md,
+    marginRight: spacing.md,
   },
   contactTitle: {
-    fontFamily: theme.typography.families.semibold,
-    fontSize: theme.typography.sizes.md,
-    color: theme.colors.textPrimary,
+    fontFamily: typography.families.semibold,
+    fontSize: typography.sizes.md,
+    color: colors.textPrimary,
     marginBottom: 2,
   },
   contactSubtitle: {
-    fontFamily: theme.typography.families.regular,
-    fontSize: theme.typography.sizes.sm,
-    color: theme.colors.textMuted,
+    fontFamily: typography.families.regular,
+    fontSize: typography.sizes.sm,
+    color: colors.textMuted,
   },
   faqItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: theme.spacing.lg,
-    backgroundColor: theme.colors.surface,
+    padding: spacing.lg,
+    backgroundColor: colors.surface,
   },
   faqIconWrapper: {
-    marginRight: theme.spacing.md,
+    marginRight: spacing.md,
   },
   faqText: {
     flex: 1,
-    fontFamily: theme.typography.families.semibold,
-    fontSize: theme.typography.sizes.md,
-    color: theme.colors.textPrimary,
-    marginRight: theme.spacing.md,
+    fontFamily: typography.families.semibold,
+    fontSize: typography.sizes.md,
+    color: colors.textPrimary,
+    marginRight: spacing.md,
   },
   divider: {
     height: 1,
-    backgroundColor: theme.colors.backgroundLight,
-    marginLeft: theme.spacing.lg,
+    backgroundColor: colors.backgroundLight,
+    marginLeft: spacing.lg,
   }
-}));
+});

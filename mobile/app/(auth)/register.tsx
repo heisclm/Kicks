@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { View, Text, TextInput, Pressable, ActivityIndicator, Alert, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
-import { StyleSheet, useStyles } from 'react-native-unistyles';
+import { StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ArrowLeft, Mail, Lock, User, ChevronRight } from 'lucide-react-native';
@@ -9,11 +9,11 @@ import Svg, { Defs, RadialGradient, Rect, Stop } from 'react-native-svg';
 import { StatusBar } from 'expo-status-bar';
 
 import { supabase } from '../../src/api/supabase';
-import { colors, spacing, typography, radius } from '../../src/theme';
+import { colors, spacing, radius, typography } from '../src/theme';
 import { useToastStore } from '../../src/store/useToastStore';
 
 export default function RegisterScreen() {
-    const { theme } = useStyles();
+    const theme = { colors, spacing, radius, typography };
   const router = useRouter();
   const insets = useSafeAreaInsets();
   
@@ -90,7 +90,7 @@ export default function RegisterScreen() {
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
       >
         <ScrollView 
-          contentContainerStyle={[styles.scrollContent, { paddingTop: insets.top + theme.spacing.md, paddingBottom: insets.bottom + theme.spacing.xl }]}
+          contentContainerStyle={[styles.scrollContent, { paddingTop: insets.top + spacing.md, paddingBottom: insets.bottom + spacing.xl }]}
           showsVerticalScrollIndicator={false}
         >
           <Pressable style={styles.backButton} onPress={() => router.back()}>
@@ -106,7 +106,7 @@ export default function RegisterScreen() {
 
           <View style={styles.form}>
             <View style={styles.row}>
-              <View style={[styles.inputGroup, { flex: 1, marginRight: theme.spacing.md }]}>
+              <View style={[styles.inputGroup, { flex: 1, marginRight: spacing.md }]}>
                 <Text style={styles.label}>FIRST NAME</Text>
                 <View style={styles.inputContainer}>
                   <User color="rgba(255,255,255,0.5)" size={20} />
@@ -197,17 +197,17 @@ export default function RegisterScreen() {
   );
 }
 
-const styles = StyleSheet.create((theme) => ({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#1a100c',
   },
   scrollContent: {
     flexGrow: 1,
-    paddingHorizontal: theme.spacing.xl,
+    paddingHorizontal: spacing.xl,
   },
   backButton: {
-    marginBottom: theme.spacing.xxl,
+    marginBottom: spacing.xxl,
     alignSelf: 'flex-start',
   },
   backIconWrapper: {
@@ -221,19 +221,19 @@ const styles = StyleSheet.create((theme) => ({
     borderColor: 'rgba(255,255,255,0.05)',
   },
   header: {
-    marginBottom: theme.spacing.xxxl,
+    marginBottom: spacing.xxxl,
   },
   title: {
-    fontFamily: theme.typography.families.extrabold,
+    fontFamily: typography.families.extrabold,
     fontSize: 40,
     lineHeight: 44,
     color: '#ffffff',
-    marginBottom: theme.spacing.sm,
+    marginBottom: spacing.sm,
     letterSpacing: -1,
   },
   subtitle: {
-    fontFamily: theme.typography.families.regular,
-    fontSize: theme.typography.sizes.md,
+    fontFamily: typography.families.regular,
+    fontSize: typography.sizes.md,
     color: 'rgba(255,255,255,0.7)',
     lineHeight: 24,
   },
@@ -244,13 +244,13 @@ const styles = StyleSheet.create((theme) => ({
     flexDirection: 'row',
   },
   inputGroup: {
-    marginBottom: theme.spacing.xl,
+    marginBottom: spacing.xl,
   },
   label: {
-    fontFamily: theme.typography.families.semibold,
-    fontSize: theme.typography.sizes.xs,
+    fontFamily: typography.families.semibold,
+    fontSize: typography.sizes.xs,
     color: 'rgba(255,255,255,0.6)',
-    marginBottom: theme.spacing.sm,
+    marginBottom: spacing.sm,
     letterSpacing: 1,
   },
   inputContainer: {
@@ -259,55 +259,55 @@ const styles = StyleSheet.create((theme) => ({
     backgroundColor: 'rgba(255,255,255,0.05)',
     borderWidth: 1,
     borderColor: 'rgba(255,255,255,0.1)',
-    borderRadius: theme.radius.md,
-    paddingHorizontal: theme.spacing.md,
+    borderRadius: radius.md,
+    paddingHorizontal: spacing.md,
     height: 60,
   },
   input: {
     flex: 1,
     color: '#ffffff',
-    fontFamily: theme.typography.families.regular,
-    fontSize: theme.typography.sizes.md,
-    marginLeft: theme.spacing.md,
+    fontFamily: typography.families.regular,
+    fontSize: typography.sizes.md,
+    marginLeft: spacing.md,
   },
   loginButton: {
     flexDirection: 'row',
-    backgroundColor: theme.colors.accent,
+    backgroundColor: colors.accent,
     height: 64,
-    borderRadius: theme.radius.round,
+    borderRadius: radius.round,
     justifyContent: 'center',
     alignItems: 'center',
-    shadowColor: theme.colors.accent,
+    shadowColor: colors.accent,
     shadowOffset: { width: 0, height: 8 },
     shadowOpacity: 0.4,
     shadowRadius: 16,
     elevation: 8,
-    marginTop: theme.spacing.md,
+    marginTop: spacing.md,
   },
   loginButtonDisabled: {
     opacity: 0.5,
   },
   loginButtonText: {
-    fontFamily: theme.typography.families.extrabold,
-    fontSize: theme.typography.sizes.md,
+    fontFamily: typography.families.extrabold,
+    fontSize: typography.sizes.md,
     color: '#ffffff',
     letterSpacing: 2,
-    marginRight: theme.spacing.xs,
+    marginRight: spacing.xs,
   },
   footer: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: theme.spacing.xxxl,
+    marginTop: spacing.xxxl,
   },
   footerText: {
-    fontFamily: theme.typography.families.regular,
-    fontSize: theme.typography.sizes.md,
+    fontFamily: typography.families.regular,
+    fontSize: typography.sizes.md,
     color: 'rgba(255,255,255,0.6)',
   },
   footerLink: {
-    fontFamily: theme.typography.families.semibold,
-    fontSize: theme.typography.sizes.md,
+    fontFamily: typography.families.semibold,
+    fontSize: typography.sizes.md,
     color: '#ffffff',
   },
-}));
+});

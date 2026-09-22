@@ -1,11 +1,11 @@
 import React, { useState, useCallback } from 'react';
 import { View, Text, FlatList, Pressable, useWindowDimensions } from 'react-native';
 import { FlashList } from '@shopify/flash-list';
-import { StyleSheet, useStyles } from 'react-native-unistyles';
+import { StyleSheet } from 'react-native';
 import { useRouter, Head } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Search, SlidersHorizontal } from 'lucide-react-native';
-import { colors, spacing, typography, radius } from '../../src/theme';
+import { colors, spacing, radius, typography } from '../src/theme';
 import { categories } from '../../src/data';
 import { ProductGridCard } from '../../src/components/ProductGridCard';
 import { ProductGridCardSkeleton } from '../../src/components/ProductGridCardSkeleton';
@@ -27,7 +27,7 @@ export default function DiscoverScreen() {
 }
 
 function DiscoverScreenContent() {
-    const { theme } = useStyles();
+    const theme = { colors, spacing, radius, typography };
   const insets = useSafeAreaInsets();
   const router = useRouter();
   const [activeCategory, setActiveCategory] = useState(categories[0].id);
@@ -44,12 +44,12 @@ function DiscoverScreenContent() {
           <Text style={styles.title}>Discover</Text>
         </View>
         <IconButton 
-          icon={<SlidersHorizontal color={theme.colors.textPrimary} size={24} strokeWidth={2} />} 
+          icon={<SlidersHorizontal color={colors.textPrimary} size={24} strokeWidth={2} />} 
           onPress={() => useToastStore.getState().showToast('Filters', 'Advanced filtering coming soon', 'info')}
         />
       </View>
       <Pressable style={styles.searchContainer} onPress={() => router.push('/search' as any)}>
-        <Search color={theme.colors.textMuted} size={20} strokeWidth={2} />
+        <Search color={colors.textMuted} size={20} strokeWidth={2} />
         <Text style={styles.searchPlaceholder}>Search for sneakers...</Text>
       </Pressable>
 
@@ -108,7 +108,7 @@ function DiscoverScreenContent() {
   }
 
   return (
-    <View style={[styles.container, { paddingTop: insets.top + theme.spacing.md }]}>
+    <View style={[styles.container, { paddingTop: insets.top + spacing.md }]}>
       <FlatList
         key={numColumns}
         data={products}
@@ -124,82 +124,82 @@ function DiscoverScreenContent() {
   );
 }
 
-const styles = StyleSheet.create((theme) => ({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: theme.colors.backgroundLight,
+    backgroundColor: colors.backgroundLight,
   },
   scrollContent: {
-    paddingHorizontal: theme.spacing.md,
+    paddingHorizontal: spacing.md,
   },
   header: {
-    marginBottom: theme.spacing.xl,
-    paddingHorizontal: theme.spacing.sm,
+    marginBottom: spacing.xl,
+    paddingHorizontal: spacing.sm,
   },
   headerTopRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: theme.spacing.lg,
+    marginBottom: spacing.lg,
   },
   headerSubtitle: {
-    fontFamily: theme.typography.families.semibold,
+    fontFamily: typography.families.semibold,
     fontSize: 11,
-    color: theme.colors.textMuted,
+    color: colors.textMuted,
     letterSpacing: 3,
     marginBottom: 6,
     textTransform: 'uppercase',
   },
   title: {
     fontSize: 34,
-    fontFamily: theme.typography.families.extrabold,
-    color: theme.colors.textPrimary,
+    fontFamily: typography.families.extrabold,
+    color: colors.textPrimary,
     letterSpacing: -1.5,
   },
   searchContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: theme.colors.surface,
-    borderRadius: theme.radius.round,
-    paddingHorizontal: theme.spacing.lg,
-    paddingVertical: theme.spacing.sm,
-    marginBottom: theme.spacing.lg,
-    marginHorizontal: theme.spacing.sm,
+    backgroundColor: colors.surface,
+    borderRadius: radius.round,
+    paddingHorizontal: spacing.lg,
+    paddingVertical: spacing.sm,
+    marginBottom: spacing.lg,
+    marginHorizontal: spacing.sm,
   },
   searchPlaceholder: {
     flex: 1,
-    marginLeft: theme.spacing.sm,
-    fontFamily: theme.typography.families.regular,
-    color: theme.colors.textMuted,
+    marginLeft: spacing.sm,
+    fontFamily: typography.families.regular,
+    color: colors.textMuted,
   },
   categoriesList: {
-    paddingHorizontal: theme.spacing.sm,
-    gap: theme.spacing.sm,
+    paddingHorizontal: spacing.sm,
+    gap: spacing.sm,
   },
   categoryPill: {
-    paddingHorizontal: theme.spacing.lg,
-    paddingVertical: theme.spacing.md,
-    borderRadius: theme.radius.round,
-    backgroundColor: theme.colors.surface,
+    paddingHorizontal: spacing.lg,
+    paddingVertical: spacing.md,
+    borderRadius: radius.round,
+    backgroundColor: colors.surface,
   },
   categoryPillActive: {
-    backgroundColor: theme.colors.primary,
+    backgroundColor: colors.primary,
   },
   categoryText: {
-    fontFamily: theme.typography.families.semibold,
-    color: theme.colors.textPrimary,
+    fontFamily: typography.families.semibold,
+    color: colors.textPrimary,
   },
   categoryTextActive: {
-    color: theme.colors.textInverse,
+    color: colors.textInverse,
   },
   row: {
     justifyContent: 'space-between',
-    paddingHorizontal: theme.spacing.sm,
-    marginBottom: theme.spacing.md,
+    paddingHorizontal: spacing.sm,
+    marginBottom: spacing.md,
   },
   cardWrapper: {
     flex: 1,
-    paddingHorizontal: theme.spacing.xs,
+    paddingHorizontal: spacing.xs,
     // Note: removed maxWidth: '48%' to allow Flex to split columns dynamically
   }
-}));
+});

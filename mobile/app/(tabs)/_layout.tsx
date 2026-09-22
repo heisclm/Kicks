@@ -1,15 +1,15 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import { StyleSheet, useStyles } from 'react-native-unistyles';
+import { StyleSheet } from 'react-native';
 import { Tabs } from 'expo-router';
 import { Search, Heart, ShoppingCart, User } from 'lucide-react-native';
 import Svg, { Path } from 'react-native-svg';
 import { BottomTabBar } from '../../src/components/BottomTabBar';
-import { colors, typography } from '../../src/theme';
+import { colors, spacing, radius, typography } from '../src/theme';
 import { useCartStore } from '../../src/store/useCartStore';
 
 function HouseBlank({ color, size, strokeWidth }: any) {
-    const { theme } = useStyles();
+    const theme = { colors, spacing, radius, typography };
   return (
     <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round">
       <Path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
@@ -18,7 +18,7 @@ function HouseBlank({ color, size, strokeWidth }: any) {
 }
 
 function CartIconWithBadge({ focused, color, size }: any) {
-    const { theme } = useStyles();
+    const theme = { colors, spacing, radius, typography };
   const cartItems = useCartStore((state) => state.items);
   const cartQuantity = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
@@ -35,7 +35,7 @@ function CartIconWithBadge({ focused, color, size }: any) {
 }
 
 export default function TabLayout() {
-    const { theme } = useStyles();
+    const theme = { colors, spacing, radius, typography };
   return (
     <Tabs
       tabBar={props => <BottomTabBar {...(props as any)} />}
@@ -89,12 +89,12 @@ export default function TabLayout() {
   );
 }
 
-const styles = StyleSheet.create((theme) => ({
+const styles = StyleSheet.create({
   badgeContainer: {
     position: 'absolute',
     top: -6,
     right: -8,
-    backgroundColor: theme.colors.accent,
+    backgroundColor: colors.accent,
     borderRadius: 10,
     minWidth: 18,
     height: 18,
@@ -102,15 +102,15 @@ const styles = StyleSheet.create((theme) => ({
     justifyContent: 'center',
     paddingHorizontal: 4,
     borderWidth: 1.5,
-    borderColor: theme.colors.surface,
+    borderColor: colors.surface,
   },
   badgeContainerFocused: {
-    borderColor: theme.colors.primary,
+    borderColor: colors.primary,
   },
   badgeText: {
-    color: theme.colors.textInverse,
-    fontFamily: theme.typography.families.semibold,
+    color: colors.textInverse,
+    fontFamily: typography.families.semibold,
     fontSize: 9,
     lineHeight: 11,
   },
-}));
+});

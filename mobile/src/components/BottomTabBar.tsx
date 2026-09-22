@@ -1,13 +1,13 @@
 import React from 'react';
 import { View, Text, Pressable, LayoutAnimation, Platform, UIManager } from 'react-native';
-import { StyleSheet, useStyles } from 'react-native-unistyles';
+import { StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { colors, spacing, radius, typography, shadows } from '../theme';
+import { colors, spacing, radius, typography } from '../theme';
 
 // UIManager.setLayoutAnimationEnabledExperimental is a no-op in New Architecture (React Native 0.76+)
 // LayoutAnimation works out of the box now.
 export function BottomTabBar({ state, descriptors, navigation }: any) {
-    const { theme } = useStyles();
+    const theme = { colors, spacing, radius, typography };
   const insets = useSafeAreaInsets();
   
   // Separate routes
@@ -16,7 +16,7 @@ export function BottomTabBar({ state, descriptors, navigation }: any) {
   const cartIndex = state.routes.findIndex((route: any) => route.name === 'cart');
 
   return (
-    <View style={[styles.container, { bottom: Math.max(insets.bottom, theme.spacing.md) }]}>
+    <View style={[styles.container, { bottom: Math.max(insets.bottom, spacing.md) }]}>
       
       {/* Main Pill */}
       <View style={[styles.mainPill, theme.shadows.soft]}>
@@ -48,7 +48,7 @@ export function BottomTabBar({ state, descriptors, navigation }: any) {
             >
               {options.tabBarIcon ? options.tabBarIcon({
                 focused: isFocused,
-                color: isFocused ? theme.colors.primary : theme.colors.textMuted,
+                color: isFocused ? colors.primary : colors.textMuted,
                 size: 20,
               }) : null}
               {isFocused && (
@@ -75,7 +75,7 @@ export function BottomTabBar({ state, descriptors, navigation }: any) {
           <Pressable onPress={onPress} style={[styles.cartCircle, theme.shadows.soft, isFocused && styles.cartCircleActive]}>
             {options.tabBarIcon ? options.tabBarIcon({
               focused: isFocused,
-              color: isFocused ? theme.colors.textInverse : theme.colors.primary,
+              color: isFocused ? colors.textInverse : colors.primary,
               size: 22,
             }) : null}
           </Pressable>
@@ -86,11 +86,11 @@ export function BottomTabBar({ state, descriptors, navigation }: any) {
   );
 }
 
-const styles = StyleSheet.create((theme) => ({
+const styles = StyleSheet.create({
   container: {
     position: 'absolute',
-    left: theme.spacing.xl,
-    right: theme.spacing.xl,
+    left: spacing.xl,
+    right: spacing.xl,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -100,11 +100,11 @@ const styles = StyleSheet.create((theme) => ({
   mainPill: {
     flex: 1,
     flexDirection: 'row',
-    backgroundColor: theme.colors.surface,
-    borderRadius: theme.radius.round,
-    paddingHorizontal: theme.spacing.sm,
-    paddingVertical: theme.spacing.sm,
-    marginRight: theme.spacing.md,
+    backgroundColor: colors.surface,
+    borderRadius: radius.round,
+    paddingHorizontal: spacing.sm,
+    paddingVertical: spacing.sm,
+    marginRight: spacing.md,
     alignItems: 'center',
     justifyContent: 'space-between',
   },
@@ -114,26 +114,26 @@ const styles = StyleSheet.create((theme) => ({
     justifyContent: 'center',
     paddingVertical: 10,
     paddingHorizontal: 12,
-    borderRadius: theme.radius.round,
+    borderRadius: radius.round,
   },
   mainTabButtonActive: {
-    backgroundColor: theme.colors.border, // Light grey for the expanding active tab pill
+    backgroundColor: colors.border, // Light grey for the expanding active tab pill
   },
   activeLabel: {
-    marginLeft: theme.spacing.xs,
-    fontFamily: theme.typography.families.semibold,
-    fontSize: theme.typography.sizes.xs,
-    color: theme.colors.primary,
+    marginLeft: spacing.xs,
+    fontFamily: typography.families.semibold,
+    fontSize: typography.sizes.xs,
+    color: colors.primary,
   },
   cartCircle: {
     width: 60,
     height: 60,
     borderRadius: 30,
-    backgroundColor: theme.colors.surface,
+    backgroundColor: colors.surface,
     alignItems: 'center',
     justifyContent: 'center',
   },
   cartCircleActive: {
-    backgroundColor: theme.colors.primary,
+    backgroundColor: colors.primary,
   }
-}));
+});

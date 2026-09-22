@@ -1,7 +1,7 @@
 import React from 'react';
 import { Pressable, StyleProp, ViewStyle } from 'react-native';
-import { StyleSheet, useStyles } from 'react-native-unistyles';
-import { colors, radius, shadows } from '../theme';
+import { StyleSheet } from 'react-native';
+import { colors, spacing, radius, typography } from '../theme';
 
 interface IconButtonProps {
   icon: React.ReactNode;
@@ -11,7 +11,7 @@ interface IconButtonProps {
 }
 
 export function IconButton({ icon, onPress, style, accessibilityLabel }: IconButtonProps) {
-    const { theme } = useStyles();
+    const theme = { colors, spacing, radius, typography };
   return (
     <Pressable 
       style={[styles.container, style]}
@@ -24,13 +24,13 @@ export function IconButton({ icon, onPress, style, accessibilityLabel }: IconBut
   );
 }
 
-const styles = StyleSheet.create((theme) => ({
+const styles = StyleSheet.create({
   container: {
     padding: 10,
-    backgroundColor: theme.colors.surface,
-    borderRadius: theme.radius.round,
+    backgroundColor: colors.surface,
+    borderRadius: radius.round,
     ...theme.shadows.soft,
     alignItems: 'center',
     justifyContent: 'center',
   },
-}));
+});

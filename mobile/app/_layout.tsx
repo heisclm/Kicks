@@ -1,4 +1,4 @@
-﻿import '../src/theme/unistyles';
+﻿
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
@@ -11,7 +11,7 @@ import { GlobalErrorBoundary } from "../src/components/GlobalErrorBoundary";
 import { useAuthStore } from "../src/store/useAuthStore";
 import { View } from "react-native";
 import * as SystemUI from 'expo-system-ui';
-import { useStyles, UnistylesRuntime } from 'react-native-unistyles';
+import { StyleSheet } from 'react-native';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -32,7 +32,7 @@ export default function RootLayout() {
   });
 
   const { initializeAuth } = useAuthStore();
-  const { theme } = useStyles();
+  const theme = { colors, spacing, radius, typography };
   
   useEffect(() => {
     initializeAuth();
@@ -40,8 +40,8 @@ export default function RootLayout() {
 
   useEffect(() => {
     // Dynamic system UI background color based on theme
-    SystemUI.setBackgroundColorAsync(theme.colors.backgroundLight);
-  }, [theme.colors.backgroundLight]);
+    SystemUI.setBackgroundColorAsync(colors.backgroundLight);
+  }, [colors.backgroundLight]);
 
   useEffect(() => {
     if (loaded || error) {
@@ -54,16 +54,16 @@ export default function RootLayout() {
   }
 
   return (
-    <View style={{ flex: 1, backgroundColor: theme.colors.backgroundLight }}>
+    <View style={{ flex: 1, backgroundColor: colors.backgroundLight }}>
       <GlobalErrorBoundary>
         <QueryClientProvider client={queryClient}>
-          <StatusBar style={UnistylesRuntime.themeName === 'dark' ? 'light' : 'dark'} />
+          <StatusBar style={'light' === 'dark' ? 'light' : 'dark'} />
           <OfflineBanner />
         <Stack
           screenOptions={{ 
             headerShown: false, 
             animation: "slide_from_right",
-            contentStyle: { backgroundColor: theme.colors.backgroundLight } 
+            contentStyle: { backgroundColor: colors.backgroundLight } 
           }}
         >
           <Stack.Screen name="index" />

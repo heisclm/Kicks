@@ -1,9 +1,9 @@
 import React, { Component, ErrorInfo, ReactNode } from 'react';
 import { View, Text, SafeAreaView } from 'react-native';
-import { StyleSheet, useStyles } from 'react-native-unistyles';
+import { StyleSheet } from 'react-native';
 import { AlertTriangle } from 'lucide-react-native';
 import { Button } from './Button';
-import { colors, spacing, typography } from '../theme';
+import { colors, spacing, radius, typography } from '../theme';
 
 interface Props {
   children: ReactNode;
@@ -39,7 +39,7 @@ export class GlobalErrorBoundary extends Component<Props, State> {
         <SafeAreaView style={styles.safeArea}>
           <View style={styles.container}>
             <View style={styles.iconContainer}>
-              <AlertTriangle color={theme.colors.error} size={48} strokeWidth={1.5} />
+              <AlertTriangle color={colors.error} size={48} strokeWidth={1.5} />
             </View>
             <Text style={styles.title}>Something went wrong</Text>
             <Text style={styles.message}>
@@ -67,39 +67,39 @@ export class GlobalErrorBoundary extends Component<Props, State> {
   }
 }
 
-const styles = StyleSheet.create((theme) => ({
+const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: theme.colors.backgroundLight,
+    backgroundColor: colors.backgroundLight,
   },
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: theme.spacing.xxl,
+    padding: spacing.xxl,
   },
   iconContainer: {
     width: 80,
     height: 80,
     borderRadius: 40,
-    backgroundColor: theme.colors.errorLight,
+    backgroundColor: colors.errorLight,
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: theme.spacing.xl,
+    marginBottom: spacing.xl,
   },
   title: {
-    fontFamily: theme.typography.families.extrabold,
-    fontSize: theme.typography.sizes.xl,
-    color: theme.colors.textPrimary,
-    marginBottom: theme.spacing.sm,
+    fontFamily: typography.families.extrabold,
+    fontSize: typography.sizes.xl,
+    color: colors.textPrimary,
+    marginBottom: spacing.sm,
     textAlign: 'center',
   },
   message: {
-    fontFamily: theme.typography.families.regular,
-    fontSize: theme.typography.sizes.md,
-    color: theme.colors.textMuted,
+    fontFamily: typography.families.regular,
+    fontSize: typography.sizes.md,
+    color: colors.textMuted,
     textAlign: 'center',
-    marginBottom: theme.spacing.xxl,
+    marginBottom: spacing.xxl,
     lineHeight: 24,
   },
   button: {
@@ -107,14 +107,14 @@ const styles = StyleSheet.create((theme) => ({
   },
   devErrorBox: {
     backgroundColor: '#FFEBEB',
-    padding: theme.spacing.md,
+    padding: spacing.md,
     borderRadius: 8,
-    marginBottom: theme.spacing.xxl,
+    marginBottom: spacing.xxl,
     width: '100%',
   },
   devErrorText: {
-    fontFamily: theme.typography.families.regular,
+    fontFamily: typography.families.regular,
     fontSize: 12,
-    color: theme.colors.error,
+    color: colors.error,
   },
-}));
+});

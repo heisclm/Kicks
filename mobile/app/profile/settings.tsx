@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { View, Text, ScrollView, Switch, Pressable } from 'react-native';
-import { StyleSheet, useStyles, UnistylesRuntime } from 'react-native-unistyles';
+import { StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ChevronLeft, ChevronRight, Bell, Moon, Globe, Shield, Smartphone } from 'lucide-react-native';
-import { colors, spacing, typography, radius } from '../../src/theme';
+import { colors, spacing, radius, typography } from '../src/theme';
 import { IconButton } from '../../src/components/IconButton';
 import { useToastStore } from '../../src/store/useToastStore';
 
 function SettingToggle({ icon, title, subtitle, value, onValueChange }: any) {
-    const { theme } = useStyles();
+    const theme = { colors, spacing, radius, typography };
   return (
     <View style={styles.settingItem}>
       <View style={styles.iconWrapper}>{icon}</View>
@@ -20,7 +20,7 @@ function SettingToggle({ icon, title, subtitle, value, onValueChange }: any) {
       <Switch 
         value={value} 
         onValueChange={onValueChange} 
-        trackColor={{ false: theme.colors.border, true: theme.colors.primary }}
+        trackColor={{ false: colors.border, true: colors.primary }}
         thumbColor="#fff"
       />
     </View>
@@ -28,7 +28,7 @@ function SettingToggle({ icon, title, subtitle, value, onValueChange }: any) {
 }
 
 function SettingLink({ icon, title, value, onPress }: any) {
-    const { theme } = useStyles();
+    const theme = { colors, spacing, radius, typography };
   return (
     <Pressable style={styles.settingItem} onPress={onPress}>
       <View style={styles.iconWrapper}>{icon}</View>
@@ -36,13 +36,13 @@ function SettingLink({ icon, title, value, onPress }: any) {
         <Text style={styles.settingTitle}>{title}</Text>
       </View>
       {value && <Text style={styles.settingValue}>{value}</Text>}
-      <ChevronRight color={theme.colors.textMuted} size={20} strokeWidth={2} />
+      <ChevronRight color={colors.textMuted} size={20} strokeWidth={2} />
     </Pressable>
   );
 }
 
 export default function SettingsScreen() {
-    const { theme } = useStyles();
+    const theme = { colors, spacing, radius, typography };
   const insets = useSafeAreaInsets();
   const router = useRouter();
   const { showToast } = useToastStore();
@@ -56,7 +56,7 @@ export default function SettingsScreen() {
       {/* Header */}
       <View style={styles.header}>
         <IconButton 
-          icon={<ChevronLeft color={theme.colors.textPrimary} size={24} strokeWidth={2.5} />} 
+          icon={<ChevronLeft color={colors.textPrimary} size={24} strokeWidth={2.5} />} 
           onPress={() => router.back()} 
           style={styles.backButton}
         />
@@ -70,7 +70,7 @@ export default function SettingsScreen() {
           <Text style={styles.sectionTitle}>APP SETTINGS</Text>
           <View style={styles.card}>
             <SettingToggle 
-              icon={<Bell color={theme.colors.textPrimary} size={20} />} 
+              icon={<Bell color={colors.textPrimary} size={20} />} 
               title="Push Notifications" 
               subtitle="Order updates and drops"
               value={pushEnabled} 
@@ -78,14 +78,14 @@ export default function SettingsScreen() {
             />
             <View style={styles.divider} />
             <SettingToggle 
-              icon={<Moon color={theme.colors.textPrimary} size={20} />} 
+              icon={<Moon color={colors.textPrimary} size={20} />} 
               title="Dark Mode" 
-              value={UnistylesRuntime.themeName === 'dark'} 
-              onValueChange={(val) => UnistylesRuntime.setTheme(val ? 'dark' : 'light')} 
+              value={'light' === 'dark'} 
+              onValueChange={(val) => {}} 
             />
             <View style={styles.divider} />
             <SettingToggle 
-              icon={<Shield color={theme.colors.textPrimary} size={20} />} 
+              icon={<Shield color={colors.textPrimary} size={20} />} 
               title="Face ID / Touch ID" 
               subtitle="Secure login & checkout"
               value={biometricsEnabled} 
@@ -98,14 +98,14 @@ export default function SettingsScreen() {
           <Text style={styles.sectionTitle}>REGIONAL</Text>
           <View style={styles.card}>
             <SettingLink 
-              icon={<Globe color={theme.colors.textPrimary} size={20} />} 
+              icon={<Globe color={colors.textPrimary} size={20} />} 
               title="Language" 
               value="English (US)"
               onPress={() => showToast('Language Settings', 'Opening language options', 'info')}
             />
             <View style={styles.divider} />
             <SettingLink 
-              icon={<Shield color={theme.colors.textPrimary} size={20} />} 
+              icon={<Shield color={colors.textPrimary} size={20} />} 
               title="Currency" 
               value="USD ($)"
               onPress={() => showToast('Currency Settings', 'Opening currency options', 'info')}
@@ -117,13 +117,13 @@ export default function SettingsScreen() {
           <Text style={styles.sectionTitle}>ABOUT</Text>
           <View style={styles.card}>
             <SettingLink 
-              icon={<Shield color={theme.colors.textPrimary} size={20} />} 
+              icon={<Shield color={colors.textPrimary} size={20} />} 
               title="Privacy Policy" 
               onPress={() => showToast('Privacy Policy', 'Opening Privacy Policy', 'info')}
             />
             <View style={styles.divider} />
             <SettingLink 
-              icon={<Smartphone color={theme.colors.textPrimary} size={20} />} 
+              icon={<Smartphone color={colors.textPrimary} size={20} />} 
               title="App Version" 
               value="v1.0.0" 
               onPress={() => showToast('App Version', 'KICKS v1.0.0 is up to date', 'success')}
@@ -140,17 +140,17 @@ export default function SettingsScreen() {
   );
 }
 
-const styles = StyleSheet.create((theme) => ({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: theme.colors.backgroundLight,
+    backgroundColor: colors.backgroundLight,
   },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingHorizontal: theme.spacing.sm,
-    paddingVertical: theme.spacing.md,
+    paddingHorizontal: spacing.sm,
+    paddingVertical: spacing.md,
   },
   backButton: {
     backgroundColor: 'transparent',
@@ -158,28 +158,28 @@ const styles = StyleSheet.create((theme) => ({
     elevation: 0,
   },
   headerTitle: {
-    fontFamily: theme.typography.families.extrabold,
-    fontSize: theme.typography.sizes.lg,
-    color: theme.colors.textPrimary,
+    fontFamily: typography.families.extrabold,
+    fontSize: typography.sizes.lg,
+    color: colors.textPrimary,
   },
   scrollContent: {
-    padding: theme.spacing.md,
-    paddingBottom: theme.spacing.xxxl,
+    padding: spacing.md,
+    paddingBottom: spacing.xxxl,
   },
   section: {
-    marginBottom: theme.spacing.xl,
+    marginBottom: spacing.xl,
   },
   sectionTitle: {
-    fontFamily: theme.typography.families.semibold,
+    fontFamily: typography.families.semibold,
     fontSize: 10,
-    color: theme.colors.textMuted,
+    color: colors.textMuted,
     letterSpacing: 2,
-    marginBottom: theme.spacing.md,
-    paddingHorizontal: theme.spacing.sm,
+    marginBottom: spacing.md,
+    paddingHorizontal: spacing.sm,
   },
   card: {
-    backgroundColor: theme.colors.surface,
-    borderRadius: theme.radius.xxl,
+    backgroundColor: colors.surface,
+    borderRadius: radius.xxl,
     overflow: 'hidden',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
@@ -190,53 +190,53 @@ const styles = StyleSheet.create((theme) => ({
   settingItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: theme.spacing.lg,
-    backgroundColor: theme.colors.surface,
+    padding: spacing.lg,
+    backgroundColor: colors.surface,
   },
   iconWrapper: {
     width: 36,
     height: 36,
     borderRadius: 18,
-    backgroundColor: theme.colors.backgroundLight,
+    backgroundColor: colors.backgroundLight,
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: theme.spacing.md,
+    marginRight: spacing.md,
   },
   settingTextContainer: {
     flex: 1,
-    marginRight: theme.spacing.md,
+    marginRight: spacing.md,
   },
   settingTitle: {
-    fontFamily: theme.typography.families.semibold,
-    fontSize: theme.typography.sizes.md,
-    color: theme.colors.textPrimary,
+    fontFamily: typography.families.semibold,
+    fontSize: typography.sizes.md,
+    color: colors.textPrimary,
   },
   settingSubtitle: {
-    fontFamily: theme.typography.families.regular,
-    fontSize: theme.typography.sizes.xs,
-    color: theme.colors.textMuted,
+    fontFamily: typography.families.regular,
+    fontSize: typography.sizes.xs,
+    color: colors.textMuted,
     marginTop: 2,
   },
   settingValue: {
-    fontFamily: theme.typography.families.regular,
-    fontSize: theme.typography.sizes.sm,
-    color: theme.colors.textMuted,
-    marginRight: theme.spacing.sm,
+    fontFamily: typography.families.regular,
+    fontSize: typography.sizes.sm,
+    color: colors.textMuted,
+    marginRight: spacing.sm,
   },
   divider: {
     height: 1,
-    backgroundColor: theme.colors.backgroundLight,
+    backgroundColor: colors.backgroundLight,
     marginLeft: 70, // Align with text
   },
   footerInfo: {
     alignItems: 'center',
-    marginTop: theme.spacing.xl,
-    marginBottom: theme.spacing.xxl,
+    marginTop: spacing.xl,
+    marginBottom: spacing.xxl,
   },
   versionText: {
-    fontFamily: theme.typography.families.regular,
+    fontFamily: typography.families.regular,
     fontSize: 11,
-    color: theme.colors.textMuted,
+    color: colors.textMuted,
     marginBottom: 4,
   }
-}));
+});

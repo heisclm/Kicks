@@ -19,7 +19,7 @@ import {
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { IconButton } from "../../src/components/IconButton";
-import { colors, radius, spacing, typography } from "../../src/theme";
+import { colors, spacing, radius, typography } from '../src/theme';
 
 interface MenuItemProps {
   icon: React.ReactNode;
@@ -36,7 +36,7 @@ function MenuItem({
   onPress,
   isDestructive,
 }: MenuItemProps) {
-    const { theme } = useStyles();
+    const theme = { colors, spacing, radius, typography };
   return (
     <Pressable style={styles.menuItem} onPress={onPress}>
       <View
@@ -49,14 +49,14 @@ function MenuItem({
       </View>
       <View style={styles.menuTextContainer}>
         <Text
-          style={[styles.menuTitle, isDestructive && { color: theme.colors.cardRed }]}
+          style={[styles.menuTitle, isDestructive && { color: colors.cardRed }]}
         >
           {title}
         </Text>
         {subtitle && <Text style={styles.menuSubtitle}>{subtitle}</Text>}
       </View>
       {!isDestructive && (
-        <ChevronRight color={theme.colors.textMuted} size={20} strokeWidth={2} />
+        <ChevronRight color={colors.textMuted} size={20} strokeWidth={2} />
       )}
     </Pressable>
   );
@@ -64,7 +64,7 @@ function MenuItem({
 
 import { useOnboardingStore } from "../../src/store/useOnboardingStore";
 import { useAuthStore } from "../../src/store/useAuthStore";
-import { useStyles } from "react-native-unistyles";
+import { StyleSheet } from 'react-native';
 
 export default function ProfileScreen() {
   return (
@@ -78,7 +78,7 @@ export default function ProfileScreen() {
 }
 
 function ProfileScreenContent() {
-    const { theme } = useStyles();
+    const theme = { colors, spacing, radius, typography };
   const insets = useSafeAreaInsets();
   const router = useRouter();
   const { resetOnboarding } = useOnboardingStore();
@@ -100,7 +100,7 @@ function ProfileScreenContent() {
         <Text style={styles.title}>Profile</Text>
       </View>
       <IconButton
-        icon={<Settings color={theme.colors.textPrimary} size={24} strokeWidth={2} />}
+        icon={<Settings color={colors.textPrimary} size={24} strokeWidth={2} />}
         onPress={() => router.push("/profile/settings" as any)}
       />
     </View>
@@ -114,7 +114,7 @@ function ProfileScreenContent() {
           onPress={() => router.push("/(auth)/login")}
         >
           <View style={styles.guestBannerIcon}>
-            <ShoppingBag color={theme.colors.textPrimary} size={20} strokeWidth={2.5} />
+            <ShoppingBag color={colors.textPrimary} size={20} strokeWidth={2.5} />
           </View>
           <View style={styles.guestBannerTextContainer}>
             <Text style={styles.guestBannerTitle}>Join KICKS</Text>
@@ -122,7 +122,7 @@ function ProfileScreenContent() {
           </View>
           <View style={styles.guestBannerAction}>
             <Text style={styles.guestBannerActionText}>SIGN IN</Text>
-            <ChevronRight color={theme.colors.textPrimary} size={16} strokeWidth={3} />
+            <ChevronRight color={colors.textPrimary} size={16} strokeWidth={3} />
           </View>
         </Pressable>
       );
@@ -152,7 +152,7 @@ function ProfileScreenContent() {
 
   return (
     <ScrollView
-      style={[styles.container, { paddingTop: insets.top + theme.spacing.md }]}
+      style={[styles.container, { paddingTop: insets.top + spacing.md }]}
       contentContainerStyle={[styles.scrollContent, { paddingBottom: 120 }]}
       showsVerticalScrollIndicator={false}
     >
@@ -165,7 +165,7 @@ function ProfileScreenContent() {
           <MenuItem
             icon={
               <ShoppingBag
-                color={theme.colors.textPrimary}
+                color={colors.textPrimary}
                 size={20}
                 strokeWidth={2}
               />
@@ -177,7 +177,7 @@ function ProfileScreenContent() {
           <View style={styles.divider} />
           <MenuItem
             icon={
-              <MapPin color={theme.colors.textPrimary} size={20} strokeWidth={2} />
+              <MapPin color={colors.textPrimary} size={20} strokeWidth={2} />
             }
             title="Shipping Addresses"
             onPress={() => router.push("/profile/addresses" as any)}
@@ -186,7 +186,7 @@ function ProfileScreenContent() {
           <MenuItem
             icon={
               <CreditCard
-                color={theme.colors.textPrimary}
+                color={colors.textPrimary}
                 size={20}
                 strokeWidth={2}
               />
@@ -201,14 +201,14 @@ function ProfileScreenContent() {
         <Text style={styles.sectionTitle}>APP SETTINGS</Text>
         <View style={styles.menuCard}>
           <MenuItem
-            icon={<Bell color={theme.colors.textPrimary} size={20} strokeWidth={2} />}
+            icon={<Bell color={colors.textPrimary} size={20} strokeWidth={2} />}
             title="Notifications"
             onPress={() => router.push("/profile/notifications" as any)}
           />
           <View style={styles.divider} />
           <MenuItem
             icon={
-              <Settings color={theme.colors.textPrimary} size={20} strokeWidth={2} />
+              <Settings color={colors.textPrimary} size={20} strokeWidth={2} />
             }
             title="Preferences"
             onPress={() => router.push("/profile/settings" as any)}
@@ -217,7 +217,7 @@ function ProfileScreenContent() {
           <MenuItem
             icon={
               <CircleHelp
-                color={theme.colors.textPrimary}
+                color={colors.textPrimary}
                 size={20}
                 strokeWidth={2}
               />
@@ -228,10 +228,10 @@ function ProfileScreenContent() {
         </View>
       </View>
 
-      <View style={[styles.section, { marginTop: theme.spacing.lg }]}>
+      <View style={[styles.section, { marginTop: spacing.lg }]}>
         <View style={styles.menuCard}>
           <MenuItem
-            icon={<LogOut color={theme.colors.cardRed} size={20} strokeWidth={2} />}
+            icon={<LogOut color={colors.cardRed} size={20} strokeWidth={2} />}
             title="Log Out"
             isDestructive
             onPress={handleSignOut}
@@ -242,33 +242,33 @@ function ProfileScreenContent() {
   );
 }
 
-const styles = StyleSheet.create((theme) => ({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: theme.colors.backgroundLight,
+    backgroundColor: colors.backgroundLight,
   },
   scrollContent: {
-    paddingHorizontal: theme.spacing.md,
+    paddingHorizontal: spacing.md,
   },
   header: {
-    marginBottom: theme.spacing.xl,
-    paddingHorizontal: theme.spacing.sm,
+    marginBottom: spacing.xl,
+    paddingHorizontal: spacing.sm,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
   },
   headerSubtitle: {
-    fontFamily: theme.typography.families.semibold,
+    fontFamily: typography.families.semibold,
     fontSize: 11,
-    color: theme.colors.textMuted,
+    color: colors.textMuted,
     letterSpacing: 3,
     marginBottom: 6,
     textTransform: "uppercase",
   },
   title: {
     fontSize: 34,
-    fontFamily: theme.typography.families.extrabold,
-    color: theme.colors.textPrimary,
+    fontFamily: typography.families.extrabold,
+    color: colors.textPrimary,
     letterSpacing: -1.5,
   },
 
@@ -276,10 +276,10 @@ const styles = StyleSheet.create((theme) => ({
   userInfoContainer: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: theme.colors.surface,
-    padding: theme.spacing.lg,
-    borderRadius: theme.radius.xxl,
-    marginBottom: theme.spacing.xxl,
+    backgroundColor: colors.surface,
+    padding: spacing.lg,
+    borderRadius: radius.xxl,
+    marginBottom: spacing.xxl,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.05,
@@ -289,53 +289,53 @@ const styles = StyleSheet.create((theme) => ({
   guestBanner: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: theme.colors.surface,
-    padding: theme.spacing.lg,
-    borderRadius: theme.radius.xl,
-    marginBottom: theme.spacing.xxl,
+    backgroundColor: colors.surface,
+    padding: spacing.lg,
+    borderRadius: radius.xl,
+    marginBottom: spacing.xxl,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.05,
     shadowRadius: 10,
     elevation: 2,
     borderWidth: 1,
-    borderColor: theme.colors.border,
+    borderColor: colors.border,
   },
   guestBannerIcon: {
     width: 44,
     height: 44,
     borderRadius: 22,
-    backgroundColor: theme.colors.surfaceVariant,
+    backgroundColor: colors.surfaceVariant,
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: theme.spacing.md,
+    marginRight: spacing.md,
   },
   guestBannerTextContainer: {
     flex: 1,
   },
   guestBannerTitle: {
-    fontFamily: theme.typography.families.extrabold,
-    fontSize: theme.typography.sizes.md,
-    color: theme.colors.textPrimary,
+    fontFamily: typography.families.extrabold,
+    fontSize: typography.sizes.md,
+    color: colors.textPrimary,
     marginBottom: 2,
   },
   guestBannerSubtitle: {
-    fontFamily: theme.typography.families.regular,
-    fontSize: theme.typography.sizes.xs,
-    color: theme.colors.textSecondary,
+    fontFamily: typography.families.regular,
+    fontSize: typography.sizes.xs,
+    color: colors.textSecondary,
   },
   guestBannerAction: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: theme.colors.surfaceVariant,
-    paddingHorizontal: theme.spacing.sm,
-    paddingVertical: theme.spacing.xs,
-    borderRadius: theme.radius.round,
+    backgroundColor: colors.surfaceVariant,
+    paddingHorizontal: spacing.sm,
+    paddingVertical: spacing.xs,
+    borderRadius: radius.round,
   },
   guestBannerActionText: {
-    fontFamily: theme.typography.families.semibold,
+    fontFamily: typography.families.semibold,
     fontSize: 10,
-    color: theme.colors.textPrimary,
+    color: colors.textPrimary,
     letterSpacing: 1,
     marginRight: 2,
   },
@@ -343,58 +343,58 @@ const styles = StyleSheet.create((theme) => ({
     width: 60,
     height: 60,
     borderRadius: 30,
-    backgroundColor: theme.colors.primary,
+    backgroundColor: colors.primary,
     justifyContent: "center",
     alignItems: "center",
   },
   avatarText: {
-    fontFamily: theme.typography.families.extrabold,
-    fontSize: theme.typography.sizes.xl,
-    color: theme.colors.textInverse,
+    fontFamily: typography.families.extrabold,
+    fontSize: typography.sizes.xl,
+    color: colors.textInverse,
   },
   userDetails: {
     flex: 1,
-    marginLeft: theme.spacing.lg,
+    marginLeft: spacing.lg,
   },
   userName: {
-    fontFamily: theme.typography.families.extrabold,
-    fontSize: theme.typography.sizes.lg,
-    color: theme.colors.textPrimary,
+    fontFamily: typography.families.extrabold,
+    fontSize: typography.sizes.lg,
+    color: colors.textPrimary,
     marginBottom: 2,
   },
   userEmail: {
-    fontFamily: theme.typography.families.regular,
-    fontSize: theme.typography.sizes.sm,
-    color: theme.colors.textMuted,
+    fontFamily: typography.families.regular,
+    fontSize: typography.sizes.sm,
+    color: colors.textMuted,
   },
   editButton: {
-    backgroundColor: theme.colors.backgroundLight,
-    paddingHorizontal: theme.spacing.md,
-    paddingVertical: theme.spacing.sm,
-    borderRadius: theme.radius.round,
+    backgroundColor: colors.backgroundLight,
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.sm,
+    borderRadius: radius.round,
   },
   editButtonText: {
-    fontFamily: theme.typography.families.extrabold,
+    fontFamily: typography.families.extrabold,
     fontSize: 10,
-    color: theme.colors.textPrimary,
+    color: colors.textPrimary,
     letterSpacing: 1,
   },
 
   // Sections
   section: {
-    marginBottom: theme.spacing.xl,
+    marginBottom: spacing.xl,
   },
   sectionTitle: {
-    fontFamily: theme.typography.families.semibold,
+    fontFamily: typography.families.semibold,
     fontSize: 10,
-    color: theme.colors.textMuted,
+    color: colors.textMuted,
     letterSpacing: 2,
-    marginBottom: theme.spacing.md,
-    paddingHorizontal: theme.spacing.sm,
+    marginBottom: spacing.md,
+    paddingHorizontal: spacing.sm,
   },
   menuCard: {
-    backgroundColor: theme.colors.surface,
-    borderRadius: theme.radius.xxl,
+    backgroundColor: colors.surface,
+    borderRadius: radius.xxl,
     overflow: "hidden",
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
@@ -405,35 +405,35 @@ const styles = StyleSheet.create((theme) => ({
   menuItem: {
     flexDirection: "row",
     alignItems: "center",
-    padding: theme.spacing.md,
-    backgroundColor: theme.colors.surface,
+    padding: spacing.md,
+    backgroundColor: colors.surface,
   },
   menuIconWrapper: {
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: theme.colors.backgroundLight,
+    backgroundColor: colors.backgroundLight,
     justifyContent: "center",
     alignItems: "center",
   },
   menuTextContainer: {
     flex: 1,
-    marginLeft: theme.spacing.md,
+    marginLeft: spacing.md,
   },
   menuTitle: {
-    fontFamily: theme.typography.families.semibold,
-    fontSize: theme.typography.sizes.md,
-    color: theme.colors.textPrimary,
+    fontFamily: typography.families.semibold,
+    fontSize: typography.sizes.md,
+    color: colors.textPrimary,
   },
   menuSubtitle: {
-    fontFamily: theme.typography.families.regular,
-    fontSize: theme.typography.sizes.xs,
-    color: theme.colors.textMuted,
+    fontFamily: typography.families.regular,
+    fontSize: typography.sizes.xs,
+    color: colors.textMuted,
     marginTop: 2,
   },
   divider: {
     height: 1,
-    backgroundColor: theme.colors.backgroundLight,
+    backgroundColor: colors.backgroundLight,
     marginLeft: 70, // Align with text
   },
-}));
+});

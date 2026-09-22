@@ -1,13 +1,13 @@
 import React, { useEffect, useRef } from 'react';
 import { Animated, Text, View } from 'react-native';
-import { StyleSheet, useStyles } from 'react-native-unistyles';
+import { StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { CheckCircle, Info, AlertCircle } from 'lucide-react-native';
-import { colors, spacing, typography, radius, shadows } from '../theme';
+import { colors, spacing, radius, typography } from '../theme';
 import { useToastStore } from '../store/useToastStore';
 
 export function ToastOverlay() {
-    const { theme } = useStyles();
+    const theme = { colors, spacing, radius, typography };
   const insets = useSafeAreaInsets();
   const { visible, title, subtitle, type } = useToastStore();
   const translateY = useRef(new Animated.Value(-150)).current;
@@ -15,7 +15,7 @@ export function ToastOverlay() {
   useEffect(() => {
     if (visible) {
       Animated.spring(translateY, {
-        toValue: insets.top + theme.spacing.md,
+        toValue: insets.top + spacing.md,
         useNativeDriver: true,
         speed: 12,
         bounciness: 8,
@@ -33,13 +33,13 @@ export function ToastOverlay() {
   let iconColor;
   if (type === 'success') {
     Icon = CheckCircle;
-    iconColor = theme.colors.success;
+    iconColor = colors.success;
   } else if (type === 'error') {
     Icon = AlertCircle;
-    iconColor = theme.colors.error;
+    iconColor = colors.error;
   } else {
     Icon = Info;
-    iconColor = theme.colors.secondary;
+    iconColor = colors.secondary;
   }
 
   return (
@@ -61,37 +61,37 @@ export function ToastOverlay() {
   );
 }
 
-const styles = StyleSheet.create((theme) => ({
+const styles = StyleSheet.create({
   container: {
     position: 'absolute',
     top: 0,
-    left: theme.spacing.md,
-    right: theme.spacing.md,
+    left: spacing.md,
+    right: spacing.md,
     zIndex: 9999,
   },
   toast: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: theme.colors.surface,
-    padding: theme.spacing.lg,
-    borderRadius: theme.radius.xxl,
+    backgroundColor: colors.surface,
+    padding: spacing.lg,
+    borderRadius: radius.xxl,
     borderWidth: 2,
     borderColor: 'transparent', // Can color code if desired
     ...theme.shadows.medium,
   },
   textContainer: {
-    marginLeft: theme.spacing.md,
+    marginLeft: spacing.md,
     flex: 1,
   },
   title: {
-    fontFamily: theme.typography.families.extrabold,
-    fontSize: theme.typography.sizes.md,
-    color: theme.colors.textPrimary,
+    fontFamily: typography.families.extrabold,
+    fontSize: typography.sizes.md,
+    color: colors.textPrimary,
   },
   subtitle: {
-    fontFamily: theme.typography.families.semibold,
-    fontSize: theme.typography.sizes.xs,
-    color: theme.colors.textMuted,
+    fontFamily: typography.families.semibold,
+    fontSize: typography.sizes.xs,
+    color: colors.textMuted,
     marginTop: 2,
   }
-}));
+});

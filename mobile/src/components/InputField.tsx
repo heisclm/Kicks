@@ -1,45 +1,45 @@
 import React from 'react';
 import { View, Text, TextInput, TextInputProps } from 'react-native';
-import { StyleSheet, useStyles } from 'react-native-unistyles';
-import { colors, typography, radius, spacing } from '../theme';
+import { StyleSheet } from 'react-native';
+import { colors, spacing, radius, typography } from '../theme';
 
 export interface InputFieldProps extends TextInputProps {
   label: string;
 }
 
 export function InputField({ label, ...props }: InputFieldProps) {
-    const { theme } = useStyles();
+    const theme = { colors, spacing, radius, typography };
   return (
     <View style={styles.inputContainer}>
       <Text style={styles.inputLabel}>{label}</Text>
       <TextInput 
         style={styles.input}
-        placeholderTextColor={theme.colors.textMuted}
+        placeholderTextColor={colors.textMuted}
         {...props}
       />
     </View>
   );
 }
 
-const styles = StyleSheet.create((theme) => ({
+const styles = StyleSheet.create({
   inputContainer: {
-    marginBottom: theme.spacing.md,
+    marginBottom: spacing.md,
   },
   inputLabel: {
-    fontSize: theme.typography.sizes.sm,
-    fontFamily: theme.typography.families.semibold,
-    color: theme.colors.textPrimary,
-    marginBottom: theme.spacing.xs,
+    fontSize: typography.sizes.sm,
+    fontFamily: typography.families.semibold,
+    color: colors.textPrimary,
+    marginBottom: spacing.xs,
   },
   input: {
-    backgroundColor: theme.colors.backgroundLight,
+    backgroundColor: colors.backgroundLight,
     borderWidth: 1,
-    borderColor: theme.colors.border,
-    borderRadius: theme.radius.md,
-    paddingHorizontal: theme.spacing.md,
-    paddingVertical: theme.spacing.md,
-    fontSize: theme.typography.sizes.md,
-    fontFamily: theme.typography.families.regular,
-    color: theme.colors.textPrimary,
+    borderColor: colors.border,
+    borderRadius: radius.md,
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.md,
+    fontSize: typography.sizes.md,
+    fontFamily: typography.families.regular,
+    color: colors.textPrimary,
   },
-}));
+});

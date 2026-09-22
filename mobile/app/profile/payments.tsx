@@ -1,10 +1,10 @@
 import React from 'react';
 import { View, Text, ScrollView, Pressable, Image } from 'react-native';
-import { StyleSheet, useStyles } from 'react-native-unistyles';
+import { StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ChevronLeft, Plus, CheckCircle, CreditCard } from 'lucide-react-native';
-import { colors, spacing, typography, radius, shadows } from '../../src/theme';
+import { colors, spacing, radius, typography } from '../src/theme';
 import { IconButton } from '../../src/components/IconButton';
 import { useToastStore } from '../../src/store/useToastStore';
 
@@ -22,11 +22,11 @@ function renderLogo(id: string) {
   if (id === 'google') return <GooglePayLogo size={36} />;
   if (id === 'mastercard') return <MastercardLogo size={36} />;
   if (id === 'visa') return <VisaLogo size={36} />;
-  return <CreditCard color={theme.colors.textPrimary} size={20} strokeWidth={2} />;
+  return <CreditCard color={colors.textPrimary} size={20} strokeWidth={2} />;
 }
 
 export default function PaymentMethodsScreen() {
-    const { theme } = useStyles();
+    const theme = { colors, spacing, radius, typography };
   const insets = useSafeAreaInsets();
   const router = useRouter();
   const { showToast } = useToastStore();
@@ -35,13 +35,13 @@ export default function PaymentMethodsScreen() {
     <View style={[styles.container, { paddingTop: insets.top }]}>
       <View style={styles.header}>
         <IconButton 
-          icon={<ChevronLeft color={theme.colors.textPrimary} size={24} strokeWidth={2.5} />} 
+          icon={<ChevronLeft color={colors.textPrimary} size={24} strokeWidth={2.5} />} 
           onPress={() => router.back()} 
           style={styles.backButton}
         />
         <Text style={styles.headerTitle}>Payments</Text>
         <IconButton 
-          icon={<Plus color={theme.colors.textPrimary} size={24} strokeWidth={2.5} />} 
+          icon={<Plus color={colors.textPrimary} size={24} strokeWidth={2.5} />} 
           style={styles.backButton}
         />
       </View>
@@ -63,7 +63,7 @@ export default function PaymentMethodsScreen() {
                   {method.last4 && <Text style={styles.subtitle}>**** **** **** {method.last4}</Text>}
                 </View>
               </View>
-              {method.isDefault && <CheckCircle color={theme.colors.primary} size={20} strokeWidth={2.5} />}
+              {method.isDefault && <CheckCircle color={colors.primary} size={20} strokeWidth={2.5} />}
             </View>
           </Pressable>
         ))}
@@ -72,17 +72,17 @@ export default function PaymentMethodsScreen() {
   );
 }
 
-const styles = StyleSheet.create((theme) => ({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: theme.colors.backgroundLight,
+    backgroundColor: colors.backgroundLight,
   },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingHorizontal: theme.spacing.sm,
-    paddingVertical: theme.spacing.md,
+    paddingHorizontal: spacing.sm,
+    paddingVertical: spacing.md,
   },
   backButton: {
     backgroundColor: 'transparent',
@@ -90,25 +90,25 @@ const styles = StyleSheet.create((theme) => ({
     elevation: 0,
   },
   headerTitle: {
-    fontFamily: theme.typography.families.extrabold,
-    fontSize: theme.typography.sizes.lg,
-    color: theme.colors.textPrimary,
+    fontFamily: typography.families.extrabold,
+    fontSize: typography.sizes.lg,
+    color: colors.textPrimary,
   },
   scrollContent: {
-    padding: theme.spacing.md,
-    paddingBottom: theme.spacing.xxxl,
+    padding: spacing.md,
+    paddingBottom: spacing.xxxl,
   },
   card: {
-    backgroundColor: theme.colors.surface,
-    borderRadius: theme.radius.xxl,
-    padding: theme.spacing.lg,
-    marginBottom: theme.spacing.md,
+    backgroundColor: colors.surface,
+    borderRadius: radius.xxl,
+    padding: spacing.lg,
+    marginBottom: spacing.md,
     borderWidth: 2,
     borderColor: 'transparent',
     ...theme.shadows.soft,
   },
   cardActive: {
-    borderColor: theme.colors.primary,
+    borderColor: colors.primary,
   },
   cardHeader: {
     flexDirection: 'row',
@@ -118,25 +118,25 @@ const styles = StyleSheet.create((theme) => ({
   titleRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: theme.spacing.md,
+    gap: spacing.md,
   },
   iconWrapper: {
     width: 48,
     height: 48,
-    borderRadius: theme.radius.lg,
-    backgroundColor: theme.colors.backgroundLight,
+    borderRadius: radius.lg,
+    backgroundColor: colors.backgroundLight,
     justifyContent: 'center',
     alignItems: 'center',
   },
   name: {
-    fontFamily: theme.typography.families.extrabold,
-    fontSize: theme.typography.sizes.md,
-    color: theme.colors.textPrimary,
+    fontFamily: typography.families.extrabold,
+    fontSize: typography.sizes.md,
+    color: colors.textPrimary,
   },
   subtitle: {
-    fontFamily: theme.typography.families.semibold,
-    fontSize: theme.typography.sizes.xs,
-    color: theme.colors.textMuted,
+    fontFamily: typography.families.semibold,
+    fontSize: typography.sizes.xs,
+    color: colors.textMuted,
     marginTop: 2,
   }
-}));
+});

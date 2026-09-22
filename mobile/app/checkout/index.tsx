@@ -21,8 +21,8 @@ import { OrderSuccessModal } from "../../src/components/OrderSuccessModal";
 import { useCartStore } from "../../src/store/useCartStore";
 import { useCheckoutStore } from "../../src/store/useCheckoutStore";
 import { useToastStore } from "../../src/store/useToastStore";
-import { colors, radius, spacing, typography } from "../../src/theme";
-import { useStyles } from "react-native-unistyles";
+import { colors, spacing, radius, typography } from '../src/theme';
+import { StyleSheet } from 'react-native';
 
 const addressSchema = z.object({
   fullName: z.string().min(2, "Name required"),
@@ -39,7 +39,7 @@ const paymentSchema = z.object({
 });
 
 export default function CheckoutScreen() {
-    const { theme } = useStyles();
+    const theme = { colors, spacing, radius, typography };
   const insets = useSafeAreaInsets();
   const router = useRouter();
   const { total, items, clearCart } = useCartStore();
@@ -160,9 +160,9 @@ export default function CheckoutScreen() {
       behavior={Platform.OS === "ios" ? "padding" : undefined}
     >
       {/* Header */}
-      <View style={[styles.header, { paddingTop: insets.top + theme.spacing.sm }]}>
+      <View style={[styles.header, { paddingTop: insets.top + spacing.sm }]}>
         <Pressable onPress={() => router.back()} style={styles.backButton}>
-          <ChevronLeft color={theme.colors.textPrimary} size={24} strokeWidth={2.5} />
+          <ChevronLeft color={colors.textPrimary} size={24} strokeWidth={2.5} />
         </Pressable>
         <Text style={styles.headerTitle}>Checkout</Text>
         <View style={{ width: 44 }} />
@@ -175,7 +175,7 @@ export default function CheckoutScreen() {
         {/* Shipping Address Section */}
         <View style={styles.section}>
           <View style={styles.sectionHeader}>
-            <MapPin color={theme.colors.textPrimary} size={20} strokeWidth={2} />
+            <MapPin color={colors.textPrimary} size={20} strokeWidth={2} />
             <Text style={styles.sectionTitle}>SHIPPING ADDRESS</Text>
           </View>
           <View style={styles.card}>
@@ -239,7 +239,7 @@ export default function CheckoutScreen() {
                 <Button
                   label="SAVE ADDRESS"
                   onPress={onSaveAddress}
-                  style={{ marginTop: theme.spacing.md }}
+                  style={{ marginTop: spacing.md }}
                 />
               </View>
             )}
@@ -249,7 +249,7 @@ export default function CheckoutScreen() {
         {/* Shipping Method Section */}
         <View style={styles.section}>
           <View style={styles.sectionHeader}>
-            <Truck color={theme.colors.textPrimary} size={20} strokeWidth={2} />
+            <Truck color={colors.textPrimary} size={20} strokeWidth={2} />
             <Text style={styles.sectionTitle}>SHIPPING METHOD</Text>
           </View>
           <View style={styles.card}>
@@ -286,7 +286,7 @@ export default function CheckoutScreen() {
         {/* Payment Section */}
         <View style={styles.section}>
           <View style={styles.sectionHeader}>
-            <CreditCard color={theme.colors.textPrimary} size={20} strokeWidth={2} />
+            <CreditCard color={colors.textPrimary} size={20} strokeWidth={2} />
             <Text style={styles.sectionTitle}>PAYMENT METHOD</Text>
           </View>
           <View style={styles.card}>
@@ -338,7 +338,7 @@ export default function CheckoutScreen() {
                 <Button
                   label="SAVE PAYMENT"
                   onPress={onSavePayment}
-                  style={{ marginTop: theme.spacing.md }}
+                  style={{ marginTop: spacing.md }}
                 />
               </View>
             )}
@@ -350,7 +350,7 @@ export default function CheckoutScreen() {
       <View
         style={[
           styles.stickyFooter,
-          { paddingBottom: insets.bottom + theme.spacing.md },
+          { paddingBottom: insets.bottom + spacing.md },
         ]}
       >
         <View style={styles.totalRow}>
@@ -375,55 +375,55 @@ export default function CheckoutScreen() {
   );
 }
 
-const styles = StyleSheet.create((theme) => ({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: theme.colors.backgroundLight,
+    backgroundColor: colors.backgroundLight,
   },
   header: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingHorizontal: theme.spacing.md,
-    paddingBottom: theme.spacing.md,
-    backgroundColor: theme.colors.backgroundLight,
+    paddingHorizontal: spacing.md,
+    paddingBottom: spacing.md,
+    backgroundColor: colors.backgroundLight,
   },
   backButton: {
-    padding: theme.spacing.sm,
-    marginLeft: -theme.spacing.sm,
+    padding: spacing.sm,
+    marginLeft: -spacing.sm,
   },
   headerTitle: {
-    fontFamily: theme.typography.families.extrabold,
-    fontSize: theme.typography.sizes.lg,
-    color: theme.colors.textPrimary,
+    fontFamily: typography.families.extrabold,
+    fontSize: typography.sizes.lg,
+    color: colors.textPrimary,
   },
   scrollContent: {
-    padding: theme.spacing.md,
+    padding: spacing.md,
     paddingBottom: 150,
     width: "100%",
     maxWidth: 700,
     alignSelf: "center",
   },
   section: {
-    marginBottom: theme.spacing.xl,
+    marginBottom: spacing.xl,
   },
   sectionHeader: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: theme.spacing.md,
-    paddingHorizontal: theme.spacing.xs,
+    marginBottom: spacing.md,
+    paddingHorizontal: spacing.xs,
   },
   sectionTitle: {
-    fontFamily: theme.typography.families.extrabold,
-    fontSize: theme.typography.sizes.sm,
-    color: theme.colors.textPrimary,
-    marginLeft: theme.spacing.sm,
+    fontFamily: typography.families.extrabold,
+    fontSize: typography.sizes.sm,
+    color: colors.textPrimary,
+    marginLeft: spacing.sm,
     letterSpacing: 1,
   },
   card: {
-    backgroundColor: theme.colors.surface,
-    borderRadius: theme.radius.xl,
-    padding: theme.spacing.lg,
+    backgroundColor: colors.surface,
+    borderRadius: radius.xl,
+    padding: spacing.lg,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.03,
@@ -431,23 +431,23 @@ const styles = StyleSheet.create((theme) => ({
     elevation: 2,
   },
   inputContainer: {
-    marginBottom: theme.spacing.lg,
+    marginBottom: spacing.lg,
   },
   inputLabel: {
-    fontFamily: theme.typography.families.semibold,
+    fontFamily: typography.families.semibold,
     fontSize: 10,
-    color: theme.colors.textMuted,
-    marginBottom: theme.spacing.xs,
+    color: colors.textMuted,
+    marginBottom: spacing.xs,
     letterSpacing: 1,
     textTransform: "uppercase",
   },
   input: {
     borderBottomWidth: 1,
-    borderBottomColor: theme.colors.border,
-    paddingVertical: theme.spacing.sm,
-    fontFamily: theme.typography.families.regular,
-    fontSize: theme.typography.sizes.md,
-    color: theme.colors.textPrimary,
+    borderBottomColor: colors.border,
+    paddingVertical: spacing.sm,
+    fontFamily: typography.families.regular,
+    fontSize: typography.sizes.md,
+    color: colors.textPrimary,
   },
   row: {
     flexDirection: "row",
@@ -456,29 +456,29 @@ const styles = StyleSheet.create((theme) => ({
     flex: 1,
   },
   spacer: {
-    width: theme.spacing.lg,
+    width: spacing.lg,
   },
   shippingOption: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingVertical: theme.spacing.md,
+    paddingVertical: spacing.md,
   },
   shippingTitle: {
-    fontFamily: theme.typography.families.semibold,
-    fontSize: theme.typography.sizes.md,
-    color: theme.colors.textPrimary,
+    fontFamily: typography.families.semibold,
+    fontSize: typography.sizes.md,
+    color: colors.textPrimary,
   },
   shippingDesc: {
-    fontFamily: theme.typography.families.regular,
-    fontSize: theme.typography.sizes.sm,
-    color: theme.colors.textMuted,
+    fontFamily: typography.families.regular,
+    fontSize: typography.sizes.sm,
+    color: colors.textMuted,
     marginTop: 2,
   },
   shippingPrice: {
-    fontFamily: theme.typography.families.extrabold,
-    fontSize: theme.typography.sizes.md,
-    color: theme.colors.textPrimary,
+    fontFamily: typography.families.extrabold,
+    fontSize: typography.sizes.md,
+    color: colors.textPrimary,
   },
   savedBlock: {
     flexDirection: "row",
@@ -489,47 +489,47 @@ const styles = StyleSheet.create((theme) => ({
     flex: 1,
   },
   savedTitle: {
-    fontFamily: theme.typography.families.extrabold,
-    fontSize: theme.typography.sizes.md,
-    color: theme.colors.textPrimary,
+    fontFamily: typography.families.extrabold,
+    fontSize: typography.sizes.md,
+    color: colors.textPrimary,
     marginBottom: 4,
   },
   savedDesc: {
-    fontFamily: theme.typography.families.regular,
-    fontSize: theme.typography.sizes.sm,
-    color: theme.colors.textMuted,
+    fontFamily: typography.families.regular,
+    fontSize: typography.sizes.sm,
+    color: colors.textMuted,
     marginTop: 2,
   },
   changeText: {
-    fontFamily: theme.typography.families.extrabold,
-    fontSize: theme.typography.sizes.sm,
-    color: theme.colors.textPrimary,
+    fontFamily: typography.families.extrabold,
+    fontSize: typography.sizes.sm,
+    color: colors.textPrimary,
     textDecorationLine: "underline",
   },
   saveAction: {
-    marginTop: theme.spacing.md,
-    backgroundColor: theme.colors.textPrimary,
-    paddingVertical: theme.spacing.md,
-    borderRadius: theme.radius.md,
+    marginTop: spacing.md,
+    backgroundColor: colors.textPrimary,
+    paddingVertical: spacing.md,
+    borderRadius: radius.md,
     alignItems: "center",
   },
   saveActionText: {
-    color: theme.colors.textInverse,
-    fontFamily: theme.typography.families.extrabold,
-    fontSize: theme.typography.sizes.sm,
+    color: colors.textInverse,
+    fontFamily: typography.families.extrabold,
+    fontSize: typography.sizes.sm,
   },
   divider: {
     height: 1,
-    backgroundColor: theme.colors.border,
+    backgroundColor: colors.border,
   },
   stickyFooter: {
     position: "absolute",
     bottom: 0,
-    backgroundColor: theme.colors.surface,
-    paddingTop: theme.spacing.lg,
-    paddingHorizontal: theme.spacing.xl,
+    backgroundColor: colors.surface,
+    paddingTop: spacing.lg,
+    paddingHorizontal: spacing.xl,
     borderTopWidth: 1,
-    borderTopColor: theme.colors.border,
+    borderTopColor: colors.border,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: -5 },
     shadowOpacity: 0.05,
@@ -543,28 +543,28 @@ const styles = StyleSheet.create((theme) => ({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: theme.spacing.lg,
+    marginBottom: spacing.lg,
   },
   totalLabel: {
-    fontFamily: theme.typography.families.semibold,
-    fontSize: theme.typography.sizes.lg,
-    color: theme.colors.textMuted,
+    fontFamily: typography.families.semibold,
+    fontSize: typography.sizes.lg,
+    color: colors.textMuted,
   },
   totalValue: {
-    fontFamily: theme.typography.families.extrabold,
-    fontSize: theme.typography.sizes.xxl,
-    color: theme.colors.textPrimary,
+    fontFamily: typography.families.extrabold,
+    fontSize: typography.sizes.xxl,
+    color: colors.textPrimary,
   },
   placeOrderButton: {
-    backgroundColor: theme.colors.primary,
-    paddingVertical: theme.spacing.lg,
-    borderRadius: theme.radius.round,
+    backgroundColor: colors.primary,
+    paddingVertical: spacing.lg,
+    borderRadius: radius.round,
     alignItems: "center",
   },
   placeOrderText: {
-    fontFamily: theme.typography.families.extrabold,
-    fontSize: theme.typography.sizes.md,
-    color: theme.colors.textInverse,
+    fontFamily: typography.families.extrabold,
+    fontSize: typography.sizes.md,
+    color: colors.textInverse,
     letterSpacing: 1,
   },
-}));
+});

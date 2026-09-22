@@ -2,15 +2,15 @@ import { Image as ExpoImage } from "expo-image";
 import { useRouter } from "expo-router";
 import { CheckCircle, ChevronLeft, Clock, Package } from "lucide-react-native";
 import { FlatList, Pressable, Text, View } from 'react-native';
-import { StyleSheet, useStyles } from 'react-native-unistyles';
+import { StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { IconButton } from "../../src/components/IconButton";
 import { SneakerLoader } from "../../src/components/SneakerLoader";
 import { useOrders } from "../../src/hooks/useOrders";
-import { colors, radius, spacing, typography } from "../../src/theme";
+import { colors, spacing, radius, typography } from '../src/theme';
 
 function OrderCard({ order }: { order: any }) {
-    const { theme } = useStyles();
+    const theme = { colors, spacing, radius, typography };
   const firstItem = order.items?.[0];
 
   const getStatusColor = (status: string) => {
@@ -22,7 +22,7 @@ function OrderCard({ order }: { order: any }) {
       case "shipped":
         return "#4A90E2"; // Blue
       default:
-        return theme.colors.textMuted;
+        return colors.textMuted;
     }
   };
 
@@ -71,7 +71,7 @@ function OrderCard({ order }: { order: any }) {
               transition={300}
             />
           ) : (
-            <Package color={theme.colors.textMuted} size={24} />
+            <Package color={colors.textMuted} size={24} />
           )}
         </View>
         <View style={styles.orderInfo}>
@@ -105,7 +105,7 @@ function OrderCard({ order }: { order: any }) {
 }
 
 export default function OrdersScreen() {
-    const { theme } = useStyles();
+    const theme = { colors, spacing, radius, typography };
   const insets = useSafeAreaInsets();
   const router = useRouter();
 
@@ -118,7 +118,7 @@ export default function OrdersScreen() {
         <IconButton
           icon={
             <ChevronLeft
-              color={theme.colors.textPrimary}
+              color={colors.textPrimary}
               size={24}
               strokeWidth={2.5}
             />
@@ -154,7 +154,7 @@ export default function OrdersScreen() {
           showsVerticalScrollIndicator={false}
           ListEmptyComponent={
             <View style={styles.emptyContainer}>
-              <Package color={theme.colors.textMuted} size={48} strokeWidth={1.5} />
+              <Package color={colors.textMuted} size={48} strokeWidth={1.5} />
               <Text style={styles.emptyTitle}>No Orders Yet</Text>
               <Text style={styles.emptySubtitle}>
                 You haven't placed any orders. Start exploring to find your
@@ -174,17 +174,17 @@ export default function OrdersScreen() {
   );
 }
 
-const styles = StyleSheet.create((theme) => ({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: theme.colors.backgroundLight,
+    backgroundColor: colors.backgroundLight,
   },
   header: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingHorizontal: theme.spacing.sm,
-    paddingVertical: theme.spacing.md,
+    paddingHorizontal: spacing.sm,
+    paddingVertical: spacing.md,
   },
   backButton: {
     backgroundColor: "transparent",
@@ -192,19 +192,19 @@ const styles = StyleSheet.create((theme) => ({
     elevation: 0,
   },
   headerTitle: {
-    fontFamily: theme.typography.families.extrabold,
-    fontSize: theme.typography.sizes.lg,
-    color: theme.colors.textPrimary,
+    fontFamily: typography.families.extrabold,
+    fontSize: typography.sizes.lg,
+    color: colors.textPrimary,
   },
   listContent: {
-    padding: theme.spacing.md,
-    paddingBottom: theme.spacing.xxxl,
+    padding: spacing.md,
+    paddingBottom: spacing.xxxl,
   },
   card: {
-    backgroundColor: theme.colors.surface,
-    borderRadius: theme.radius.xxl,
-    padding: theme.spacing.lg,
-    marginBottom: theme.spacing.lg,
+    backgroundColor: colors.surface,
+    borderRadius: radius.xxl,
+    padding: spacing.lg,
+    marginBottom: spacing.lg,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.04,
@@ -215,18 +215,18 @@ const styles = StyleSheet.create((theme) => ({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: theme.spacing.md,
+    marginBottom: spacing.md,
   },
   orderId: {
-    fontFamily: theme.typography.families.extrabold,
-    fontSize: theme.typography.sizes.md,
-    color: theme.colors.textPrimary,
+    fontFamily: typography.families.extrabold,
+    fontSize: typography.sizes.md,
+    color: colors.textPrimary,
     letterSpacing: 0.5,
   },
   orderDate: {
-    fontFamily: theme.typography.families.semibold,
-    fontSize: theme.typography.sizes.xs,
-    color: theme.colors.textMuted,
+    fontFamily: typography.families.semibold,
+    fontSize: typography.sizes.xs,
+    color: colors.textMuted,
   },
   cardBody: {
     flexDirection: "row",
@@ -235,11 +235,11 @@ const styles = StyleSheet.create((theme) => ({
   imageContainer: {
     width: 80,
     height: 80,
-    backgroundColor: theme.colors.backgroundLight,
-    borderRadius: theme.radius.xl,
+    backgroundColor: colors.backgroundLight,
+    borderRadius: radius.xl,
     justifyContent: "center",
     alignItems: "center",
-    padding: theme.spacing.sm,
+    padding: spacing.sm,
   },
   productImage: {
     width: "100%",
@@ -247,29 +247,29 @@ const styles = StyleSheet.create((theme) => ({
   },
   orderInfo: {
     flex: 1,
-    marginLeft: theme.spacing.lg,
+    marginLeft: spacing.lg,
   },
   productName: {
-    fontFamily: theme.typography.families.semibold,
-    fontSize: theme.typography.sizes.md,
-    color: theme.colors.textPrimary,
+    fontFamily: typography.families.semibold,
+    fontSize: typography.sizes.md,
+    color: colors.textPrimary,
     marginBottom: 4,
   },
   itemCount: {
-    fontFamily: theme.typography.families.regular,
-    fontSize: theme.typography.sizes.sm,
-    color: theme.colors.textMuted,
+    fontFamily: typography.families.regular,
+    fontSize: typography.sizes.sm,
+    color: colors.textMuted,
     marginBottom: 6,
   },
   orderTotal: {
-    fontFamily: theme.typography.families.extrabold,
-    fontSize: theme.typography.sizes.md,
-    color: theme.colors.textPrimary,
+    fontFamily: typography.families.extrabold,
+    fontSize: typography.sizes.md,
+    color: colors.textPrimary,
   },
   divider: {
     height: 1,
-    backgroundColor: theme.colors.backgroundLight,
-    marginVertical: theme.spacing.md,
+    backgroundColor: colors.backgroundLight,
+    marginVertical: spacing.md,
   },
   cardFooter: {
     flexDirection: "row",
@@ -279,48 +279,48 @@ const styles = StyleSheet.create((theme) => ({
   statusBadge: {
     flexDirection: "row",
     alignItems: "center",
-    paddingHorizontal: theme.spacing.md,
+    paddingHorizontal: spacing.md,
     paddingVertical: 6,
-    borderRadius: theme.radius.round,
+    borderRadius: radius.round,
     gap: 6,
   },
   statusText: {
-    fontFamily: theme.typography.families.extrabold,
+    fontFamily: typography.families.extrabold,
     fontSize: 10,
     textTransform: "uppercase",
     letterSpacing: 1,
   },
   detailsLink: {
-    fontFamily: theme.typography.families.semibold,
-    fontSize: theme.typography.sizes.sm,
-    color: theme.colors.textPrimary,
+    fontFamily: typography.families.semibold,
+    fontSize: typography.sizes.sm,
+    color: colors.textPrimary,
     textDecorationLine: "underline",
   },
   emptyContainer: {
     paddingTop: 100,
     alignItems: "center",
-    paddingHorizontal: theme.spacing.xl,
+    paddingHorizontal: spacing.xl,
   },
   emptyTitle: {
-    fontFamily: theme.typography.families.extrabold,
-    fontSize: theme.typography.sizes.xl,
-    color: theme.colors.textPrimary,
-    marginTop: theme.spacing.lg,
-    marginBottom: theme.spacing.sm,
+    fontFamily: typography.families.extrabold,
+    fontSize: typography.sizes.xl,
+    color: colors.textPrimary,
+    marginTop: spacing.lg,
+    marginBottom: spacing.sm,
   },
   emptySubtitle: {
-    fontFamily: theme.typography.families.regular,
-    fontSize: theme.typography.sizes.md,
-    color: theme.colors.textMuted,
+    fontFamily: typography.families.regular,
+    fontSize: typography.sizes.md,
+    color: colors.textMuted,
     textAlign: "center",
     lineHeight: 22,
-    marginBottom: theme.spacing.xxl,
+    marginBottom: spacing.xxl,
   },
   exploreButton: {
-    backgroundColor: theme.colors.textPrimary,
-    paddingHorizontal: theme.spacing.xxxl,
-    paddingVertical: theme.spacing.lg,
-    borderRadius: theme.radius.round,
+    backgroundColor: colors.textPrimary,
+    paddingHorizontal: spacing.xxxl,
+    paddingVertical: spacing.lg,
+    borderRadius: radius.round,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 8 },
     shadowOpacity: 0.15,
@@ -328,9 +328,9 @@ const styles = StyleSheet.create((theme) => ({
     elevation: 8,
   },
   exploreButtonText: {
-    fontFamily: theme.typography.families.extrabold,
+    fontFamily: typography.families.extrabold,
     fontSize: 12,
-    color: theme.colors.textInverse,
+    color: colors.textInverse,
     letterSpacing: 1.5,
   },
-}));
+});

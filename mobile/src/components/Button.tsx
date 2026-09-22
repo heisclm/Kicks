@@ -1,8 +1,8 @@
 import React from 'react';
 import { Pressable, Text, PressableProps, StyleProp, ViewStyle, TextStyle, ActivityIndicator } from 'react-native';
-import { StyleSheet, useStyles } from 'react-native-unistyles';
+import { StyleSheet } from 'react-native';
 import * as Haptics from 'expo-haptics';
-import { colors, radius, spacing, typography } from '../theme';
+import { colors, spacing, radius, typography } from '../theme';
 
 export interface ButtonProps extends PressableProps {
   label: string;
@@ -30,7 +30,7 @@ export function Button({
   onPress,
   ...props
 }: ButtonProps) {
-    const { theme } = useStyles();
+    const theme = { colors, spacing, radius, typography };
   
   const handlePress = (e: any) => {
     if (disabled || isLoading) return;
@@ -41,26 +41,26 @@ export function Button({
   const getVariantStyles = () => {
     switch (variant) {
       case 'secondary':
-        return { bg: theme.colors.secondary, text: theme.colors.textPrimary, border: 'transparent' };
+        return { bg: colors.secondary, text: colors.textPrimary, border: 'transparent' };
       case 'outline':
-        return { bg: 'transparent', text: theme.colors.textPrimary, border: theme.colors.border };
+        return { bg: 'transparent', text: colors.textPrimary, border: colors.border };
       case 'ghost':
-        return { bg: 'transparent', text: theme.colors.primary, border: 'transparent' };
+        return { bg: 'transparent', text: colors.primary, border: 'transparent' };
       case 'primary':
       default:
-        return { bg: theme.colors.primary, text: theme.colors.textInverse, border: 'transparent' };
+        return { bg: colors.primary, text: colors.textInverse, border: 'transparent' };
     }
   };
 
   const getSizeStyles = () => {
     switch (size) {
       case 'sm':
-        return { py: theme.spacing.sm, px: theme.spacing.md, fontSize: theme.typography.sizes.sm };
+        return { py: spacing.sm, px: spacing.md, fontSize: typography.sizes.sm };
       case 'lg':
-        return { py: theme.spacing.lg, px: theme.spacing.xxl, fontSize: theme.typography.sizes.lg };
+        return { py: spacing.lg, px: spacing.xxl, fontSize: typography.sizes.lg };
       case 'md':
       default:
-        return { py: theme.spacing.md, px: theme.spacing.xl, fontSize: theme.typography.sizes.md };
+        return { py: spacing.md, px: spacing.xl, fontSize: typography.sizes.md };
     }
   };
 
@@ -106,15 +106,15 @@ export function Button({
   );
 }
 
-const styles = StyleSheet.create((theme) => ({
+const styles = StyleSheet.create({
   button: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: theme.radius.xxxl,
-    gap: theme.spacing.sm,
+    borderRadius: radius.xxxl,
+    gap: spacing.sm,
   },
   label: {
-    fontFamily: theme.typography.families.semibold,
+    fontFamily: typography.families.semibold,
   },
-}));
+});

@@ -1,9 +1,9 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import { StyleSheet, useStyles } from 'react-native-unistyles';
+import { StyleSheet } from 'react-native';
 import { Control, Controller } from 'react-hook-form';
 import { InputField, InputFieldProps } from './InputField';
-import { colors, typography, spacing } from '../theme';
+import { colors, spacing, radius, typography } from '../theme';
 
 interface FormInputProps extends Omit<InputFieldProps, 'value' | 'onChangeText'> {
   name: string;
@@ -11,7 +11,7 @@ interface FormInputProps extends Omit<InputFieldProps, 'value' | 'onChangeText'>
 }
 
 export function FormInput({ name, control, ...props }: FormInputProps) {
-    const { theme } = useStyles();
+    const theme = { colors, spacing, radius, typography };
   return (
     <Controller
       control={control}
@@ -33,16 +33,16 @@ export function FormInput({ name, control, ...props }: FormInputProps) {
   );
 }
 
-const styles = StyleSheet.create((theme) => ({
+const styles = StyleSheet.create({
   container: {
-    marginBottom: theme.spacing.xs,
+    marginBottom: spacing.xs,
   },
   errorText: {
-    color: theme.colors.primary, // Using red/primary for error
-    fontSize: theme.typography.sizes.sm,
-    fontFamily: theme.typography.families.regular,
+    color: colors.primary, // Using red/primary for error
+    fontSize: typography.sizes.sm,
+    fontFamily: typography.families.regular,
     marginTop: -8,
     marginBottom: 8,
     marginLeft: 4,
   },
-}));
+});

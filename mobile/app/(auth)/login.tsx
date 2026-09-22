@@ -19,11 +19,11 @@ import Svg, { Defs, RadialGradient, Rect, Stop } from "react-native-svg";
 
 import { supabase } from "../../src/api/supabase";
 import { useToastStore } from "../../src/store/useToastStore";
-import { colors, radius, spacing, typography } from "../../src/theme";
-import { useStyles } from "react-native-unistyles";
+import { colors, spacing, radius, typography } from '../src/theme';
+import { StyleSheet } from 'react-native';
 
 export default function LoginScreen() {
-    const { theme } = useStyles();
+    const theme = { colors, spacing, radius, typography };
   const router = useRouter();
   const insets = useSafeAreaInsets();
 
@@ -96,8 +96,8 @@ export default function LoginScreen() {
           contentContainerStyle={[
             styles.scrollContent,
             {
-              paddingTop: insets.top + theme.spacing.md,
-              paddingBottom: insets.bottom + theme.spacing.xl,
+              paddingTop: insets.top + spacing.md,
+              paddingBottom: insets.bottom + spacing.xl,
             },
           ]}
           showsVerticalScrollIndicator={false}
@@ -186,17 +186,17 @@ export default function LoginScreen() {
   );
 }
 
-const styles = StyleSheet.create((theme) => ({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#1a100c",
   },
   scrollContent: {
     flexGrow: 1,
-    paddingHorizontal: theme.spacing.xl,
+    paddingHorizontal: spacing.xl,
   },
   backButton: {
-    marginBottom: theme.spacing.xxl,
+    marginBottom: spacing.xxl,
     alignSelf: "flex-start",
   },
   backIconWrapper: {
@@ -210,19 +210,19 @@ const styles = StyleSheet.create((theme) => ({
     borderColor: "rgba(255,255,255,0.05)",
   },
   header: {
-    marginBottom: theme.spacing.xxxl,
+    marginBottom: spacing.xxxl,
   },
   title: {
-    fontFamily: theme.typography.families.extrabold,
+    fontFamily: typography.families.extrabold,
     fontSize: 40,
     lineHeight: 44,
     color: "#ffffff",
-    marginBottom: theme.spacing.sm,
+    marginBottom: spacing.sm,
     letterSpacing: -1,
   },
   subtitle: {
-    fontFamily: theme.typography.families.regular,
-    fontSize: theme.typography.sizes.md,
+    fontFamily: typography.families.regular,
+    fontSize: typography.sizes.md,
     color: "rgba(255,255,255,0.7)",
     lineHeight: 24,
   },
@@ -230,13 +230,13 @@ const styles = StyleSheet.create((theme) => ({
     flex: 1,
   },
   inputGroup: {
-    marginBottom: theme.spacing.xl,
+    marginBottom: spacing.xl,
   },
   label: {
-    fontFamily: theme.typography.families.semibold,
-    fontSize: theme.typography.sizes.xs,
+    fontFamily: typography.families.semibold,
+    fontSize: typography.sizes.xs,
     color: "rgba(255,255,255,0.6)",
-    marginBottom: theme.spacing.sm,
+    marginBottom: spacing.sm,
     letterSpacing: 1,
   },
   inputContainer: {
@@ -245,35 +245,35 @@ const styles = StyleSheet.create((theme) => ({
     backgroundColor: "rgba(255,255,255,0.05)",
     borderWidth: 1,
     borderColor: "rgba(255,255,255,0.1)",
-    borderRadius: theme.radius.md,
-    paddingHorizontal: theme.spacing.md,
+    borderRadius: radius.md,
+    paddingHorizontal: spacing.md,
     height: 60,
   },
   input: {
     flex: 1,
     color: "#ffffff",
-    fontFamily: theme.typography.families.regular,
-    fontSize: theme.typography.sizes.md,
-    marginLeft: theme.spacing.md,
+    fontFamily: typography.families.regular,
+    fontSize: typography.sizes.md,
+    marginLeft: spacing.md,
   },
   forgotPasswordContainer: {
     alignItems: "flex-end",
-    marginBottom: theme.spacing.xxl,
-    marginTop: -theme.spacing.sm,
+    marginBottom: spacing.xxl,
+    marginTop: -spacing.sm,
   },
   forgotPasswordText: {
-    fontFamily: theme.typography.families.regular,
-    fontSize: theme.typography.sizes.sm,
+    fontFamily: typography.families.regular,
+    fontSize: typography.sizes.sm,
     color: "rgba(255,255,255,0.6)",
   },
   loginButton: {
     flexDirection: "row",
-    backgroundColor: theme.colors.accent,
+    backgroundColor: colors.accent,
     height: 64,
-    borderRadius: theme.radius.round,
+    borderRadius: radius.round,
     justifyContent: "center",
     alignItems: "center",
-    shadowColor: theme.colors.accent,
+    shadowColor: colors.accent,
     shadowOffset: { width: 0, height: 8 },
     shadowOpacity: 0.4,
     shadowRadius: 16,
@@ -283,26 +283,26 @@ const styles = StyleSheet.create((theme) => ({
     opacity: 0.5,
   },
   loginButtonText: {
-    fontFamily: theme.typography.families.extrabold,
-    fontSize: theme.typography.sizes.md,
+    fontFamily: typography.families.extrabold,
+    fontSize: typography.sizes.md,
     color: "#ffffff",
     letterSpacing: 2,
-    marginRight: theme.spacing.xs,
+    marginRight: spacing.xs,
   },
   footer: {
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    marginTop: theme.spacing.xxxl,
+    marginTop: spacing.xxxl,
   },
   footerText: {
-    fontFamily: theme.typography.families.regular,
-    fontSize: theme.typography.sizes.md,
+    fontFamily: typography.families.regular,
+    fontSize: typography.sizes.md,
     color: "rgba(255,255,255,0.6)",
   },
   footerLink: {
-    fontFamily: theme.typography.families.semibold,
-    fontSize: theme.typography.sizes.md,
+    fontFamily: typography.families.semibold,
+    fontSize: typography.sizes.md,
     color: "#ffffff",
   },
-}));
+});

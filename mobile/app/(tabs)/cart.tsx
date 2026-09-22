@@ -1,10 +1,10 @@
 import React from 'react';
 import { View, Text, FlatList, Pressable } from 'react-native';
-import { StyleSheet, useStyles } from 'react-native-unistyles';
+import { StyleSheet } from 'react-native';
 import { useRouter, Head } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ShoppingBag, MoreHorizontal } from 'lucide-react-native';
-import { colors, spacing, typography, radius } from '../../src/theme';
+import { colors, spacing, radius, typography } from '../src/theme';
 import { useProducts } from '../../src/hooks/useProducts';
 import { CartItemCard } from '../../src/components/CartItemCard';
 import { IconButton } from '../../src/components/IconButton';
@@ -23,7 +23,7 @@ export default function CartScreen() {
 }
 
 function CartScreenContent() {
-    const { theme } = useStyles();
+    const theme = { colors, spacing, radius, typography };
   const insets = useSafeAreaInsets();
   const router = useRouter();
   
@@ -43,7 +43,7 @@ function CartScreenContent() {
   const renderEmptyState = () => (
     <View style={styles.emptyContainer}>
       <View style={styles.emptyIconWrapper}>
-        <ShoppingBag color={theme.colors.textInverse} size={40} strokeWidth={2} />
+        <ShoppingBag color={colors.textInverse} size={40} strokeWidth={2} />
       </View>
       <Text style={styles.emptyTitle}>Your Cart is Empty</Text>
       <Text style={styles.emptySubtitle}>
@@ -64,7 +64,7 @@ function CartScreenContent() {
         <Text style={styles.headerSubtitle}>SHOPPING BAG</Text>
         <Text style={styles.title}>My Cart</Text>
       </View>
-      <IconButton icon={<MoreHorizontal color={theme.colors.textPrimary} size={24} strokeWidth={2} />} />
+      <IconButton icon={<MoreHorizontal color={colors.textPrimary} size={24} strokeWidth={2} />} />
     </View>
   );
 
@@ -100,7 +100,7 @@ function CartScreenContent() {
   };
 
   return (
-    <View style={[styles.container, { paddingTop: insets.top + theme.spacing.md }]}>
+    <View style={[styles.container, { paddingTop: insets.top + spacing.md }]}>
       {items.length === 0 ? (
         <View style={styles.emptyWrapper}>
           {renderHeader()}
@@ -144,40 +144,40 @@ function CartScreenContent() {
   );
 }
 
-const styles = StyleSheet.create((theme) => ({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: theme.colors.backgroundLight,
+    backgroundColor: colors.backgroundLight,
   },
   emptyWrapper: {
     flex: 1,
-    paddingHorizontal: theme.spacing.md,
+    paddingHorizontal: spacing.md,
   },
   scrollContent: {
-    paddingHorizontal: theme.spacing.md,
+    paddingHorizontal: spacing.md,
     width: '100%',
     maxWidth: 700,
     alignSelf: 'center',
   },
   header: {
-    marginBottom: theme.spacing.xl,
-    paddingHorizontal: theme.spacing.sm,
+    marginBottom: spacing.xl,
+    paddingHorizontal: spacing.sm,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
   },
   headerSubtitle: {
-    fontFamily: theme.typography.families.semibold,
+    fontFamily: typography.families.semibold,
     fontSize: 11,
-    color: theme.colors.textMuted,
+    color: colors.textMuted,
     letterSpacing: 3,
     marginBottom: 6,
     textTransform: 'uppercase',
   },
   title: {
     fontSize: 34,
-    fontFamily: theme.typography.families.extrabold,
-    color: theme.colors.textPrimary,
+    fontFamily: typography.families.extrabold,
+    color: colors.textPrimary,
     letterSpacing: -1.5,
   },
   
@@ -186,96 +186,96 @@ const styles = StyleSheet.create((theme) => ({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: theme.spacing.xl,
+    paddingHorizontal: spacing.xl,
     marginTop: -80,
   },
   emptyIconWrapper: {
     width: 90,
     height: 90,
     borderRadius: 45,
-    backgroundColor: theme.colors.textPrimary, // Dark contrast circle
+    backgroundColor: colors.textPrimary, // Dark contrast circle
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: theme.spacing.xl,
-    shadowColor: theme.colors.textPrimary,
+    marginBottom: spacing.xl,
+    shadowColor: colors.textPrimary,
     shadowOffset: { width: 0, height: 10 },
     shadowOpacity: 0.2,
     shadowRadius: 15,
     elevation: 10,
   },
   emptyTitle: {
-    fontFamily: theme.typography.families.extrabold,
-    fontSize: theme.typography.sizes.xxl,
-    color: theme.colors.textPrimary,
-    marginBottom: theme.spacing.sm,
+    fontFamily: typography.families.extrabold,
+    fontSize: typography.sizes.xxl,
+    color: colors.textPrimary,
+    marginBottom: spacing.sm,
     textAlign: 'center',
   },
   emptySubtitle: {
-    fontFamily: theme.typography.families.regular,
-    fontSize: theme.typography.sizes.md,
-    color: theme.colors.textMuted,
+    fontFamily: typography.families.regular,
+    fontSize: typography.sizes.md,
+    color: colors.textMuted,
     textAlign: 'center',
     lineHeight: 24,
-    marginBottom: theme.spacing.xxl,
+    marginBottom: spacing.xxl,
   },
   exploreButton: {
-    backgroundColor: theme.colors.primary,
-    paddingHorizontal: theme.spacing.xxl,
-    paddingVertical: theme.spacing.lg,
-    borderRadius: theme.radius.round,
-    shadowColor: theme.colors.primary,
+    backgroundColor: colors.primary,
+    paddingHorizontal: spacing.xxl,
+    paddingVertical: spacing.lg,
+    borderRadius: radius.round,
+    shadowColor: colors.primary,
     shadowOffset: { width: 0, height: 5 },
     shadowOpacity: 0.3,
     shadowRadius: 10,
     elevation: 5,
   },
   exploreButtonText: {
-    fontFamily: theme.typography.families.extrabold,
+    fontFamily: typography.families.extrabold,
     fontSize: 12,
-    color: theme.colors.textInverse,
+    color: colors.textInverse,
     letterSpacing: 1,
   },
 
   // Order Summary
   summaryContainer: {
-    marginTop: theme.spacing.xl,
-    paddingHorizontal: theme.spacing.sm,
+    marginTop: spacing.xl,
+    paddingHorizontal: spacing.sm,
   },
   summaryTitle: {
-    fontFamily: theme.typography.families.extrabold,
-    fontSize: theme.typography.sizes.lg,
-    color: theme.colors.textPrimary,
-    marginBottom: theme.spacing.lg,
+    fontFamily: typography.families.extrabold,
+    fontSize: typography.sizes.lg,
+    color: colors.textPrimary,
+    marginBottom: spacing.lg,
   },
   summaryRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: theme.spacing.md,
+    marginBottom: spacing.md,
   },
   summaryLabel: {
-    fontFamily: theme.typography.families.regular,
-    fontSize: theme.typography.sizes.md,
-    color: theme.colors.textMuted,
+    fontFamily: typography.families.regular,
+    fontSize: typography.sizes.md,
+    color: colors.textMuted,
   },
   summaryValue: {
-    fontFamily: theme.typography.families.semibold,
-    fontSize: theme.typography.sizes.md,
-    color: theme.colors.textPrimary,
+    fontFamily: typography.families.semibold,
+    fontSize: typography.sizes.md,
+    color: colors.textPrimary,
   },
   divider: {
     height: 1,
     backgroundColor: 'rgba(0,0,0,0.05)',
-    marginVertical: theme.spacing.sm,
+    marginVertical: spacing.sm,
   },
   summaryTotalLabel: {
-    fontFamily: theme.typography.families.extrabold,
-    fontSize: theme.typography.sizes.md,
-    color: theme.colors.textPrimary,
+    fontFamily: typography.families.extrabold,
+    fontSize: typography.sizes.md,
+    color: colors.textPrimary,
   },
   summaryTotalValue: {
-    fontFamily: theme.typography.families.extrabold,
-    fontSize: theme.typography.sizes.lg,
-    color: theme.colors.textPrimary,
+    fontFamily: typography.families.extrabold,
+    fontSize: typography.sizes.lg,
+    color: colors.textPrimary,
   },
 
   // Sticky Footer
@@ -283,8 +283,8 @@ const styles = StyleSheet.create((theme) => ({
     position: 'absolute',
     bottom: 0,
     backgroundColor: 'rgba(255,255,255,0.9)',
-    paddingTop: theme.spacing.md,
-    paddingHorizontal: theme.spacing.md,
+    paddingTop: spacing.md,
+    paddingHorizontal: spacing.md,
     borderTopWidth: 1,
     borderTopColor: 'rgba(0,0,0,0.05)',
     width: '100%',
@@ -292,19 +292,19 @@ const styles = StyleSheet.create((theme) => ({
     alignSelf: 'center',
   },
   checkoutButton: {
-    backgroundColor: theme.colors.primary,
-    paddingVertical: theme.spacing.lg,
-    borderRadius: theme.radius.round,
+    backgroundColor: colors.primary,
+    paddingVertical: spacing.lg,
+    borderRadius: radius.round,
     alignItems: 'center',
-    shadowColor: theme.colors.primary,
+    shadowColor: colors.primary,
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 10,
     elevation: 4,
   },
   checkoutButtonText: {
-    fontFamily: theme.typography.families.extrabold,
-    fontSize: theme.typography.sizes.md,
-    color: theme.colors.textInverse,
+    fontFamily: typography.families.extrabold,
+    fontSize: typography.sizes.md,
+    color: colors.textInverse,
   }
-}));
+});

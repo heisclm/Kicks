@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { View, Text, Dimensions } from 'react-native';
-import { StyleSheet, useStyles } from 'react-native-unistyles';
+import { StyleSheet } from 'react-native';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -11,7 +11,7 @@ import Animated, {
   withDelay,
 } from 'react-native-reanimated';
 import { Image as ExpoImage } from 'expo-image';
-import { colors, typography, spacing } from '../theme';
+import { colors, spacing, radius, typography } from '../theme';
 
 interface SneakerLoaderProps {
   label?: string;
@@ -21,7 +21,7 @@ interface SneakerLoaderProps {
 const { width } = Dimensions.get('window');
 
 export function SneakerLoader({ label = "Lacing up...", transparent = false }: SneakerLoaderProps) {
-    const { theme } = useStyles();
+    const theme = { colors, spacing, radius, typography };
   const floatAnim = useSharedValue(0);
   const pulseAnim = useSharedValue(0.8);
   const glowAnim = useSharedValue(0.5);
@@ -97,14 +97,14 @@ export function SneakerLoader({ label = "Lacing up...", transparent = false }: S
   );
 }
 
-const styles = StyleSheet.create((theme) => ({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
   containerSolid: {
-    backgroundColor: theme.colors.backgroundLight,
+    backgroundColor: colors.backgroundLight,
   },
   animationContainer: {
     width: 200,
@@ -118,7 +118,7 @@ const styles = StyleSheet.create((theme) => ({
     width: 120,
     height: 120,
     borderRadius: 60,
-    backgroundColor: theme.colors.primary,
+    backgroundColor: colors.primary,
     opacity: 0.15,
     filter: 'blur(20px)', // Web/New Arch
   },
@@ -143,11 +143,11 @@ const styles = StyleSheet.create((theme) => ({
     zIndex: 1,
   },
   label: {
-    fontFamily: theme.typography.families.semibold,
+    fontFamily: typography.families.semibold,
     fontSize: 16,
-    color: theme.colors.textSecondary,
+    color: colors.textSecondary,
     letterSpacing: 2,
     marginTop: 20,
     textTransform: 'uppercase',
   },
-}));
+});

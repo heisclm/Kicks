@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, Modal, TextInput, Pressable, KeyboardAvoidingView, Platform, ActivityIndicator } from 'react-native';
-import { StyleSheet, useStyles } from 'react-native-unistyles';
+import { StyleSheet } from 'react-native';
 import { X, Star } from 'lucide-react-native';
-import { colors, radius, spacing, typography } from '../theme';
+import { colors, spacing, radius, typography } from '../theme';
 import { Button } from './Button';
 import { useAuthStore } from '../store/useAuthStore';
 import { useToastStore } from '../store/useToastStore';
@@ -15,7 +15,7 @@ interface AddReviewModalProps {
 }
 
 export function AddReviewModal({ visible, onClose, onSubmit, isSubmitting }: AddReviewModalProps) {
-    const { theme } = useStyles();
+    const theme = { colors, spacing, radius, typography };
   const [rating, setRating] = useState(5);
   const [comment, setComment] = useState('');
 
@@ -44,7 +44,7 @@ export function AddReviewModal({ visible, onClose, onSubmit, isSubmitting }: Add
           <View style={styles.header}>
             <Text style={styles.title}>Write a Review</Text>
             <Pressable onPress={onClose} style={styles.closeBtn}>
-              <X color={theme.colors.textPrimary} size={24} />
+              <X color={colors.textPrimary} size={24} />
             </Pressable>
           </View>
           
@@ -52,7 +52,7 @@ export function AddReviewModal({ visible, onClose, onSubmit, isSubmitting }: Add
             {[1, 2, 3, 4, 5].map((star) => (
               <Pressable key={star} onPress={() => setRating(star)} style={styles.starBtn}>
                 <Star 
-                  color={star <= rating ? '#F5A623' : theme.colors.border} 
+                  color={star <= rating ? '#F5A623' : colors.border} 
                   fill={star <= rating ? '#F5A623' : 'transparent'} 
                   size={32} 
                 />
@@ -63,7 +63,7 @@ export function AddReviewModal({ visible, onClose, onSubmit, isSubmitting }: Add
           <TextInput
             style={styles.input}
             placeholder="What did you think about this product?"
-            placeholderTextColor={theme.colors.textMuted}
+            placeholderTextColor={colors.textMuted}
             value={comment}
             onChangeText={setComment}
             multiline
@@ -83,53 +83,53 @@ export function AddReviewModal({ visible, onClose, onSubmit, isSubmitting }: Add
   );
 }
 
-const styles = StyleSheet.create((theme) => ({
+const styles = StyleSheet.create({
   overlay: {
     flex: 1,
     backgroundColor: 'rgba(0,0,0,0.5)',
     justifyContent: 'flex-end',
   },
   content: {
-    backgroundColor: theme.colors.surface,
-    borderTopLeftRadius: theme.radius.xl,
-    borderTopRightRadius: theme.radius.xl,
-    padding: theme.spacing.xl,
-    paddingBottom: theme.spacing.xxl * 2,
+    backgroundColor: colors.surface,
+    borderTopLeftRadius: radius.xl,
+    borderTopRightRadius: radius.xl,
+    padding: spacing.xl,
+    paddingBottom: spacing.xxl * 2,
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: theme.spacing.xl,
+    marginBottom: spacing.xl,
   },
   title: {
-    fontFamily: theme.typography.families.extrabold,
-    fontSize: theme.typography.sizes.lg,
-    color: theme.colors.textPrimary,
+    fontFamily: typography.families.extrabold,
+    fontSize: typography.sizes.lg,
+    color: colors.textPrimary,
   },
   closeBtn: {
-    padding: theme.spacing.xs,
+    padding: spacing.xs,
   },
   ratingContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
-    marginBottom: theme.spacing.xl,
-    gap: theme.spacing.sm,
+    marginBottom: spacing.xl,
+    gap: spacing.sm,
   },
   starBtn: {
-    padding: theme.spacing.xs,
+    padding: spacing.xs,
   },
   input: {
-    backgroundColor: theme.colors.backgroundLight,
-    borderRadius: theme.radius.md,
-    padding: theme.spacing.md,
-    fontFamily: theme.typography.families.regular,
-    fontSize: theme.typography.sizes.md,
-    color: theme.colors.textPrimary,
+    backgroundColor: colors.backgroundLight,
+    borderRadius: radius.md,
+    padding: spacing.md,
+    fontFamily: typography.families.regular,
+    fontSize: typography.sizes.md,
+    color: colors.textPrimary,
     minHeight: 120,
-    marginBottom: theme.spacing.xl,
+    marginBottom: spacing.xl,
   },
   submitBtn: {
-    marginTop: theme.spacing.sm,
+    marginTop: spacing.sm,
   },
-}));
+});

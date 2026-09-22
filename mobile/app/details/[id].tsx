@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, Pressable, ScrollView, Dimensions } from 'react-native';
-import { StyleSheet, useStyles } from 'react-native-unistyles';
+import { StyleSheet } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ChevronLeft, Heart, Lock, RotateCcw, ShoppingBag, Star } from 'lucide-react-native';
@@ -18,7 +18,7 @@ import { Button } from '../../src/components/Button';
 import { useToastStore } from '../../src/store/useToastStore';
 import { useWishlistStore } from '../../src/store/useWishlistStore';
 import { useCartStore } from '../../src/store/useCartStore';
-import { colors, spacing, radius, typography, shadows } from '../../src/theme';
+import { colors, spacing, radius, typography } from '../src/theme';
 import { useReviews, useReviewEligibility, useAddReview } from '../../src/hooks/useReviews';
 import { AddReviewModal } from '../../src/components/AddReviewModal';
 import { useAuthStore } from '../../src/store/useAuthStore';
@@ -27,7 +27,7 @@ import { SneakerLoader } from '../../src/components/SneakerLoader';
 const { width } = Dimensions.get('window');
 
 export default function ProductDetailsScreen() {
-    const { theme } = useStyles();
+    const theme = { colors, spacing, radius, typography };
   const { id } = useLocalSearchParams<{ id: string }>();
   const router = useRouter();
   const { data: product, isLoading } = useProduct(id as string);
@@ -111,9 +111,9 @@ export default function ProductDetailsScreen() {
       <SafeAreaView edges={['top']} style={styles.safeArea}>
         {/* Header */}
         <View style={styles.header}>
-          <IconButton icon={<ChevronLeft color={theme.colors.iconDark} size={24} />} onPress={() => router.back()} />
+          <IconButton icon={<ChevronLeft color={colors.iconDark} size={24} />} onPress={() => router.back()} />
           <IconButton 
-            icon={<Heart color={isSaved ? theme.colors.primary : theme.colors.iconDark} size={24} fill={isSaved ? theme.colors.primary : 'transparent'} />} 
+            icon={<Heart color={isSaved ? colors.primary : colors.iconDark} size={24} fill={isSaved ? colors.primary : 'transparent'} />} 
             onPress={handleToggleWishlist}
           />
         </View>
@@ -257,16 +257,16 @@ export default function ProductDetailsScreen() {
       </ScrollView>
 
       {/* Bottom Bar */}
-      <View style={[styles.bottomBar, { paddingBottom: Math.max(insets.bottom, theme.spacing.xxl) }]}>
+      <View style={[styles.bottomBar, { paddingBottom: Math.max(insets.bottom, spacing.xxl) }]}>
         <View style={styles.priceContainer}>
           <Text style={styles.priceLabel}>$ {product.price}</Text>
         </View>
         <Button 
-          style={{ flex: 1.5, marginLeft: theme.spacing.xxl }}
+          style={{ flex: 1.5, marginLeft: spacing.xxl }}
           size="lg"
           label="ADD TO CART" 
           onPress={handleAddToCart} 
-          rightIcon={<CartAddIcon color={theme.colors.textInverse} size={20} strokeWidth={2.5} />} 
+          rightIcon={<CartAddIcon color={colors.textInverse} size={20} strokeWidth={2.5} />} 
         />
       </View>
 
@@ -285,20 +285,20 @@ export default function ProductDetailsScreen() {
   );
 }
 
-const styles = StyleSheet.create((theme) => ({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: theme.colors.backgroundLight,
+    backgroundColor: colors.backgroundLight,
   },
   safeArea: {
-    backgroundColor: theme.colors.backgroundLight,
+    backgroundColor: colors.backgroundLight,
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: theme.spacing.xxl,
-    paddingVertical: theme.spacing.md,
+    paddingHorizontal: spacing.xxl,
+    paddingVertical: spacing.md,
   },
   scrollContent: {
     paddingBottom: 120,
@@ -307,46 +307,46 @@ const styles = StyleSheet.create((theme) => ({
     alignSelf: 'center',
   },
   titleContainer: {
-    paddingHorizontal: theme.spacing.xxl,
-    marginTop: theme.spacing.md,
+    paddingHorizontal: spacing.xxl,
+    marginTop: spacing.md,
   },
   gender: {
-    fontFamily: theme.typography.families.semibold,
+    fontFamily: typography.families.semibold,
     fontSize: 12,
-    color: theme.colors.textMuted,
+    color: colors.textMuted,
     letterSpacing: 2,
     marginBottom: 4,
   },
   title: {
-    fontSize: theme.typography.sizes.huge,
-    fontFamily: theme.typography.families.extrabold,
-    color: theme.colors.textPrimary,
+    fontSize: typography.sizes.huge,
+    fontFamily: typography.families.extrabold,
+    color: colors.textPrimary,
   },
   imageContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: theme.spacing.xl,
+    marginTop: spacing.xl,
     height: 350,
     position: 'relative',
   },
   highlyRatedPill: {
     position: 'absolute',
-    top: theme.spacing.md,
-    left: theme.spacing.xl,
-    backgroundColor: theme.colors.surface,
-    paddingHorizontal: theme.spacing.md,
-    paddingVertical: theme.spacing.sm,
-    borderRadius: theme.radius.xxxl,
+    top: spacing.md,
+    left: spacing.xl,
+    backgroundColor: colors.surface,
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.sm,
+    borderRadius: radius.xxxl,
     flexDirection: 'row',
     alignItems: 'center',
-    gap: theme.spacing.xs,
+    gap: spacing.xs,
     zIndex: 10,
     ...theme.shadows.soft,
   },
   highlyRatedText: {
-    fontFamily: theme.typography.families.semibold,
+    fontFamily: typography.families.semibold,
     fontSize: 12,
-    color: theme.colors.textPrimary,
+    color: colors.textPrimary,
   },
   mainImage: {
     width: width * 0.9,
@@ -357,44 +357,44 @@ const styles = StyleSheet.create((theme) => ({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: theme.spacing.md,
+    marginTop: spacing.md,
     width: '60%',
   },
   rotationLine: {
     flex: 1,
     height: 1,
-    backgroundColor: theme.colors.border,
+    backgroundColor: colors.border,
     position: 'absolute',
     width: '100%',
     zIndex: 0,
-    borderRadius: theme.radius.round,
+    borderRadius: radius.round,
   },
   rotationIconContainer: {
     flexDirection: 'row',
-    backgroundColor: theme.colors.surface,
-    paddingHorizontal: theme.spacing.md,
-    paddingVertical: theme.spacing.xs,
-    borderRadius: theme.radius.xl,
+    backgroundColor: colors.surface,
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.xs,
+    borderRadius: radius.xl,
     zIndex: 1,
     ...theme.shadows.soft,
   },
   thumbnailsContainer: {
-    paddingHorizontal: theme.spacing.xxl,
-    marginTop: theme.spacing.xl,
-    gap: theme.spacing.md,
+    paddingHorizontal: spacing.xxl,
+    marginTop: spacing.xl,
+    gap: spacing.md,
   },
   thumbnailWrapper: {
     width: 70,
     height: 70,
-    borderRadius: theme.radius.lg,
-    backgroundColor: theme.colors.surface,
-    padding: theme.spacing.md,
+    borderRadius: radius.lg,
+    backgroundColor: colors.surface,
+    padding: spacing.md,
     borderWidth: 2,
     borderColor: 'transparent',
     ...theme.shadows.soft,
   },
   thumbnailWrapperSelected: {
-    borderColor: theme.colors.textPrimary,
+    borderColor: colors.textPrimary,
   },
   thumbnailImage: {
     width: '100%',
@@ -402,43 +402,43 @@ const styles = StyleSheet.create((theme) => ({
     transform: [{ rotate: '-15deg' }]
   },
   detailsContainer: {
-    paddingHorizontal: theme.spacing.xxl,
-    marginTop: theme.spacing.xxxl,
+    paddingHorizontal: spacing.xxl,
+    marginTop: spacing.xxxl,
   },
   sizeHeaderRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: theme.spacing.md,
+    marginBottom: spacing.md,
   },
   sizeLabel: {
     fontSize: 10,
-    fontFamily: theme.typography.families.semibold,
-    color: theme.colors.textMuted,
+    fontFamily: typography.families.semibold,
+    color: colors.textMuted,
     letterSpacing: 2,
   },
   sizeGuideLink: {
     fontSize: 10,
-    fontFamily: theme.typography.families.semibold,
-    color: theme.colors.textPrimary,
+    fontFamily: typography.families.semibold,
+    color: colors.textPrimary,
     letterSpacing: 1,
     textDecorationLine: 'underline',
   },
   sizesContainer: {
-    paddingVertical: theme.spacing.md,
-    gap: theme.spacing.md,
+    paddingVertical: spacing.md,
+    gap: spacing.md,
   },
   colorLabel: {
-    fontFamily: theme.typography.families.semibold,
+    fontFamily: typography.families.semibold,
     fontSize: 12,
-    color: theme.colors.textPrimary,
+    color: colors.textPrimary,
     letterSpacing: 1.5,
-    marginTop: theme.spacing.xl,
-    marginBottom: theme.spacing.sm,
+    marginTop: spacing.xl,
+    marginBottom: spacing.sm,
   },
   colorsContainer: {
-    paddingVertical: theme.spacing.sm,
-    gap: theme.spacing.md,
+    paddingVertical: spacing.sm,
+    gap: spacing.md,
   },
   colorCircle: {
     width: 36,
@@ -449,34 +449,34 @@ const styles = StyleSheet.create((theme) => ({
     ...theme.shadows.soft,
   },
   colorCircleSelected: {
-    borderColor: theme.colors.textPrimary,
+    borderColor: colors.textPrimary,
     borderWidth: 3,
   },
   descriptionLabel: {
     fontSize: 10,
-    fontFamily: theme.typography.families.semibold,
-    color: theme.colors.textMuted,
+    fontFamily: typography.families.semibold,
+    color: colors.textMuted,
     letterSpacing: 2,
-    marginTop: theme.spacing.xxxl,
-    marginBottom: theme.spacing.sm,
+    marginTop: spacing.xxxl,
+    marginBottom: spacing.sm,
   },
   description: {
-    fontSize: theme.typography.sizes.sm,
+    fontSize: typography.sizes.sm,
     lineHeight: 22,
-    color: theme.colors.textMuted,
-    fontFamily: theme.typography.families.regular,
+    color: colors.textMuted,
+    fontFamily: typography.families.regular,
   },
   bottomBar: {
     position: 'absolute',
     bottom: 0,
-    backgroundColor: theme.colors.backgroundLight,
+    backgroundColor: colors.backgroundLight,
     flexDirection: 'row',
-    paddingHorizontal: theme.spacing.xxl,
-    paddingTop: theme.spacing.xl,
+    paddingHorizontal: spacing.xxl,
+    paddingTop: spacing.xl,
     alignItems: 'center',
     justifyContent: 'space-between',
     borderTopWidth: 1,
-    borderTopColor: theme.colors.border,
+    borderTopColor: colors.border,
     width: '100%',
     maxWidth: 800,
     alignSelf: 'center',
@@ -485,25 +485,25 @@ const styles = StyleSheet.create((theme) => ({
     flex: 1,
   },
   priceLabel: {
-    fontSize: theme.typography.sizes.xl,
-    fontFamily: theme.typography.families.extrabold,
-    color: theme.colors.textPrimary,
+    fontSize: typography.sizes.xl,
+    fontFamily: typography.families.extrabold,
+    color: colors.textPrimary,
   },
   buyButton: {
     flex: 1.5,
-    backgroundColor: theme.colors.primary,
+    backgroundColor: colors.primary,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: theme.spacing.lg,
-    borderRadius: theme.radius.xxxl,
-    marginLeft: theme.spacing.xxl,
-    gap: theme.spacing.sm,
+    paddingVertical: spacing.lg,
+    borderRadius: radius.xxxl,
+    marginLeft: spacing.xxl,
+    gap: spacing.sm,
   },
   buyButtonText: {
-    color: theme.colors.textInverse,
-    fontSize: theme.typography.sizes.md,
-    fontFamily: theme.typography.families.semibold,
+    color: colors.textInverse,
+    fontSize: typography.sizes.md,
+    fontFamily: typography.families.semibold,
   },
   reviewsHeader: {
     flexDirection: 'row',
@@ -511,64 +511,64 @@ const styles = StyleSheet.create((theme) => ({
     alignItems: 'baseline',
   },
   writeReviewLink: {
-    fontFamily: theme.typography.families.extrabold,
-    fontSize: theme.typography.sizes.sm,
-    color: theme.colors.textPrimary,
+    fontFamily: typography.families.extrabold,
+    fontSize: typography.sizes.sm,
+    color: colors.textPrimary,
     textDecorationLine: 'underline',
   },
   loadingText: {
-    fontFamily: theme.typography.families.regular,
-    fontSize: theme.typography.sizes.sm,
-    color: theme.colors.textMuted,
-    marginTop: theme.spacing.md,
+    fontFamily: typography.families.regular,
+    fontSize: typography.sizes.sm,
+    color: colors.textMuted,
+    marginTop: spacing.md,
   },
   emptyReviews: {
-    fontFamily: theme.typography.families.regular,
-    fontSize: theme.typography.sizes.sm,
-    color: theme.colors.textMuted,
-    marginTop: theme.spacing.md,
+    fontFamily: typography.families.regular,
+    fontSize: typography.sizes.sm,
+    color: colors.textMuted,
+    marginTop: spacing.md,
     fontStyle: 'italic',
   },
   reviewCard: {
-    backgroundColor: theme.colors.surface,
-    padding: theme.spacing.lg,
-    borderRadius: theme.radius.xl,
-    marginTop: theme.spacing.md,
+    backgroundColor: colors.surface,
+    padding: spacing.lg,
+    borderRadius: radius.xl,
+    marginTop: spacing.md,
     ...theme.shadows.soft,
   },
   reviewHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: theme.spacing.sm,
+    marginBottom: spacing.sm,
   },
   reviewAuthorInfo: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: theme.spacing.sm,
+    gap: spacing.sm,
   },
   reviewAvatar: {
     width: 32,
     height: 32,
     borderRadius: 16,
-    backgroundColor: theme.colors.textPrimary,
+    backgroundColor: colors.textPrimary,
     justifyContent: 'center',
     alignItems: 'center',
   },
   reviewAvatarText: {
-    color: theme.colors.textInverse,
-    fontFamily: theme.typography.families.extrabold,
-    fontSize: theme.typography.sizes.sm,
+    color: colors.textInverse,
+    fontFamily: typography.families.extrabold,
+    fontSize: typography.sizes.sm,
   },
   reviewAuthorName: {
-    fontFamily: theme.typography.families.extrabold,
-    fontSize: theme.typography.sizes.sm,
-    color: theme.colors.textPrimary,
+    fontFamily: typography.families.extrabold,
+    fontSize: typography.sizes.sm,
+    color: colors.textPrimary,
   },
   reviewDate: {
-    fontFamily: theme.typography.families.regular,
+    fontFamily: typography.families.regular,
     fontSize: 10,
-    color: theme.colors.textMuted,
+    color: colors.textMuted,
   },
   reviewRating: {
     flexDirection: 'row',
@@ -576,14 +576,14 @@ const styles = StyleSheet.create((theme) => ({
     gap: 4,
   },
   reviewRatingText: {
-    fontFamily: theme.typography.families.extrabold,
-    fontSize: theme.typography.sizes.sm,
+    fontFamily: typography.families.extrabold,
+    fontSize: typography.sizes.sm,
     color: '#F5A623',
   },
   reviewComment: {
-    fontFamily: theme.typography.families.regular,
-    fontSize: theme.typography.sizes.sm,
-    color: theme.colors.textSecondary,
+    fontFamily: typography.families.regular,
+    fontSize: typography.sizes.sm,
+    color: colors.textSecondary,
     lineHeight: 20,
   }
-}));
+});

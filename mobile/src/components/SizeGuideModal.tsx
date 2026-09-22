@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, Text, Modal, Pressable, ScrollView } from 'react-native';
-import { StyleSheet, useStyles } from 'react-native-unistyles';
+import { StyleSheet } from 'react-native';
 import { X } from 'lucide-react-native';
-import { colors, spacing, typography, radius, shadows } from '../theme';
+import { colors, spacing, radius, typography } from '../theme';
 
 interface SizeGuideModalProps {
   visible: boolean;
@@ -23,7 +23,7 @@ const sizeData = [
 ];
 
 export function SizeGuideModal({ visible, onClose }: SizeGuideModalProps) {
-    const { theme } = useStyles();
+    const theme = { colors, spacing, radius, typography };
   return (
     <Modal
       visible={visible}
@@ -40,7 +40,7 @@ export function SizeGuideModal({ visible, onClose }: SizeGuideModalProps) {
               <Text style={styles.headerSubtitle}>Men's Footwear</Text>
             </View>
             <Pressable onPress={onClose} style={styles.closeButton}>
-              <X color={theme.colors.textPrimary} size={24} />
+              <X color={colors.textPrimary} size={24} />
             </Pressable>
           </View>
 
@@ -74,55 +74,55 @@ export function SizeGuideModal({ visible, onClose }: SizeGuideModalProps) {
   );
 }
 
-const styles = StyleSheet.create((theme) => ({
+const styles = StyleSheet.create({
   overlay: {
     flex: 1,
     backgroundColor: 'rgba(0, 0, 0, 0.4)',
     justifyContent: 'flex-end',
   },
   modalContent: {
-    backgroundColor: theme.colors.surface,
-    borderTopLeftRadius: theme.radius.xxxl,
-    borderTopRightRadius: theme.radius.xxxl,
+    backgroundColor: colors.surface,
+    borderTopLeftRadius: radius.xxxl,
+    borderTopRightRadius: radius.xxxl,
     height: '70%',
-    paddingTop: theme.spacing.xl,
-    paddingBottom: theme.spacing.xxxl,
+    paddingTop: spacing.xl,
+    paddingBottom: spacing.xxxl,
     ...theme.shadows.medium,
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: theme.spacing.xxl,
-    marginBottom: theme.spacing.xl,
+    paddingHorizontal: spacing.xxl,
+    marginBottom: spacing.xl,
   },
   headerTitle: {
-    fontFamily: theme.typography.families.extrabold,
-    fontSize: theme.typography.sizes.xl,
-    color: theme.colors.textPrimary,
+    fontFamily: typography.families.extrabold,
+    fontSize: typography.sizes.xl,
+    color: colors.textPrimary,
   },
   headerSubtitle: {
-    fontFamily: theme.typography.families.semibold,
-    fontSize: theme.typography.sizes.sm,
-    color: theme.colors.textMuted,
+    fontFamily: typography.families.semibold,
+    fontSize: typography.sizes.sm,
+    color: colors.textMuted,
     marginTop: 2,
   },
   closeButton: {
-    padding: theme.spacing.sm,
-    backgroundColor: theme.colors.backgroundLight,
-    borderRadius: theme.radius.round,
+    padding: spacing.sm,
+    backgroundColor: colors.backgroundLight,
+    borderRadius: radius.round,
   },
   tableHeader: {
     flexDirection: 'row',
-    paddingHorizontal: theme.spacing.xxl,
-    paddingVertical: theme.spacing.md,
+    paddingHorizontal: spacing.xxl,
+    paddingVertical: spacing.md,
     borderBottomWidth: 1,
-    borderBottomColor: theme.colors.border,
+    borderBottomColor: colors.border,
   },
   columnHeader: {
-    fontFamily: theme.typography.families.semibold,
-    fontSize: theme.typography.sizes.sm,
-    color: theme.colors.textMuted,
+    fontFamily: typography.families.semibold,
+    fontSize: typography.sizes.sm,
+    color: colors.textMuted,
   },
   col: {
     flex: 1,
@@ -133,28 +133,28 @@ const styles = StyleSheet.create((theme) => ({
   },
   tableRow: {
     flexDirection: 'row',
-    paddingHorizontal: theme.spacing.xxl,
-    paddingVertical: theme.spacing.lg,
+    paddingHorizontal: spacing.xxl,
+    paddingVertical: spacing.lg,
   },
   tableRowAlt: {
-    backgroundColor: theme.colors.backgroundLight,
+    backgroundColor: colors.backgroundLight,
   },
   cell: {
-    fontFamily: theme.typography.families.regular,
-    fontSize: theme.typography.sizes.md,
-    color: theme.colors.textPrimary,
+    fontFamily: typography.families.regular,
+    fontSize: typography.sizes.md,
+    color: colors.textPrimary,
   },
   usCell: {
-    fontFamily: theme.typography.families.semibold,
+    fontFamily: typography.families.semibold,
   },
   footer: {
-    paddingHorizontal: theme.spacing.xxl,
-    paddingTop: theme.spacing.xl,
+    paddingHorizontal: spacing.xxl,
+    paddingTop: spacing.xl,
     alignItems: 'center',
   },
   footerText: {
-    fontFamily: theme.typography.families.regular,
-    fontSize: theme.typography.sizes.sm,
-    color: theme.colors.textMuted,
+    fontFamily: typography.families.regular,
+    fontSize: typography.sizes.sm,
+    color: colors.textMuted,
   }
-}));
+});

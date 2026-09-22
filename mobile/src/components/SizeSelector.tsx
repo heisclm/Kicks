@@ -1,7 +1,7 @@
 import React from 'react';
 import { Pressable, Text } from 'react-native';
-import { StyleSheet, useStyles } from 'react-native-unistyles';
-import { colors, radius, typography } from '../theme';
+import { StyleSheet } from 'react-native';
+import { colors, spacing, radius, typography } from '../theme';
 
 interface SizeSelectorProps {
   size: number;
@@ -10,7 +10,7 @@ interface SizeSelectorProps {
 }
 
 export function SizeSelector({ size, isSelected, onPress }: SizeSelectorProps) {
-    const { theme } = useStyles();
+    const theme = { colors, spacing, radius, typography };
   return (
     <Pressable 
       style={[styles.container, isSelected && styles.containerSelected]}
@@ -26,27 +26,27 @@ export function SizeSelector({ size, isSelected, onPress }: SizeSelectorProps) {
   );
 }
 
-const styles = StyleSheet.create((theme) => ({
+const styles = StyleSheet.create({
   container: {
     width: 45,
     height: 45,
-    borderRadius: theme.radius.round,
-    backgroundColor: theme.colors.surface,
+    borderRadius: radius.round,
+    backgroundColor: colors.surface,
     alignItems: 'center',
     justifyContent: 'center',
     borderWidth: 1,
-    borderColor: theme.colors.border,
+    borderColor: colors.border,
   },
   containerSelected: {
     backgroundColor: '#7D4734', // Custom specific brown from the details screen design
     borderColor: '#7D4734',
   },
   text: {
-    fontSize: theme.typography.sizes.md,
-    fontFamily: theme.typography.families.semibold,
-    color: theme.colors.textPrimary,
+    fontSize: typography.sizes.md,
+    fontFamily: typography.families.semibold,
+    color: colors.textPrimary,
   },
   textSelected: {
-    color: theme.colors.surface,
+    color: colors.surface,
   }
-}));
+});

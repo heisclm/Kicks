@@ -1,14 +1,14 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import { StyleSheet, useStyles } from 'react-native-unistyles';
+import { StyleSheet } from 'react-native';
 import { useNetInfo } from '@react-native-community/netinfo';
 import { WifiOff } from 'lucide-react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Animated, { FadeInUp, FadeOutUp } from 'react-native-reanimated';
-import { colors, typography, spacing } from '../theme';
+import { colors, spacing, radius, typography } from '../theme';
 
 export function OfflineBanner() {
-    const { theme } = useStyles();
+    const theme = { colors, spacing, radius, typography };
   const netInfo = useNetInfo();
   const insets = useSafeAreaInsets();
 
@@ -20,37 +20,37 @@ export function OfflineBanner() {
     <Animated.View 
       entering={FadeInUp} 
       exiting={FadeOutUp} 
-      style={[styles.container, { paddingTop: insets.top + theme.spacing.xs }]}
+      style={[styles.container, { paddingTop: insets.top + spacing.xs }]}
     >
       <View style={styles.content}>
-        <WifiOff color={theme.colors.textInverse} size={16} style={styles.icon} />
+        <WifiOff color={colors.textInverse} size={16} style={styles.icon} />
         <Text style={styles.text}>No internet connection</Text>
       </View>
     </Animated.View>
   );
 }
 
-const styles = StyleSheet.create((theme) => ({
+const styles = StyleSheet.create({
   container: {
     position: 'absolute',
     top: 0,
     left: 0,
     right: 0,
-    backgroundColor: theme.colors.error,
+    backgroundColor: colors.error,
     zIndex: 999,
   },
   content: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingBottom: theme.spacing.sm,
+    paddingBottom: spacing.sm,
   },
   icon: {
-    marginRight: theme.spacing.sm,
+    marginRight: spacing.sm,
   },
   text: {
-    color: theme.colors.textInverse,
-    fontFamily: theme.typography.families.semibold,
-    fontSize: theme.typography.sizes.sm,
+    color: colors.textInverse,
+    fontFamily: typography.families.semibold,
+    fontSize: typography.sizes.sm,
   },
-}));
+});

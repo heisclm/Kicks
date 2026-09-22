@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, ScrollView, Pressable, Image } from 'react-native';
-import { StyleSheet, useStyles } from 'react-native-unistyles';
+import { StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Search, Bell } from 'lucide-react-native';
 import { useRouter, Head } from 'expo-router';
@@ -13,7 +13,7 @@ import { SneakerLoader } from '../../src/components/SneakerLoader';
 import { ErrorState } from '../../src/components/ErrorState';
 import { IconButton } from '../../src/components/IconButton';
 import { BrandPill } from '../../src/components/BrandPill';
-import { colors, spacing, radius, typography } from '../../src/theme';
+import { colors, spacing, radius, typography } from '../src/theme';
 import { useProducts } from '../../src/hooks/useProducts';
 import { useNotifications } from '../../src/hooks/useNotifications';
 
@@ -30,7 +30,7 @@ export default function HomeScreen() {
 }
 
 function HomeScreenContent() {
-    const { theme } = useStyles();
+    const theme = { colors, spacing, radius, typography };
   const router = useRouter();
   const [selectedBrand, setSelectedBrand] = useState('all');
   
@@ -81,7 +81,7 @@ function HomeScreenContent() {
       <View style={styles.header}>
         <View>
           <IconButton 
-            icon={<Bell color={theme.colors.iconDark} size={24} />} 
+            icon={<Bell color={colors.iconDark} size={24} />} 
             onPress={() => router.push('/profile/notifications' as any)} 
             accessibilityLabel="Notifications"
           />
@@ -89,7 +89,7 @@ function HomeScreenContent() {
         </View>
         <Text style={styles.headerTitle}>KICKS</Text>
         <IconButton 
-          icon={<Search color={theme.colors.iconDark} size={24} />} 
+          icon={<Search color={colors.iconDark} size={24} />} 
           onPress={() => router.push('/search' as any)} 
           accessibilityLabel="Search sneakers"
         />
@@ -100,7 +100,7 @@ function HomeScreenContent() {
         {/* Featured Banner */}
         <View style={styles.featuredContainer}>
           <LinearGradient
-            colors={[theme.colors.primary, theme.colors.secondary]}
+            colors={[colors.primary, colors.secondary]}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 1 }}
             style={styles.featuredBanner}
@@ -121,7 +121,7 @@ function HomeScreenContent() {
         </View>
 
         {/* Brands */}
-        <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.brandsContainer} contentContainerStyle={{ paddingHorizontal: theme.spacing.xxl }}>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.brandsContainer} contentContainerStyle={{ paddingHorizontal: spacing.xxl }}>
           {brands.map((brand) => (
             <BrandPill 
               key={brand.id}
@@ -140,27 +140,27 @@ function HomeScreenContent() {
   );
 }
 
-const styles = StyleSheet.create((theme) => ({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: theme.colors.backgroundLight,
+    backgroundColor: colors.backgroundLight,
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: theme.spacing.xxl,
-    paddingVertical: theme.spacing.md,
+    paddingHorizontal: spacing.xxl,
+    paddingVertical: spacing.md,
   },
   headerTitle: {
-    fontSize: theme.typography.sizes.lg,
-    fontFamily: theme.typography.families.extrabold,
-    color: theme.colors.textPrimary,
+    fontSize: typography.sizes.lg,
+    fontFamily: typography.families.extrabold,
+    color: colors.textPrimary,
   },
   headerRight: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: theme.spacing.xs,
+    gap: spacing.xs,
   },
   notificationDot: {
     position: 'absolute',
@@ -169,52 +169,52 @@ const styles = StyleSheet.create((theme) => ({
     width: 8,
     height: 8,
     borderRadius: 4,
-    backgroundColor: theme.colors.primary,
+    backgroundColor: colors.primary,
     borderWidth: 1.5,
-    borderColor: theme.colors.backgroundLight,
+    borderColor: colors.backgroundLight,
   },
   scrollContent: {
-    paddingBottom: theme.spacing.huge,
+    paddingBottom: spacing.huge,
   },
   featuredContainer: {
-    paddingHorizontal: theme.spacing.xxl,
-    marginTop: theme.spacing.xl,
+    paddingHorizontal: spacing.xxl,
+    marginTop: spacing.xl,
     width: '100%',
     maxWidth: 700,
     alignSelf: 'center',
   },
   featuredBanner: {
-    borderRadius: theme.radius.xxxl,
+    borderRadius: radius.xxxl,
     flexDirection: 'row',
     height: 180,
   },
   featuredContent: {
     flex: 1,
-    padding: theme.spacing.xxl,
+    padding: spacing.xxl,
     justifyContent: 'center',
   },
   featuredLabel: {
     color: 'rgba(255, 255, 255, 0.8)',
-    fontSize: theme.typography.sizes.xs,
-    marginBottom: theme.spacing.sm,
+    fontSize: typography.sizes.xs,
+    marginBottom: spacing.sm,
   },
   featuredTitle: {
-    color: theme.colors.textInverse,
-    fontSize: theme.typography.sizes.xl,
-    fontFamily: theme.typography.families.extrabold,
-    marginBottom: theme.spacing.lg,
+    color: colors.textInverse,
+    fontSize: typography.sizes.xl,
+    fontFamily: typography.families.extrabold,
+    marginBottom: spacing.lg,
   },
   shopNowButton: {
-    backgroundColor: theme.colors.surface,
-    paddingHorizontal: theme.spacing.lg,
-    paddingVertical: theme.spacing.sm,
-    borderRadius: theme.radius.xl,
+    backgroundColor: colors.surface,
+    paddingHorizontal: spacing.lg,
+    paddingVertical: spacing.sm,
+    borderRadius: radius.xl,
     alignSelf: 'flex-start',
   },
   shopNowText: {
-    color: theme.colors.textPrimary,
-    fontFamily: theme.typography.families.semibold,
-    fontSize: theme.typography.sizes.xs,
+    color: colors.textPrimary,
+    fontFamily: typography.families.semibold,
+    fontSize: typography.sizes.xs,
   },
   featuredImage: {
     width: 200,
@@ -225,14 +225,14 @@ const styles = StyleSheet.create((theme) => ({
     transform: [{ rotate: '-15deg' }]
   },
   brandsContainer: {
-    marginTop: theme.spacing.xxxl,
+    marginTop: spacing.xxxl,
     flexDirection: 'row',
   },
   productList: {
-    paddingHorizontal: theme.spacing.xxl,
-    marginTop: theme.spacing.xxxl,
+    paddingHorizontal: spacing.xxl,
+    marginTop: spacing.xxxl,
     width: '100%',
     maxWidth: 700,
     alignSelf: 'center',
   }
-}));
+});

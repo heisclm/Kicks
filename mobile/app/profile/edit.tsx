@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { View, Text, ScrollView, TextInput, Pressable, KeyboardAvoidingView, Platform } from 'react-native';
-import { StyleSheet, useStyles } from 'react-native-unistyles';
+import { StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ChevronLeft, Camera } from 'lucide-react-native';
 import { useToastStore } from '../../src/store/useToastStore';
-import { colors, spacing, typography, radius } from '../../src/theme';
+import { colors, spacing, radius, typography } from '../src/theme';
 import { IconButton } from '../../src/components/IconButton';
 
 export default function EditProfileScreen() {
-    const { theme } = useStyles();
+    const theme = { colors, spacing, radius, typography };
   const insets = useSafeAreaInsets();
   const router = useRouter();
 
@@ -22,9 +22,9 @@ export default function EditProfileScreen() {
       style={styles.container} 
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
     >
-      <View style={[styles.header, { paddingTop: insets.top + theme.spacing.sm }]}>
+      <View style={[styles.header, { paddingTop: insets.top + spacing.sm }]}>
         <IconButton 
-          icon={<ChevronLeft color={theme.colors.textPrimary} size={24} strokeWidth={2.5} />} 
+          icon={<ChevronLeft color={colors.textPrimary} size={24} strokeWidth={2.5} />} 
           onPress={() => router.back()} 
           style={styles.backButton}
         />
@@ -38,7 +38,7 @@ export default function EditProfileScreen() {
           <View style={styles.avatarWrapper}>
             <Text style={styles.avatarText}>JD</Text>
             <View style={styles.cameraIcon}>
-              <Camera color={theme.colors.textInverse} size={16} strokeWidth={2} />
+              <Camera color={colors.textInverse} size={16} strokeWidth={2} />
             </View>
           </View>
         </View>
@@ -50,7 +50,7 @@ export default function EditProfileScreen() {
               style={styles.input}
               value={name}
               onChangeText={setName}
-              placeholderTextColor={theme.colors.textMuted}
+              placeholderTextColor={colors.textMuted}
             />
           </View>
 
@@ -62,7 +62,7 @@ export default function EditProfileScreen() {
               onChangeText={setEmail}
               keyboardType="email-address"
               autoCapitalize="none"
-              placeholderTextColor={theme.colors.textMuted}
+              placeholderTextColor={colors.textMuted}
             />
           </View>
 
@@ -73,14 +73,14 @@ export default function EditProfileScreen() {
               value={phone}
               onChangeText={setPhone}
               keyboardType="phone-pad"
-              placeholderTextColor={theme.colors.textMuted}
+              placeholderTextColor={colors.textMuted}
             />
           </View>
         </View>
 
       </ScrollView>
 
-      <View style={[styles.footer, { paddingBottom: Math.max(insets.bottom, theme.spacing.lg) }]}>
+      <View style={[styles.footer, { paddingBottom: Math.max(insets.bottom, spacing.lg) }]}>
         <Pressable 
           style={styles.saveButton} 
           onPress={() => {
@@ -95,17 +95,17 @@ export default function EditProfileScreen() {
   );
 }
 
-const styles = StyleSheet.create((theme) => ({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: theme.colors.backgroundLight,
+    backgroundColor: colors.backgroundLight,
   },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingHorizontal: theme.spacing.sm,
-    paddingBottom: theme.spacing.md,
+    paddingHorizontal: spacing.sm,
+    paddingBottom: spacing.md,
   },
   backButton: {
     backgroundColor: 'transparent',
@@ -113,87 +113,87 @@ const styles = StyleSheet.create((theme) => ({
     elevation: 0,
   },
   headerTitle: {
-    fontFamily: theme.typography.families.extrabold,
-    fontSize: theme.typography.sizes.lg,
-    color: theme.colors.textPrimary,
+    fontFamily: typography.families.extrabold,
+    fontSize: typography.sizes.lg,
+    color: colors.textPrimary,
   },
   scrollContent: {
-    paddingHorizontal: theme.spacing.xl,
-    paddingTop: theme.spacing.lg,
-    paddingBottom: theme.spacing.xxxl,
+    paddingHorizontal: spacing.xl,
+    paddingTop: spacing.lg,
+    paddingBottom: spacing.xxxl,
   },
   avatarSection: {
     alignItems: 'center',
-    marginBottom: theme.spacing.xxxl,
+    marginBottom: spacing.xxxl,
   },
   avatarWrapper: {
     width: 100,
     height: 100,
     borderRadius: 50,
-    backgroundColor: theme.colors.primary,
+    backgroundColor: colors.primary,
     justifyContent: 'center',
     alignItems: 'center',
     position: 'relative',
   },
   avatarText: {
-    fontFamily: theme.typography.families.extrabold,
+    fontFamily: typography.families.extrabold,
     fontSize: 36,
-    color: theme.colors.textInverse,
+    color: colors.textInverse,
   },
   cameraIcon: {
     position: 'absolute',
     bottom: 0,
     right: 0,
-    backgroundColor: theme.colors.textPrimary,
+    backgroundColor: colors.textPrimary,
     width: 32,
     height: 32,
     borderRadius: 16,
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 3,
-    borderColor: theme.colors.backgroundLight,
+    borderColor: colors.backgroundLight,
   },
   form: {
-    gap: theme.spacing.lg,
+    gap: spacing.lg,
   },
   inputGroup: {
     gap: 8,
   },
   label: {
-    fontFamily: theme.typography.families.semibold,
+    fontFamily: typography.families.semibold,
     fontSize: 10,
-    color: theme.colors.textMuted,
+    color: colors.textMuted,
     letterSpacing: 2,
     marginLeft: 4,
   },
   input: {
-    backgroundColor: theme.colors.surface,
-    paddingHorizontal: theme.spacing.lg,
-    paddingVertical: theme.spacing.lg,
-    borderRadius: theme.radius.xl,
-    fontFamily: theme.typography.families.semibold,
-    fontSize: theme.typography.sizes.md,
-    color: theme.colors.textPrimary,
+    backgroundColor: colors.surface,
+    paddingHorizontal: spacing.lg,
+    paddingVertical: spacing.lg,
+    borderRadius: radius.xl,
+    fontFamily: typography.families.semibold,
+    fontSize: typography.sizes.md,
+    color: colors.textPrimary,
     borderWidth: 1,
-    borderColor: theme.colors.border,
+    borderColor: colors.border,
   },
   footer: {
-    paddingHorizontal: theme.spacing.xxl,
-    paddingTop: theme.spacing.lg,
-    backgroundColor: theme.colors.backgroundLight,
+    paddingHorizontal: spacing.xxl,
+    paddingTop: spacing.lg,
+    backgroundColor: colors.backgroundLight,
     borderTopWidth: 1,
-    borderTopColor: theme.colors.border,
+    borderTopColor: colors.border,
   },
   saveButton: {
-    backgroundColor: theme.colors.primary,
-    paddingVertical: theme.spacing.lg,
-    borderRadius: theme.radius.xxxl,
+    backgroundColor: colors.primary,
+    paddingVertical: spacing.lg,
+    borderRadius: radius.xxxl,
     alignItems: 'center',
   },
   saveButtonText: {
-    fontFamily: theme.typography.families.semibold,
-    fontSize: theme.typography.sizes.sm,
-    color: theme.colors.textInverse,
+    fontFamily: typography.families.semibold,
+    fontSize: typography.sizes.sm,
+    color: colors.textInverse,
     letterSpacing: 1,
   }
-}));
+});

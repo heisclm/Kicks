@@ -13,7 +13,7 @@ import {
   View
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { colors, spacing, typography } from "../src/theme";
+import { colors, spacing, radius, typography } from '../src/theme';
 
 const { width, height } = Dimensions.get("window");
 
@@ -25,10 +25,10 @@ import Svg, {
 } from "react-native-svg";
 
 import { useOnboardingStore } from "../src/store/useOnboardingStore";
-import { useStyles } from "react-native-unistyles";
+import { StyleSheet } from 'react-native';
 
 export default function OnboardingScreen() {
-    const { theme } = useStyles();
+    const theme = { colors, spacing, radius, typography };
   const router = useRouter();
   const insets = useSafeAreaInsets();
 
@@ -99,7 +99,7 @@ export default function OnboardingScreen() {
   if (!isHydrated || hasSeenOnboarding) {
     return (
       <View
-        style={[styles.container, { backgroundColor: theme.colors.backgroundDark }]}
+        style={[styles.container, { backgroundColor: colors.backgroundDark }]}
       />
     );
   }
@@ -180,10 +180,10 @@ export default function OnboardingScreen() {
   );
 }
 
-const styles = StyleSheet.create((theme) => ({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: theme.colors.backgroundDark,
+    backgroundColor: colors.backgroundDark,
   },
   background: {
     position: "absolute",
@@ -215,19 +215,19 @@ const styles = StyleSheet.create((theme) => ({
   contentContainer: {
     flex: 0.3,
     alignItems: "center",
-    paddingHorizontal: theme.spacing.xxxl,
+    paddingHorizontal: spacing.xxxl,
   },
   title: {
-    fontSize: theme.typography.sizes.huge,
-    fontFamily: theme.typography.families.extrabold,
-    color: theme.colors.textInverse,
+    fontSize: typography.sizes.huge,
+    fontFamily: typography.families.extrabold,
+    color: colors.textInverse,
     textAlign: "center",
     lineHeight: 40,
-    marginBottom: theme.spacing.lg,
+    marginBottom: spacing.lg,
   },
   subtitle: {
-    fontSize: theme.typography.sizes.sm,
-    color: theme.colors.textMuted,
+    fontSize: typography.sizes.sm,
+    color: colors.textMuted,
     textAlign: "center",
     lineHeight: 22,
   },
@@ -237,9 +237,9 @@ const styles = StyleSheet.create((theme) => ({
     justifyContent: "flex-start",
   },
   buttonText: {
-    color: theme.colors.textInverse,
-    fontSize: theme.typography.sizes.md,
-    fontFamily: theme.typography.families.semibold,
-    marginTop: theme.spacing.sm,
+    color: colors.textInverse,
+    fontSize: typography.sizes.md,
+    fontFamily: typography.families.semibold,
+    marginTop: spacing.sm,
   },
-}));
+});

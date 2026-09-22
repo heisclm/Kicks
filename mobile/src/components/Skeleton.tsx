@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { View, ViewStyle, DimensionValue } from 'react-native';
-import { StyleSheet, useStyles } from 'react-native-unistyles';
+import { StyleSheet } from 'react-native';
 import Animated, { 
   useAnimatedStyle, 
   useSharedValue, 
@@ -9,7 +9,7 @@ import Animated, {
   withTiming, 
   withDelay
 } from 'react-native-reanimated';
-import { colors, radius } from '../theme';
+import { colors, spacing, radius, typography } from '../theme';
 
 interface SkeletonProps {
   width?: DimensionValue;
@@ -19,8 +19,8 @@ interface SkeletonProps {
   delay?: number;
 }
 
-export function Skeleton({ width = '100%', height = 20, borderRadius = theme.radius.md, style, delay = 0 }: SkeletonProps) {
-    const { theme } = useStyles();
+export function Skeleton({ width = '100%', height = 20, borderRadius = radius.md, style, delay = 0 }: SkeletonProps) {
+    const theme = { colors, spacing, radius, typography };
   const opacity = useSharedValue(0.3);
 
   useEffect(() => {
@@ -53,9 +53,9 @@ export function Skeleton({ width = '100%', height = 20, borderRadius = theme.rad
   );
 }
 
-const styles = StyleSheet.create((theme) => ({
+const styles = StyleSheet.create({
   skeleton: {
-    backgroundColor: theme.colors.border,
+    backgroundColor: colors.border,
     overflow: 'hidden',
   },
-}));
+});

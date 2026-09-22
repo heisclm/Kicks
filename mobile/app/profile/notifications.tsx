@@ -1,19 +1,19 @@
 import React from 'react';
 import { View, Text, FlatList, Pressable } from 'react-native';
-import { StyleSheet, useStyles } from 'react-native-unistyles';
+import { StyleSheet } from 'react-native';
 import { useToastStore } from '../../src/store/useToastStore';
 import { useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ChevronLeft, Bell, Tag, Package, Sparkles } from 'lucide-react-native';
-import { colors, spacing, typography, radius } from '../../src/theme';
+import { colors, spacing, radius, typography } from '../src/theme';
 import { useNotifications, useMarkNotificationRead, useMarkAllNotificationsRead } from '../../src/hooks/useNotifications';
 import { ActivityIndicator } from 'react-native';
 import { IconButton } from '../../src/components/IconButton';
 import { SneakerLoader } from '../../src/components/SneakerLoader';
 
 function NotificationIcon({ type, isRead }: { type: string; isRead: boolean }) {
-    const { theme } = useStyles();
-  const color = isRead ? theme.colors.textMuted : theme.colors.textInverse;
+    const theme = { colors, spacing, radius, typography };
+  const color = isRead ? colors.textMuted : colors.textInverse;
   switch(type) {
     case 'Order': return <Package color={color} size={20} strokeWidth={2} />;
     case 'Release': return <Sparkles color={color} size={20} strokeWidth={2} />;
@@ -23,7 +23,7 @@ function NotificationIcon({ type, isRead }: { type: string; isRead: boolean }) {
 }
 
 function NotificationCard({ item }: { item: any }) {
-    const { theme } = useStyles();
+    const theme = { colors, spacing, radius, typography };
   const { mutate: markAsRead } = useMarkNotificationRead();
   
   const formattedDate = new Date(item.date).toLocaleDateString('en-US', {
@@ -57,7 +57,7 @@ function NotificationCard({ item }: { item: any }) {
 }
 
 export default function NotificationsScreen() {
-    const { theme } = useStyles();
+    const theme = { colors, spacing, radius, typography };
   const insets = useSafeAreaInsets();
   const router = useRouter();
   
@@ -71,7 +71,7 @@ export default function NotificationsScreen() {
       {/* Header */}
       <View style={styles.header}>
         <IconButton 
-          icon={<ChevronLeft color={theme.colors.textPrimary} size={24} strokeWidth={2.5} />} 
+          icon={<ChevronLeft color={colors.textPrimary} size={24} strokeWidth={2.5} />} 
           onPress={() => router.back()} 
           style={styles.backButton}
         />
@@ -79,7 +79,7 @@ export default function NotificationsScreen() {
         {hasUnread ? (
           <Pressable onPress={() => markAllAsRead()} disabled={isMarkingAll}>
             {isMarkingAll ? (
-              <ActivityIndicator size="small" color={theme.colors.primary} />
+              <ActivityIndicator size="small" color={colors.primary} />
             ) : (
               <Text style={styles.markAllText}>Mark all</Text>
             )}
@@ -107,9 +107,9 @@ export default function NotificationsScreen() {
           showsVerticalScrollIndicator={false}
           ListEmptyComponent={
             <View style={[styles.emptyContainer, { flex: 1, justifyContent: 'center', alignItems: 'center', marginTop: 100 }]}>
-              <Bell color={theme.colors.textMuted} size={48} strokeWidth={1.5} />
-              <Text style={[styles.title, { marginTop: theme.spacing.md, color: theme.colors.textPrimary }]}>No Notifications</Text>
-              <Text style={[styles.message, { marginTop: theme.spacing.xs, textAlign: 'center' }]}>You're all caught up!</Text>
+              <Bell color={colors.textMuted} size={48} strokeWidth={1.5} />
+              <Text style={[styles.title, { marginTop: spacing.md, color: colors.textPrimary }]}>No Notifications</Text>
+              <Text style={[styles.message, { marginTop: spacing.xs, textAlign: 'center' }]}>You're all caught up!</Text>
             </View>
           }
         />
@@ -118,19 +118,19 @@ export default function NotificationsScreen() {
   );
 }
 
-const styles = StyleSheet.create((theme) => ({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: theme.colors.backgroundLight,
+    backgroundColor: colors.backgroundLight,
   },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingHorizontal: theme.spacing.sm,
-    paddingVertical: theme.spacing.md,
+    paddingHorizontal: spacing.sm,
+    paddingVertical: spacing.md,
     borderBottomWidth: 1,
-    borderBottomColor: theme.colors.border,
+    borderBottomColor: colors.border,
   },
   backButton: {
     backgroundColor: 'transparent',
@@ -138,19 +138,19 @@ const styles = StyleSheet.create((theme) => ({
     elevation: 0,
   },
   headerTitle: {
-    fontFamily: theme.typography.families.extrabold,
-    fontSize: theme.typography.sizes.lg,
-    color: theme.colors.textPrimary,
+    fontFamily: typography.families.extrabold,
+    fontSize: typography.sizes.lg,
+    color: colors.textPrimary,
   },
   listContent: {
-    paddingBottom: theme.spacing.xxxl,
+    paddingBottom: spacing.xxxl,
   },
   card: {
     flexDirection: 'row',
-    padding: theme.spacing.xl,
+    padding: spacing.xl,
     borderBottomWidth: 1,
-    borderBottomColor: theme.colors.border,
-    backgroundColor: theme.colors.backgroundLight,
+    borderBottomColor: colors.border,
+    backgroundColor: colors.backgroundLight,
   },
   cardUnread: {
     backgroundColor: '#fff', // Slightly brighter to pop
@@ -159,13 +159,13 @@ const styles = StyleSheet.create((theme) => ({
     width: 48,
     height: 48,
     borderRadius: 24,
-    backgroundColor: theme.colors.surface,
+    backgroundColor: colors.surface,
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: theme.spacing.lg,
+    marginRight: spacing.lg,
   },
   iconContainerUnread: {
-    backgroundColor: theme.colors.textPrimary, // Dark contrast for unread
+    backgroundColor: colors.textPrimary, // Dark contrast for unread
   },
   contentContainer: {
     flex: 1,
@@ -178,35 +178,35 @@ const styles = StyleSheet.create((theme) => ({
     marginBottom: 4,
   },
   title: {
-    fontFamily: theme.typography.families.semibold,
-    fontSize: theme.typography.sizes.md,
-    color: theme.colors.textMuted,
+    fontFamily: typography.families.semibold,
+    fontSize: typography.sizes.md,
+    color: colors.textMuted,
     flex: 1,
-    marginRight: theme.spacing.md,
+    marginRight: spacing.md,
   },
   titleUnread: {
-    fontFamily: theme.typography.families.extrabold,
-    color: theme.colors.textPrimary,
+    fontFamily: typography.families.extrabold,
+    color: colors.textPrimary,
   },
   date: {
-    fontFamily: theme.typography.families.semibold,
+    fontFamily: typography.families.semibold,
     fontSize: 10,
-    color: theme.colors.textMuted,
+    color: colors.textMuted,
     textTransform: 'uppercase',
     letterSpacing: 0.5,
   },
   message: {
-    fontFamily: theme.typography.families.regular,
-    fontSize: theme.typography.sizes.sm,
-    color: theme.colors.textMuted,
+    fontFamily: typography.families.regular,
+    fontSize: typography.sizes.sm,
+    color: colors.textMuted,
     lineHeight: 20,
   },
   emptyContainer: {
-    padding: theme.spacing.xl,
+    padding: spacing.xl,
   },
   markAllText: {
-    fontFamily: theme.typography.families.extrabold,
-    fontSize: theme.typography.sizes.sm,
-    color: theme.colors.primary,
+    fontFamily: typography.families.extrabold,
+    fontSize: typography.sizes.sm,
+    color: colors.primary,
   }
-}));
+});

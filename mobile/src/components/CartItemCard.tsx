@@ -1,10 +1,10 @@
 import React from 'react';
 import { View, Text, Pressable } from 'react-native';
-import { StyleSheet, useStyles } from 'react-native-unistyles';
+import { StyleSheet } from 'react-native';
 import { Image as ExpoImage } from 'expo-image';
 import { Trash2, Minus, Plus } from 'lucide-react-native';
 import { CartItem, Product } from '../types';
-import { colors, spacing, radius, typography, shadows } from '../theme';
+import { colors, spacing, radius, typography } from '../theme';
 
 interface CartItemCardProps {
   cartItem: CartItem;
@@ -15,7 +15,7 @@ interface CartItemCardProps {
 }
 
 export function CartItemCard({ cartItem, product, onIncrease, onDecrease, onRemove }: CartItemCardProps) {
-    const { theme } = useStyles();
+    const theme = { colors, spacing, radius, typography };
   return (
     <View style={[styles.card, theme.shadows.soft]}>
       <View style={styles.imageContainer}>
@@ -35,7 +35,7 @@ export function CartItemCard({ cartItem, product, onIncrease, onDecrease, onRemo
             accessibilityRole="button"
             accessibilityLabel={`Remove ${product.name} from cart`}
           >
-            <Trash2 color={theme.colors.textMuted} size={18} strokeWidth={2} />
+            <Trash2 color={colors.textMuted} size={18} strokeWidth={2} />
           </Pressable>
         </View>
 
@@ -52,7 +52,7 @@ export function CartItemCard({ cartItem, product, onIncrease, onDecrease, onRemo
               accessibilityRole="button"
               accessibilityLabel="Decrease quantity"
             >
-              <Minus color={theme.colors.textPrimary} size={14} strokeWidth={2.5} />
+              <Minus color={colors.textPrimary} size={14} strokeWidth={2.5} />
             </Pressable>
             <Text style={styles.qtyText} accessibilityLabel={`Quantity ${cartItem.quantity}`}>{cartItem.quantity}</Text>
             <Pressable 
@@ -62,7 +62,7 @@ export function CartItemCard({ cartItem, product, onIncrease, onDecrease, onRemo
               accessibilityRole="button"
               accessibilityLabel="Increase quantity"
             >
-              <Plus color={theme.colors.textPrimary} size={14} strokeWidth={2.5} />
+              <Plus color={colors.textPrimary} size={14} strokeWidth={2.5} />
             </Pressable>
           </View>
         </View>
@@ -71,20 +71,20 @@ export function CartItemCard({ cartItem, product, onIncrease, onDecrease, onRemo
   );
 }
 
-const styles = StyleSheet.create((theme) => ({
+const styles = StyleSheet.create({
   card: {
-    backgroundColor: theme.colors.surface,
-    borderRadius: theme.radius.xl,
-    padding: theme.spacing.sm,
-    marginBottom: theme.spacing.md,
+    backgroundColor: colors.surface,
+    borderRadius: radius.xl,
+    padding: spacing.sm,
+    marginBottom: spacing.md,
     flexDirection: 'row',
     alignItems: 'center',
   },
   imageContainer: {
     width: 90,
     height: 90,
-    backgroundColor: theme.colors.backgroundLight,
-    borderRadius: theme.radius.lg,
+    backgroundColor: colors.backgroundLight,
+    borderRadius: radius.lg,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -95,10 +95,10 @@ const styles = StyleSheet.create((theme) => ({
   },
   infoContainer: {
     flex: 1,
-    marginLeft: theme.spacing.md,
+    marginLeft: spacing.md,
     justifyContent: 'space-between',
     height: 90,
-    paddingVertical: theme.spacing.xs,
+    paddingVertical: spacing.xs,
   },
   topRow: {
     flexDirection: 'row',
@@ -107,27 +107,27 @@ const styles = StyleSheet.create((theme) => ({
   },
   titleArea: {
     flex: 1,
-    paddingRight: theme.spacing.sm,
+    paddingRight: spacing.sm,
   },
   brand: {
-    fontFamily: theme.typography.families.semibold,
+    fontFamily: typography.families.semibold,
     fontSize: 9,
-    color: theme.colors.textMuted,
+    color: colors.textMuted,
     letterSpacing: 0.5,
     marginBottom: 2,
   },
   name: {
-    fontFamily: theme.typography.families.semibold,
-    fontSize: theme.typography.sizes.sm,
-    color: theme.colors.textPrimary,
+    fontFamily: typography.families.semibold,
+    fontSize: typography.sizes.sm,
+    color: colors.textPrimary,
   },
   removeButton: {
     padding: 2,
   },
   size: {
-    fontFamily: theme.typography.families.regular,
-    fontSize: theme.typography.sizes.xs,
-    color: theme.colors.textMuted,
+    fontFamily: typography.families.regular,
+    fontSize: typography.sizes.xs,
+    color: colors.textMuted,
     marginTop: 2,
   },
   bottomRow: {
@@ -137,25 +137,25 @@ const styles = StyleSheet.create((theme) => ({
     marginTop: 'auto',
   },
   price: {
-    fontFamily: theme.typography.families.extrabold,
-    fontSize: theme.typography.sizes.md,
-    color: theme.colors.textPrimary,
+    fontFamily: typography.families.extrabold,
+    fontSize: typography.sizes.md,
+    color: colors.textPrimary,
   },
   quantitySelector: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: theme.colors.backgroundLight,
-    borderRadius: theme.radius.round,
-    paddingHorizontal: theme.spacing.sm,
+    backgroundColor: colors.backgroundLight,
+    borderRadius: radius.round,
+    paddingHorizontal: spacing.sm,
     paddingVertical: 4,
   },
   qtyButton: {
     padding: 4,
   },
   qtyText: {
-    fontFamily: theme.typography.families.semibold,
-    fontSize: theme.typography.sizes.sm,
-    color: theme.colors.textPrimary,
-    marginHorizontal: theme.spacing.md,
+    fontFamily: typography.families.semibold,
+    fontSize: typography.sizes.sm,
+    color: colors.textPrimary,
+    marginHorizontal: spacing.md,
   }
-}));
+});
