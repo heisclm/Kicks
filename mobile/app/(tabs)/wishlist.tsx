@@ -156,11 +156,11 @@ const styles = StyleSheet.create({
   row: {
     justifyContent: 'space-between',
     paddingHorizontal: spacing.sm,
-    marginBottom: spacing.md,
   },
   cardWrapper: {
     flex: 1,
     paddingHorizontal: spacing.xs,
+    paddingBottom: spacing.lg,
   },
   emptyContainer: {
     flex: 1,

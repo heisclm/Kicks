@@ -8,7 +8,6 @@ import Animated, {
   withSequence,
   withTiming,
   Easing,
-  withDelay,
 } from 'react-native-reanimated';
 import { Image as ExpoImage } from 'expo-image';
 import { colors, spacing, radius, typography } from '../theme';
@@ -20,37 +19,59 @@ interface SneakerLoaderProps {
 
 const { width } = Dimensions.get('window');
 
-export function SneakerLoader({ label = "Lacing up...", transparent = false }: SneakerLoaderProps) {
+export function SneakerLoader({ label = "Loading...", transparent = false }: SneakerLoaderProps) {
   const floatAnim = useSharedValue(0);
+  const scaleAnim = useSharedValue(1);
   const pulseAnim = useSharedValue(0.8);
-  const glowAnim = useSharedValue(0.5);
+  const glowAnim = useSharedValue(0.3);
+  const rotateAnim = useSharedValue(0);
 
   useEffect(() => {
-    // Float up and down
+    // Very subtle float
     floatAnim.value = withRepeat(
       withSequence(
-        withTiming(-15, { duration: 1000, easing: Easing.inOut(Easing.ease) }),
-        withTiming(0, { duration: 1000, easing: Easing.inOut(Easing.ease) })
+        withTiming(-8, { duration: 1200, easing: Easing.inOut(Easing.ease) }),
+        withTiming(0, { duration: 1200, easing: Easing.inOut(Easing.ease) })
       ),
       -1,
       true
     );
 
-    // Shadow pulsing
+    // Soft breathing scale
+    scaleAnim.value = withRepeat(
+      withSequence(
+        withTiming(1.05, { duration: 1200, easing: Easing.inOut(Easing.ease) }),
+        withTiming(1, { duration: 1200, easing: Easing.inOut(Easing.ease) })
+      ),
+      -1,
+      true
+    );
+
+    // Subtle premium rotation (sway)
+    rotateAnim.value = withRepeat(
+      withSequence(
+        withTiming(3, { duration: 1200, easing: Easing.inOut(Easing.ease) }),
+        withTiming(-3, { duration: 1200, easing: Easing.inOut(Easing.ease) })
+      ),
+      -1,
+      true
+    );
+
+    // Shadow pulsing matches float
     pulseAnim.value = withRepeat(
       withSequence(
-        withTiming(0.4, { duration: 1000, easing: Easing.inOut(Easing.ease) }),
-        withTiming(0.8, { duration: 1000, easing: Easing.inOut(Easing.ease) })
+        withTiming(0.4, { duration: 1200, easing: Easing.inOut(Easing.ease) }),
+        withTiming(0.8, { duration: 1200, easing: Easing.inOut(Easing.ease) })
       ),
       -1,
       true
     );
 
-    // Glow pulsing
+    // Soft glow pulsing
     glowAnim.value = withRepeat(
       withSequence(
-        withTiming(1, { duration: 1500, easing: Easing.inOut(Easing.ease) }),
-        withTiming(0.5, { duration: 1500, easing: Easing.inOut(Easing.ease) })
+        withTiming(0.6, { duration: 2000, easing: Easing.inOut(Easing.ease) }),
+        withTiming(0.2, { duration: 2000, easing: Easing.inOut(Easing.ease) })
       ),
       -1,
       true
@@ -58,17 +79,21 @@ export function SneakerLoader({ label = "Lacing up...", transparent = false }: S
   }, []);
 
   const sneakerStyle = useAnimatedStyle(() => ({
-    transform: [{ translateY: floatAnim.value }],
+    transform: [
+      { translateY: floatAnim.value },
+      { scale: scaleAnim.value },
+      { rotate: `${rotateAnim.value}deg` }
+    ],
   }));
 
   const shadowStyle = useAnimatedStyle(() => ({
     opacity: pulseAnim.value,
-    transform: [{ scaleX: pulseAnim.value * 1.5 }, { scaleY: pulseAnim.value * 0.8 }],
+    transform: [{ scaleX: pulseAnim.value * 1.2 }, { scaleY: pulseAnim.value * 0.8 }],
   }));
 
   const glowStyle = useAnimatedStyle(() => ({
     opacity: glowAnim.value,
-    transform: [{ scale: glowAnim.value * 1.2 }],
+    transform: [{ scale: glowAnim.value * 1.5 }],
   }));
 
   return (
@@ -77,7 +102,7 @@ export function SneakerLoader({ label = "Lacing up...", transparent = false }: S
         {/* Shimmer/Glow Behind */}
         <Animated.View style={[styles.glow, glowStyle]} />
         
-        {/* Floating Sneaker */}
+        {/* Premium Small Sneaker Logo */}
         <Animated.View style={[styles.sneakerWrapper, sneakerStyle]}>
           <ExpoImage 
             source={require('../../assets/images/icon.png')} 
@@ -91,7 +116,7 @@ export function SneakerLoader({ label = "Lacing up...", transparent = false }: S
         <Animated.View style={[styles.shadow, shadowStyle]} />
       </View>
       
-      <Text style={styles.label}>{label}</Text>
+      {label ? <Text style={styles.label}>{label}</Text> : null}
     </View>
   );
 }
@@ -106,24 +131,24 @@ const styles = StyleSheet.create({
     backgroundColor: colors.backgroundLight,
   },
   animationContainer: {
-    width: 200,
-    height: 200,
+    width: 140,
+    height: 140,
     justifyContent: 'center',
     alignItems: 'center',
     position: 'relative',
   },
   glow: {
     position: 'absolute',
-    width: 120,
-    height: 120,
-    borderRadius: 60,
+    width: 80,
+    height: 80,
+    borderRadius: 40,
     backgroundColor: colors.primary,
-    opacity: 0.15,
-    filter: 'blur(20px)', // Web/New Arch
+    opacity: 0.1,
+    filter: 'blur(25px)', // Web/New Arch
   },
   sneakerWrapper: {
-    width: 180,
-    height: 120,
+    width: 80,
+    height: 80,
     justifyContent: 'center',
     alignItems: 'center',
     zIndex: 2,
@@ -133,18 +158,18 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   shadow: {
-    width: 80,
-    height: 12,
-    backgroundColor: 'rgba(0, 0, 0, 0.15)',
-    borderRadius: 6,
+    width: 50,
+    height: 8,
+    backgroundColor: 'rgba(0, 0, 0, 0.1)',
+    borderRadius: 4,
     position: 'absolute',
-    bottom: 20,
+    bottom: 25,
     zIndex: 1,
   },
   label: {
     fontFamily: typography.families.semibold,
-    fontSize: 16,
-    color: colors.textSecondary,
+    fontSize: typography.sizes.sm,
+    color: colors.textMuted,
     letterSpacing: 2,
     marginTop: 20,
     textTransform: 'uppercase',

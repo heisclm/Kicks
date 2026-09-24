@@ -41,7 +41,7 @@ export const useWishlistStore = create<WishlistState>()(
         set((state) => ({
           savedProductIds: isCurrentlySaved
             ? state.savedProductIds.filter(id => id !== productId)
-            : [...state.savedProductIds, productId]
+            : [productId, ...state.savedProductIds]
         }));
 
         // Background Sync if Logged In

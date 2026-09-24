@@ -195,7 +195,6 @@ const styles = StyleSheet.create({
   row: {
     justifyContent: 'space-between',
     paddingHorizontal: spacing.sm,
-    marginBottom: spacing.md,
   },
   cardWrapper: {
     flex: 1,
