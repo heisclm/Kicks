@@ -199,6 +199,6 @@ const styles = StyleSheet.create({
   cardWrapper: {
     flex: 1,
     paddingHorizontal: spacing.xs,
-    // Note: removed maxWidth: '48%' to allow Flex to split columns dynamically
+    paddingBottom: spacing.lg,
   }
 });
