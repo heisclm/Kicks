@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+const fs = require('fs');
+let content = `import React, { useState } from 'react';
 import { View, Text, ScrollView, Switch, Pressable } from 'react-native';
 import { StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
@@ -98,14 +99,14 @@ export default function SettingsScreen() {
               icon={<Globe color={colors.textPrimary} size={20} />} 
               title="Language" 
               value={language}
-              onPress={() => showToast('Language', `Currently set to ${language}`, 'info')}
+              onPress={() => showToast('Language', \`Currently set to \${language}\`, 'info')}
             />
             <View style={styles.divider} />
             <SettingLink 
               icon={<Shield color={colors.textPrimary} size={20} />} 
               title="Currency" 
               value={currency}
-              onPress={() => showToast('Currency', `Currently set to ${currency}`, 'info')}
+              onPress={() => showToast('Currency', \`Currently set to \${currency}\`, 'info')}
             />
           </View>
         </View>
@@ -130,7 +131,7 @@ export default function SettingsScreen() {
 
         <View style={styles.footerInfo}>
           <Text style={styles.versionText}>KICKS App Version 1.0.0 (Build 57)</Text>
-          <Text style={styles.versionText}>ï¿½ 2026 KICKS, Inc.</Text>
+          <Text style={styles.versionText}>© 2026 KICKS, Inc.</Text>
         </View>
       </ScrollView>
     </View>
@@ -237,3 +238,5 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   }
 });
+`;
+fs.writeFileSync('mobile/app/profile/settings.tsx', content, 'utf8');
