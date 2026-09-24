@@ -16,9 +16,26 @@ import { useRouter } from 'next/navigation';
 
 export function ProductForm({ brands, categories }: { brands: Brand[], categories: Category[] }) {
   const [selectedSizes, setSelectedSizes] = useState<string[]>(['US 9', 'US 10']);
+  const [tags, setTags] = useState<string[]>([]);
+  const [tagInput, setTagInput] = useState('');
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
+
+  const addTag = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter' || e.key === ',') {
+      e.preventDefault();
+      const newTag = tagInput.trim().toLowerCase();
+      if (newTag && !tags.includes(newTag)) {
+        setTags([...tags, newTag]);
+      }
+      setTagInput('');
+    }
+  };
+
+  const removeTag = (tagToRemove: string) => {
+    setTags(tags.filter(t => t !== tagToRemove));
+  };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -248,6 +265,31 @@ export function ProductForm({ brands, categories }: { brands: Brand[], categorie
                   <option className="bg-background text-foreground" value="Women">Women</option>
                   <option className="bg-background text-foreground" value="Kids">Kids</option>
                 </Select>
+              </div>
+
+              <div className="space-y-2 pt-2 border-t border-border/50">
+                <Label htmlFor="tags">Tags</Label>
+                <div className="flex flex-col gap-2">
+                  <div className="flex flex-wrap gap-2 mb-1">
+                    {tags.map(tag => (
+                      <div key={tag} className="flex items-center gap-1 bg-muted px-2 py-1 rounded-md text-xs">
+                        {tag}
+                        <button type="button" onClick={() => removeTag(tag)} className="text-muted-foreground hover:text-foreground">
+                          <X size={12} />
+                        </button>
+                        <input type="hidden" name="tags" value={tag} />
+                      </div>
+                    ))}
+                  </div>
+                  <Input 
+                    id="tags" 
+                    value={tagInput}
+                    onChange={(e) => setTagInput(e.target.value)}
+                    onKeyDown={addTag}
+                    placeholder="Type and press Enter..." 
+                  />
+                  <p className="text-[10px] text-muted-foreground">Use tags like "summer", "sale", "limited" to help customers find this product.</p>
+                </div>
               </div>
             </CardContent>
           </Card>

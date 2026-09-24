@@ -63,6 +63,33 @@ export function BrandActions({ brand }: { brand: Brand }) {
                 <Label htmlFor="description">Description</Label>
                 <Textarea id="description" name="description" defaultValue={brand.description} />
               </div>
+              <div>
+                <Label htmlFor="image-edit">Brand Logo</Label>
+                <div className="mt-1 border border-dashed border-border rounded-md p-4 text-center cursor-pointer hover:bg-muted/30 transition-colors relative">
+                  <input 
+                    type="file" 
+                    id="image-edit"
+                    name="image" 
+                    accept="image/*" 
+                    className="absolute inset-0 opacity-0 cursor-pointer"
+                    onChange={(e) => {
+                      const file = e.target.files?.[0];
+                      if (file) {
+                        const img = document.getElementById(`edit-brand-preview-${brand.id}`) as HTMLImageElement;
+                        if (img) img.src = URL.createObjectURL(file);
+                        document.getElementById(`edit-brand-placeholder-${brand.id}`)?.classList.add('hidden');
+                        img.classList.remove('hidden');
+                      }
+                    }}
+                  />
+                  <div id={`edit-brand-placeholder-${brand.id}`} className={brand.logo_url ? "hidden" : "text-xs text-muted-foreground pt-2"}>
+                    <span className="block font-medium text-foreground mb-1">Upload New Logo</span>
+                    Click to browse
+                  </div>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img id={`edit-brand-preview-${brand.id}`} src={brand.logo_url || ""} alt="Logo Preview" className={brand.logo_url ? "h-12 object-contain mx-auto" : "hidden h-12 object-contain mx-auto"} />
+                </div>
+              </div>
               <div className="flex justify-end gap-2 mt-6">
                 <Button type="button" variant="ghost" onClick={() => setIsEditOpen(false)}>Cancel</Button>
                 <Button type="submit" disabled={isPending}>{isPending ? 'Saving...' : 'Save'}</Button>

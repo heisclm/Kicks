@@ -23,6 +23,7 @@ export class ProductRepository {
         brand_id,
         category_id,
         description,
+        tags,
         brands ( name ),
         categories ( name ),
         product_variants ( stock_quantity ),
@@ -69,7 +70,8 @@ export class ProductRepository {
         stock,
         status,
         image,
-        createdAt: row.created_at
+        createdAt: row.created_at,
+        tags: (row.tags as string[]) || []
         } as Product;
     });
 
@@ -78,7 +80,9 @@ export class ProductRepository {
       const q = filters.search.toLowerCase();
       results = results.filter(
         (p) =>
-          p.name.toLowerCase().includes(q) || p.brand.toLowerCase().includes(q)
+          p.name.toLowerCase().includes(q) || 
+          p.brand.toLowerCase().includes(q) ||
+          p.tags?.some(tag => tag.toLowerCase().includes(q))
       );
     }
 
@@ -103,7 +107,8 @@ export class ProductRepository {
         brand_id: input.brand_id,
         category_id: input.category_id,
         base_price: input.base_price,
-        is_active: input.is_active
+        is_active: input.is_active,
+        tags: input.tags || []
       }])
       .select()
       .single();
@@ -133,7 +138,8 @@ export class ProductRepository {
         brand_id: input.brand_id,
         category_id: input.category_id,
         base_price: input.base_price,
-        is_active: input.is_active
+        is_active: input.is_active,
+        tags: input.tags || []
       })
       .eq('id', input.id)
       .select()

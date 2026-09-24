@@ -15,6 +15,7 @@ export interface Product {
   status: ProductStatus;
   image: string;
   createdAt: string;
+  tags?: string[];
 }
 
 export interface ProductFilters {

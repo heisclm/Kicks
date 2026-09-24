@@ -8,6 +8,7 @@ export const CreateProductSchema = z.object({
   base_price: z.coerce.number().min(0, "Price must be positive"),
   is_active: z.boolean().default(false),
   image_url: z.string().url().optional(),
+  tags: z.array(z.string()).optional(),
 });
 export type CreateProductInput = z.infer<typeof CreateProductSchema>;
 

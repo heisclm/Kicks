@@ -18,7 +18,8 @@ export async function createProductAction(formData: FormData): Promise<ActionSta
       category_id: formData.get('category_id'),
       base_price: formData.get('base_price'),
       is_active: formData.get('is_active') === 'true',
-      image_url: undefined as string | undefined
+      image_url: undefined as string | undefined,
+      tags: formData.getAll('tags') as string[]
     };
 
     // Handle File upload if present
@@ -61,7 +62,8 @@ export async function updateProductAction(formData: FormData): Promise<ActionSta
       brand_id: formData.get('brand_id'),
       category_id: formData.get('category_id'),
       base_price: formData.get('base_price'),
-      is_active: formData.get('is_active') === 'true'
+      is_active: formData.get('is_active') === 'true',
+      tags: formData.getAll('tags') as string[]
     };
     const validated = UpdateProductSchema.safeParse(rawData);
     if (!validated.success) return { success: false, error: validated.error.issues[0].message };

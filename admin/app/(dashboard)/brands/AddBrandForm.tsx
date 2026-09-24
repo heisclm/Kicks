@@ -54,28 +54,43 @@ export function AddBrandForm() {
         </div>
       )}
 
-      <form action={handleSubmit} className="flex flex-col sm:flex-row gap-3">
-        <div className="flex-1">
-          <Input 
-            name="name" 
-            placeholder="Brand Name (e.g. Nike)" 
-            required 
-            autoFocus
-          />
+      <form action={handleSubmit} className="flex flex-col gap-4">
+        <div className="flex flex-col sm:flex-row gap-3">
+          <div className="flex-1 space-y-2">
+            <Input name="name" placeholder="Brand Name (e.g. Nike)" required autoFocus />
+            <Input name="description" placeholder="Description (optional)" />
+          </div>
+          <div className="flex-1">
+            <div className="border border-dashed border-border rounded-md p-4 text-center cursor-pointer hover:bg-muted/30 transition-colors relative">
+              <input 
+                type="file" 
+                name="image" 
+                accept="image/*" 
+                className="absolute inset-0 opacity-0 cursor-pointer"
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  if (file) {
+                    const img = document.getElementById('new-brand-preview') as HTMLImageElement;
+                    if (img) img.src = URL.createObjectURL(file);
+                    document.getElementById('new-brand-placeholder')?.classList.add('hidden');
+                    img.classList.remove('hidden');
+                  }
+                }}
+              />
+              <div id="new-brand-placeholder" className="text-xs text-muted-foreground pt-3">
+                <span className="block font-medium text-foreground mb-1">Brand Logo</span>
+                Click to upload
+              </div>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img id="new-brand-preview" src="" alt="Logo Preview" className="hidden h-12 object-contain mx-auto" />
+            </div>
+          </div>
         </div>
-        <div className="flex-1">
-          <Input 
-            name="description" 
-            placeholder="Description (optional)" 
-          />
+        <div className="flex justify-end">
+          <Button type="submit" disabled={isSubmitting} className="bg-brand-primary text-white hover:bg-brand-primary-hover">
+            {isSubmitting ? 'Saving...' : 'Save Brand'}
+          </Button>
         </div>
-        <Button 
-          type="submit" 
-          disabled={isSubmitting}
-          className="bg-brand-primary text-white hover:bg-brand-primary-hover"
-        >
-          {isSubmitting ? 'Saving...' : 'Save Brand'}
-        </Button>
       </form>
     </Card>
   );
