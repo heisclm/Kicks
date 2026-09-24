@@ -36,7 +36,6 @@ function MenuItem({
   onPress,
   isDestructive,
 }: MenuItemProps) {
-    const theme = { colors, spacing, radius, typography };
   return (
     <Pressable style={styles.menuItem} onPress={onPress}>
       <View
@@ -77,7 +76,6 @@ export default function ProfileScreen() {
 }
 
 function ProfileScreenContent() {
-    const theme = { colors, spacing, radius, typography };
   const insets = useSafeAreaInsets();
   const router = useRouter();
   const { resetOnboarding } = useOnboardingStore();

@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, Modal, Pressable, ScrollView } from 'react-native';
 import { StyleSheet } from 'react-native';
 import { X } from 'lucide-react-native';
-import { colors, spacing, radius, typography } from '../theme';
+import { colors, spacing, radius, typography, shadows } from '../theme';
 
 interface SizeGuideModalProps {
   visible: boolean;
@@ -23,7 +23,6 @@ const sizeData = [
 ];
 
 export function SizeGuideModal({ visible, onClose }: SizeGuideModalProps) {
-    const theme = { colors, spacing, radius, typography };
   return (
     <Modal
       visible={visible}
@@ -87,7 +86,7 @@ const styles = StyleSheet.create({
     height: '70%',
     paddingTop: spacing.xl,
     paddingBottom: spacing.xxxl,
-    ...theme.shadows.medium,
+    ...shadows.medium,
   },
   header: {
     flexDirection: 'row',

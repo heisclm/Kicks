@@ -2,12 +2,11 @@ import React from 'react';
 import { View, Text, Pressable, LayoutAnimation, Platform, UIManager } from 'react-native';
 import { StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { colors, spacing, radius, typography } from '../theme';
+import { colors, spacing, radius, typography, shadows } from '../theme';
 
 // UIManager.setLayoutAnimationEnabledExperimental is a no-op in New Architecture (React Native 0.76+)
 // LayoutAnimation works out of the box now.
 export function BottomTabBar({ state, descriptors, navigation }: any) {
-    const theme = { colors, spacing, radius, typography };
   const insets = useSafeAreaInsets();
   
   // Separate routes
@@ -19,7 +18,7 @@ export function BottomTabBar({ state, descriptors, navigation }: any) {
     <View style={[styles.container, { bottom: Math.max(insets.bottom, spacing.md) }]}>
       
       {/* Main Pill */}
-      <View style={[styles.mainPill, theme.shadows.soft]}>
+      <View style={[styles.mainPill, shadows.soft]}>
         {mainRoutes.map((route: any) => {
           const originalIndex = state.routes.findIndex((r: any) => r.key === route.key);
           const { options } = descriptors[route.key];
@@ -72,7 +71,7 @@ export function BottomTabBar({ state, descriptors, navigation }: any) {
         };
 
         return (
-          <Pressable onPress={onPress} style={[styles.cartCircle, theme.shadows.soft, isFocused && styles.cartCircleActive]}>
+          <Pressable onPress={onPress} style={[styles.cartCircle, shadows.soft, isFocused && styles.cartCircleActive]}>
             {options.tabBarIcon ? options.tabBarIcon({
               focused: isFocused,
               color: isFocused ? colors.textInverse : colors.primary,

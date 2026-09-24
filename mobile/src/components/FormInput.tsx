@@ -11,7 +11,6 @@ interface FormInputProps extends Omit<InputFieldProps, 'value' | 'onChangeText'>
 }
 
 export function FormInput({ name, control, ...props }: FormInputProps) {
-    const theme = { colors, spacing, radius, typography };
   return (
     <Controller
       control={control}

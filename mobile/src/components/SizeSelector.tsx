@@ -10,7 +10,6 @@ interface SizeSelectorProps {
 }
 
 export function SizeSelector({ size, isSelected, onPress }: SizeSelectorProps) {
-    const theme = { colors, spacing, radius, typography };
   return (
     <Pressable 
       style={[styles.container, isSelected && styles.containerSelected]}

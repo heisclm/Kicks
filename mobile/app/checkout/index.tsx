@@ -38,7 +38,6 @@ const paymentSchema = z.object({
 });
 
 export default function CheckoutScreen() {
-    const theme = { colors, spacing, radius, typography };
   const insets = useSafeAreaInsets();
   const router = useRouter();
   const { total, items, clearCart } = useCartStore();

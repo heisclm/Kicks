@@ -22,7 +22,6 @@ import { useToastStore } from "../../src/store/useToastStore";
 import { colors, spacing, radius, typography } from '../../src/theme';
 
 export default function LoginScreen() {
-    const theme = { colors, spacing, radius, typography };
   const router = useRouter();
   const insets = useSafeAreaInsets();
 

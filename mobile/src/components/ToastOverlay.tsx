@@ -3,11 +3,10 @@ import { Animated, Text, View } from 'react-native';
 import { StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { CheckCircle, Info, AlertCircle } from 'lucide-react-native';
-import { colors, spacing, radius, typography } from '../theme';
+import { colors, spacing, radius, typography, shadows } from '../theme';
 import { useToastStore } from '../store/useToastStore';
 
 export function ToastOverlay() {
-    const theme = { colors, spacing, radius, typography };
   const insets = useSafeAreaInsets();
   const { visible, title, subtitle, type } = useToastStore();
   const translateY = useRef(new Animated.Value(-150)).current;
@@ -77,7 +76,7 @@ const styles = StyleSheet.create({
     borderRadius: radius.xxl,
     borderWidth: 2,
     borderColor: 'transparent', // Can color code if desired
-    ...theme.shadows.medium,
+    ...shadows.medium,
   },
   textContainer: {
     marginLeft: spacing.md,

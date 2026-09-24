@@ -9,7 +9,6 @@ import { colors, spacing, radius, typography } from '../../src/theme';
 import { IconButton } from '../../src/components/IconButton';
 
 export default function EditProfileScreen() {
-    const theme = { colors, spacing, radius, typography };
   const insets = useSafeAreaInsets();
   const router = useRouter();
 

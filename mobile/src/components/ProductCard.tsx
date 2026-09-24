@@ -14,7 +14,6 @@ interface ProductCardProps {
 }
 
 export function ProductCard({ item, onPress }: ProductCardProps) {
-    const theme = { colors, spacing, radius, typography };
   // Determine background color based on product color/brand from mock
   let bgColor = colors.cardPeach;
   if (item.color === '#E04A3A') bgColor = colors.cardRed;

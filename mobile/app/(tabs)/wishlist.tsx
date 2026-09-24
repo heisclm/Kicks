@@ -23,7 +23,6 @@ export default function WishlistScreen() {
 }
 
 function WishlistScreenContent() {
-    const theme = { colors, spacing, radius, typography };
   const insets = useSafeAreaInsets();
   const router = useRouter();
   

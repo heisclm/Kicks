@@ -27,7 +27,6 @@ import Svg, {
 import { useOnboardingStore } from "../src/store/useOnboardingStore";
 
 export default function OnboardingScreen() {
-    const theme = { colors, spacing, radius, typography };
   const router = useRouter();
   const insets = useSafeAreaInsets();
 

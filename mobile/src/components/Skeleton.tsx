@@ -20,7 +20,6 @@ interface SkeletonProps {
 }
 
 export function Skeleton({ width = '100%', height = 20, borderRadius = radius.md, style, delay = 0 }: SkeletonProps) {
-    const theme = { colors, spacing, radius, typography };
   const opacity = useSharedValue(0.3);
 
   useEffect(() => {

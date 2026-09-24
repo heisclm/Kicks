@@ -8,7 +8,6 @@ import Animated, { FadeInUp, FadeOutUp } from 'react-native-reanimated';
 import { colors, spacing, radius, typography } from '../theme';
 
 export function OfflineBanner() {
-    const theme = { colors, spacing, radius, typography };
   const netInfo = useNetInfo();
   const insets = useSafeAreaInsets();
 

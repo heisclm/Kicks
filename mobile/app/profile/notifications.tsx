@@ -12,7 +12,6 @@ import { IconButton } from '../../src/components/IconButton';
 import { SneakerLoader } from '../../src/components/SneakerLoader';
 
 function NotificationIcon({ type, isRead }: { type: string; isRead: boolean }) {
-    const theme = { colors, spacing, radius, typography };
   const color = isRead ? colors.textMuted : colors.textInverse;
   switch(type) {
     case 'Order': return <Package color={color} size={20} strokeWidth={2} />;
@@ -23,7 +22,6 @@ function NotificationIcon({ type, isRead }: { type: string; isRead: boolean }) {
 }
 
 function NotificationCard({ item }: { item: any }) {
-    const theme = { colors, spacing, radius, typography };
   const { mutate: markAsRead } = useMarkNotificationRead();
   
   const formattedDate = new Date(item.date).toLocaleDateString('en-US', {
@@ -57,7 +55,6 @@ function NotificationCard({ item }: { item: any }) {
 }
 
 export default function NotificationsScreen() {
-    const theme = { colors, spacing, radius, typography };
   const insets = useSafeAreaInsets();
   const router = useRouter();
   

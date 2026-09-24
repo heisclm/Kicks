@@ -9,7 +9,6 @@ import { colors, spacing, radius, typography } from '../../src/theme';
 import { useCartStore } from '../../src/store/useCartStore';
 
 function HouseBlank({ color, size, strokeWidth }: any) {
-    const theme = { colors, spacing, radius, typography };
   return (
     <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round">
       <Path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
@@ -18,7 +17,6 @@ function HouseBlank({ color, size, strokeWidth }: any) {
 }
 
 function CartIconWithBadge({ focused, color, size }: any) {
-    const theme = { colors, spacing, radius, typography };
   const cartItems = useCartStore((state) => state.items);
   const cartQuantity = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
@@ -35,7 +33,6 @@ function CartIconWithBadge({ focused, color, size }: any) {
 }
 
 export default function TabLayout() {
-    const theme = { colors, spacing, radius, typography };
   return (
     <Tabs
       tabBar={props => <BottomTabBar {...(props as any)} />}

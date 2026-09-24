@@ -15,7 +15,6 @@ interface AddReviewModalProps {
 }
 
 export function AddReviewModal({ visible, onClose, onSubmit, isSubmitting }: AddReviewModalProps) {
-    const theme = { colors, spacing, radius, typography };
   const [rating, setRating] = useState(5);
   const [comment, setComment] = useState('');
 

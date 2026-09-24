@@ -5,7 +5,6 @@ import { Skeleton } from './Skeleton';
 import { colors, spacing, radius, typography } from '../theme';
 
 export function ProductCardSkeleton() {
-    const theme = { colors, spacing, radius, typography };
   return (
     <View style={styles.card}>
       <View style={styles.infoContainer}>

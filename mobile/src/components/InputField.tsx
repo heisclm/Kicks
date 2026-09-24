@@ -8,7 +8,6 @@ export interface InputFieldProps extends TextInputProps {
 }
 
 export function InputField({ label, ...props }: InputFieldProps) {
-    const theme = { colors, spacing, radius, typography };
   return (
     <View style={styles.inputContainer}>
       <Text style={styles.inputLabel}>{label}</Text>

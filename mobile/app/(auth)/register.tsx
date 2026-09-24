@@ -13,7 +13,6 @@ import { colors, spacing, radius, typography } from '../../src/theme';
 import { useToastStore } from '../../src/store/useToastStore';
 
 export default function RegisterScreen() {
-    const theme = { colors, spacing, radius, typography };
   const router = useRouter();
   const insets = useSafeAreaInsets();
   

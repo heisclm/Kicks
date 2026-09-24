@@ -4,7 +4,7 @@ import { StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ChevronLeft, Plus, CheckCircle, CreditCard } from 'lucide-react-native';
-import { colors, spacing, radius, typography } from '../../src/theme';
+import { colors, spacing, radius, typography, shadows } from '../../src/theme';
 import { IconButton } from '../../src/components/IconButton';
 import { useToastStore } from '../../src/store/useToastStore';
 
@@ -26,7 +26,6 @@ function renderLogo(id: string) {
 }
 
 export default function PaymentMethodsScreen() {
-    const theme = { colors, spacing, radius, typography };
   const insets = useSafeAreaInsets();
   const router = useRouter();
   const { showToast } = useToastStore();
@@ -105,7 +104,7 @@ const styles = StyleSheet.create({
     marginBottom: spacing.md,
     borderWidth: 2,
     borderColor: 'transparent',
-    ...theme.shadows.soft,
+    ...shadows.soft,
   },
   cardActive: {
     borderColor: colors.primary,

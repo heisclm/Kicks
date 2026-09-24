@@ -30,7 +30,6 @@ export function Button({
   onPress,
   ...props
 }: ButtonProps) {
-    const theme = { colors, spacing, radius, typography };
   
   const handlePress = (e: any) => {
     if (disabled || isLoading) return;

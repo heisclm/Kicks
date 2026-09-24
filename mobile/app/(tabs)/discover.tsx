@@ -27,7 +27,6 @@ export default function DiscoverScreen() {
 }
 
 function DiscoverScreenContent() {
-    const theme = { colors, spacing, radius, typography };
   const insets = useSafeAreaInsets();
   const router = useRouter();
   const [activeCategory, setActiveCategory] = useState(categories[0].id);

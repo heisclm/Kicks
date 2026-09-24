@@ -6,7 +6,7 @@ import Animated from 'react-native-reanimated';
 import { Image as ExpoImage } from 'expo-image';
 import * as Haptics from 'expo-haptics';
 import { Product } from '../types';
-import { colors, spacing, radius, typography } from '../theme';
+import { colors, spacing, radius, typography, shadows } from '../theme';
 import { useWishlistStore } from '../store/useWishlistStore';
 
 const AnimatedExpoImage = Animated.createAnimatedComponent(ExpoImage);
@@ -17,7 +17,6 @@ interface ProductGridCardProps {
 }
 
 export function ProductGridCard({ item, onPress }: ProductGridCardProps) {
-    const theme = { colors, spacing, radius, typography };
   const isInWishlist = useWishlistStore((state) => state.isInWishlist(item.id));
   const toggleWishlist = useWishlistStore((state) => state.toggleWishlist);
 
@@ -29,7 +28,7 @@ export function ProductGridCard({ item, onPress }: ProductGridCardProps) {
 
   return (
     <Pressable 
-      style={[styles.card, theme.shadows.soft]} 
+      style={[styles.card, shadows.soft]} 
       onPress={onPress}
       accessibilityRole="button"
       accessibilityLabel={`View ${item.name}`}

@@ -13,7 +13,6 @@ interface BrandPillProps {
 import { NikeLogo, AdidasLogo, PumaLogo, ReebokLogo, NewBalanceLogo } from './BrandLogos';
 
 export function BrandPill({ brand, isSelected, onPress }: BrandPillProps) {
-    const theme = { colors, spacing, radius, typography };
   const iconColor = isSelected ? colors.surface : colors.textPrimary;
   return (
     <Pressable 

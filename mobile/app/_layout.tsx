@@ -32,7 +32,6 @@ export default function RootLayout() {
   });
 
   const { initializeAuth } = useAuthStore();
-  const theme = { colors, spacing, radius, typography };
   
   useEffect(() => {
     initializeAuth();

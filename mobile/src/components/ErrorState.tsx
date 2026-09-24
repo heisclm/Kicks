@@ -16,7 +16,6 @@ export function ErrorState({
   message = "Please check your connection and try again.", 
   onRetry 
 }: ErrorStateProps) {
-    const theme = { colors, spacing, radius, typography };
   return (
     <View style={styles.container}>
       <View style={styles.iconContainer}>

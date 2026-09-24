@@ -30,7 +30,6 @@ export default function HomeScreen() {
 }
 
 function HomeScreenContent() {
-    const theme = { colors, spacing, radius, typography };
   const router = useRouter();
   const [selectedBrand, setSelectedBrand] = useState('all');
   

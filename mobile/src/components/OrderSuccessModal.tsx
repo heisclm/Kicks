@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { View, Text, Modal, Animated, Easing, Pressable } from 'react-native';
 import { StyleSheet } from 'react-native';
 import { CheckCircle, Package } from 'lucide-react-native';
-import { colors, spacing, radius, typography } from '../theme';
+import { colors, spacing, radius, typography, shadows } from '../theme';
 
 interface OrderSuccessModalProps {
   visible: boolean;
@@ -10,7 +10,6 @@ interface OrderSuccessModalProps {
 }
 
 export function OrderSuccessModal({ visible, onClose }: OrderSuccessModalProps) {
-    const theme = { colors, spacing, radius, typography };
   const scaleAnim = useRef(new Animated.Value(0)).current;
   const opacityAnim = useRef(new Animated.Value(0)).current;
 
@@ -91,7 +90,7 @@ const styles = StyleSheet.create({
     padding: spacing.xxl,
     width: '100%',
     alignItems: 'center',
-    ...theme.shadows.medium,
+    ...shadows.medium,
   },
   iconContainer: {
     marginBottom: spacing.xl,

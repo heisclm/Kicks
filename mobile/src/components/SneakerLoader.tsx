@@ -21,7 +21,6 @@ interface SneakerLoaderProps {
 const { width } = Dimensions.get('window');
 
 export function SneakerLoader({ label = "Lacing up...", transparent = false }: SneakerLoaderProps) {
-    const theme = { colors, spacing, radius, typography };
   const floatAnim = useSharedValue(0);
   const pulseAnim = useSharedValue(0.8);
   const glowAnim = useSharedValue(0.5);

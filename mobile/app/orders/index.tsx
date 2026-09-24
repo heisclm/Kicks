@@ -10,7 +10,6 @@ import { useOrders } from "../../src/hooks/useOrders";
 import { colors, spacing, radius, typography } from '../../src/theme';
 
 function OrderCard({ order }: { order: any }) {
-    const theme = { colors, spacing, radius, typography };
   const firstItem = order.items?.[0];
 
   const getStatusColor = (status: string) => {
@@ -105,7 +104,6 @@ function OrderCard({ order }: { order: any }) {
 }
 
 export default function OrdersScreen() {
-    const theme = { colors, spacing, radius, typography };
   const insets = useSafeAreaInsets();
   const router = useRouter();
 

@@ -4,7 +4,7 @@ import { StyleSheet } from 'react-native';
 import { Image as ExpoImage } from 'expo-image';
 import { Trash2, Minus, Plus } from 'lucide-react-native';
 import { CartItem, Product } from '../types';
-import { colors, spacing, radius, typography } from '../theme';
+import { colors, spacing, radius, typography, shadows } from '../theme';
 
 interface CartItemCardProps {
   cartItem: CartItem;
@@ -15,9 +15,8 @@ interface CartItemCardProps {
 }
 
 export function CartItemCard({ cartItem, product, onIncrease, onDecrease, onRemove }: CartItemCardProps) {
-    const theme = { colors, spacing, radius, typography };
   return (
-    <View style={[styles.card, theme.shadows.soft]}>
+    <View style={[styles.card, shadows.soft]}>
       <View style={styles.imageContainer}>
         <ExpoImage source={product.image} style={styles.image} contentFit="contain" cachePolicy="disk" transition={300} />
       </View>

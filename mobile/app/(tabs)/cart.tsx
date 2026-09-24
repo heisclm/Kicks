@@ -23,7 +23,6 @@ export default function CartScreen() {
 }
 
 function CartScreenContent() {
-    const theme = { colors, spacing, radius, typography };
   const insets = useSafeAreaInsets();
   const router = useRouter();
   

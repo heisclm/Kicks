@@ -16,7 +16,6 @@ const faq = [
 ];
 
 function ContactItem({ icon, title, subtitle, onPress }: any) {
-    const theme = { colors, spacing, radius, typography };
   return (
     <Pressable 
       style={styles.contactItem}
@@ -33,7 +32,6 @@ function ContactItem({ icon, title, subtitle, onPress }: any) {
 }
 
 export default function SupportScreen() {
-    const theme = { colors, spacing, radius, typography };
   const insets = useSafeAreaInsets();
   const router = useRouter();
   const { showToast } = useToastStore();

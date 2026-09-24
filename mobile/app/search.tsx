@@ -13,7 +13,6 @@ import { useToastStore } from '../src/store/useToastStore';
 const RECENT_SEARCHES = ['Nike Air Max', 'Jordan', 'Running Shoes', 'Yeezy'];
 
 export default function SearchScreen() {
-    const theme = { colors, spacing, radius, typography };
   const insets = useSafeAreaInsets();
   const router = useRouter();
   const addToCart = useCartStore(state => state.addToCart);

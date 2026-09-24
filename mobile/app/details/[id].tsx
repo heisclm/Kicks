@@ -18,7 +18,7 @@ import { Button } from '../../src/components/Button';
 import { useToastStore } from '../../src/store/useToastStore';
 import { useWishlistStore } from '../../src/store/useWishlistStore';
 import { useCartStore } from '../../src/store/useCartStore';
-import { colors, spacing, radius, typography } from '../../src/theme';
+import { colors, spacing, radius, typography, shadows } from '../../src/theme';
 import { useReviews, useReviewEligibility, useAddReview } from '../../src/hooks/useReviews';
 import { AddReviewModal } from '../../src/components/AddReviewModal';
 import { useAuthStore } from '../../src/store/useAuthStore';
@@ -27,7 +27,6 @@ import { SneakerLoader } from '../../src/components/SneakerLoader';
 const { width } = Dimensions.get('window');
 
 export default function ProductDetailsScreen() {
-    const theme = { colors, spacing, radius, typography };
   const { id } = useLocalSearchParams<{ id: string }>();
   const router = useRouter();
   const { data: product, isLoading } = useProduct(id as string);
@@ -341,7 +340,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: spacing.xs,
     zIndex: 10,
-    ...theme.shadows.soft,
+    ...shadows.soft,
   },
   highlyRatedText: {
     fontFamily: typography.families.semibold,
@@ -376,7 +375,7 @@ const styles = StyleSheet.create({
     paddingVertical: spacing.xs,
     borderRadius: radius.xl,
     zIndex: 1,
-    ...theme.shadows.soft,
+    ...shadows.soft,
   },
   thumbnailsContainer: {
     paddingHorizontal: spacing.xxl,
@@ -391,7 +390,7 @@ const styles = StyleSheet.create({
     padding: spacing.md,
     borderWidth: 2,
     borderColor: 'transparent',
-    ...theme.shadows.soft,
+    ...shadows.soft,
   },
   thumbnailWrapperSelected: {
     borderColor: colors.textPrimary,
@@ -446,7 +445,7 @@ const styles = StyleSheet.create({
     borderRadius: 18,
     borderWidth: 2,
     borderColor: 'transparent',
-    ...theme.shadows.soft,
+    ...shadows.soft,
   },
   colorCircleSelected: {
     borderColor: colors.textPrimary,
@@ -534,7 +533,7 @@ const styles = StyleSheet.create({
     padding: spacing.lg,
     borderRadius: radius.xl,
     marginTop: spacing.md,
-    ...theme.shadows.soft,
+    ...shadows.soft,
   },
   reviewHeader: {
     flexDirection: 'row',

@@ -9,7 +9,6 @@ import { IconButton } from '../../src/components/IconButton';
 import { useToastStore } from '../../src/store/useToastStore';
 
 function SettingToggle({ icon, title, subtitle, value, onValueChange }: any) {
-    const theme = { colors, spacing, radius, typography };
   return (
     <View style={styles.settingItem}>
       <View style={styles.iconWrapper}>{icon}</View>
@@ -28,7 +27,6 @@ function SettingToggle({ icon, title, subtitle, value, onValueChange }: any) {
 }
 
 function SettingLink({ icon, title, value, onPress }: any) {
-    const theme = { colors, spacing, radius, typography };
   return (
     <Pressable style={styles.settingItem} onPress={onPress}>
       <View style={styles.iconWrapper}>{icon}</View>
@@ -42,7 +40,6 @@ function SettingLink({ icon, title, value, onPress }: any) {
 }
 
 export default function SettingsScreen() {
-    const theme = { colors, spacing, radius, typography };
   const insets = useSafeAreaInsets();
   const router = useRouter();
   const { showToast } = useToastStore();
