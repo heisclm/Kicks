@@ -3,10 +3,7 @@ import { Order, OrderStatus, CartItem } from '../types';
 
 class OrderRepository {
   async getOrders(userId: string): Promise<Order[]> {
-    if (process.env.EXPO_PUBLIC_USE_MOCK_DATA !== 'false') {
-      const { orders } = require('../data');
-      return orders;
-    }
+    
 
     const { data, error } = await supabase
       .from('orders')
@@ -26,7 +23,7 @@ class OrderRepository {
           product_variants (
             product_id,
             products (
-              images
+              product_images (image_url)
             )
           )
         )
@@ -56,7 +53,7 @@ class OrderRepository {
         quantity: item.quantity,
         price: item.unit_price_at_purchase,
         // We inject the image URL directly into the item for the UI to use if needed
-        image: item.product_variants?.products?.images?.[0] || null,
+        image: item.product_variants?.products?.product_images?.[0]?.image_url ? { uri: item.product_variants.products.product_images[0].image_url } : null,
         name: item.snapshot_name || 'Unknown Product',
       })),
     };

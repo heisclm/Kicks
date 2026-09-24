@@ -10,9 +10,7 @@ export interface CheckoutRequest {
 
 class OrderService {
   async placeOrder(request: CheckoutRequest): Promise<string | null> {
-    if (process.env.EXPO_PUBLIC_USE_MOCK_DATA !== 'false') {
-      return `mock-order-${Date.now()}`;
-    }
+    
 
     try {
       // Use the Postgres RPC function to safely convert the cart to an order
