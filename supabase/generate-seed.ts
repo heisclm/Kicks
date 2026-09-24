@@ -1,5 +1,5 @@
 import * as fs from 'fs';
-import { products } from '../src/data/products';
+import { products } from '../mobile/src/data/products';
 
 let sql = `-- Seed Data Generated from Mock Products\n\n`;
 
@@ -41,7 +41,7 @@ for (const p of products) {
   const bId = brandMap.get(p.brand);
   const cId = catMap.get(p.category);
   
-  sql += `INSERT INTO products (id, name, subtitle, description, brand_id, category_id, gender, base_price, is_active) VALUES ('${pId}', '${p.name.replace(/'/g, "''")}', '${p.subtitle ? p.subtitle.replace(/'/g, "''") : ''}', '${p.description ? p.description.replace(/'/g, "''") : ''}', '${bId}', '${cId}', '${p.gender || 'Unisex'}', ${p.price}, true);\n`;
+  sql += `INSERT INTO products (id, name, subtitle, description, brand_id, category_id, gender, base_price, is_active) VALUES ('${pId}', '${p.name.replace(/'/g, "''")}', '${p.subtitle ? p.subtitle.replace(/'/g, "''") : ''}', '${p.description ? p.description.replace(/'/g, "''") : ''}', '${bId}', '${cId}', '${(p.gender || 'Unisex').replace(/'/g, "''")}', ${p.price}, true);\n`;
   
   sql += `INSERT INTO product_images (product_id, image_url, is_primary, display_order) VALUES ('${pId}', '${p.image}', true, 0);\n`;
   

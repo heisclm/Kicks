@@ -1,6 +1,6 @@
 import { createClient } from '@supabase/supabase-js';
 import * as dotenv from 'dotenv';
-import { products } from '../src/data/products';
+import { products } from '../mobile/src/data/products';
 
 dotenv.config();
 

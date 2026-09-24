@@ -36,9 +36,4 @@ export class MockProductRepository implements IProductRepository {
 
 import { SupabaseProductRepository } from './SupabaseProductRepository';
 
-// Service Export - dynamically switch based on EXPO_PUBLIC_USE_MOCK_DATA
-const useMockData = process.env.EXPO_PUBLIC_USE_MOCK_DATA !== 'false'; // Defaults to true unless explicitly false
-
-export const ProductService: IProductRepository = useMockData 
-  ? new MockProductRepository() 
-  : new SupabaseProductRepository();
+export const ProductService: IProductRepository = new SupabaseProductRepository();
