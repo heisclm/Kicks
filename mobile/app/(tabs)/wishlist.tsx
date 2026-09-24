@@ -33,7 +33,10 @@ function WishlistScreenContent() {
   const { data: allProducts = [] } = useProducts();
 
   // Derive full products from the saved IDs
-  const savedProducts = allProducts.filter(p => savedProductIds.includes(p.id));
+  // Derive full products from the saved IDs, preserving the exact chronological order of savedProductIds
+  const savedProducts = savedProductIds
+    .map(id => allProducts.find(p => p.id === id))
+    .filter(Boolean) as typeof allProducts;
 
   const renderEmptyState = () => (
     <View style={styles.emptyContainer}>

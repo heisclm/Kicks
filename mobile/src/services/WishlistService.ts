@@ -9,7 +9,8 @@ class WishlistService {
     const { data, error } = await supabase
       .from('wishlists')
       .select('product_id')
-      .eq('user_id', userId);
+      .eq('user_id', userId)
+      .order('created_at', { ascending: false });
       
     if (error) {
       console.error('Error fetching wishlist:', error);
