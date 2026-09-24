@@ -39,13 +39,6 @@ export default function LoginScreen() {
 
     setLoading(true);
 
-    if (process.env.EXPO_PUBLIC_USE_MOCK_DATA !== "false") {
-      setTimeout(() => {
-        setLoading(false);
-        router.replace("/(tabs)");
-      }, 1000);
-      return;
-    }
 
     const { error } = await supabase.auth.signInWithPassword({
       email,

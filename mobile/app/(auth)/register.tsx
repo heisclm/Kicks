@@ -30,14 +30,6 @@ export default function RegisterScreen() {
 
     setLoading(true);
 
-    if (process.env.EXPO_PUBLIC_USE_MOCK_DATA !== 'false') {
-      setTimeout(() => {
-        setLoading(false);
-        useToastStore.getState().showToast('Success', 'Mock registration successful! Please log in.', 'success');
-        router.back();
-      }, 1000);
-      return;
-    }
 
     const { error } = await supabase.auth.signUp({
       email,
