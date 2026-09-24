@@ -110,7 +110,7 @@ function HomeScreenContent() {
             >
               <View style={styles.featuredContent}>
                 <Text style={styles.featuredLabel}>Featured</Text>
-                <Text style={styles.featuredTitle} numberOfLines={2}>{products[0].name.replace('Nike ', '')}</Text>
+                <Text style={styles.featuredTitle} numberOfLines={2}>{products[0]?.name?.replace('Nike ', '') || 'Sneaker'}</Text>
                 <Pressable style={styles.shopNowButton} onPress={() => router.push(`/details/${products[0].id}`)}>
                   <Text style={styles.shopNowText}>Shop now</Text>
                 </Pressable>

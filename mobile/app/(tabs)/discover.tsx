@@ -77,7 +77,12 @@ function DiscoverScreenContent() {
     </View>
   );
 
-  const filteredProducts = activeCategory === 'all' ? products : products.filter(p => p.category?.toLowerCase() === categories.find(c => c.id === activeCategory)?.name.toLowerCase() || p.categoryId === activeCategory);
+  const activeCategoryName = categories.find(c => c.id === activeCategory)?.name?.toLowerCase();
+  const filteredProducts = activeCategory === 'all' ? products : products.filter(p => {
+    if (activeCategoryName && p.category?.toLowerCase() === activeCategoryName) return true;
+    if (p.categoryId === activeCategory) return true;
+    return false;
+  });
 
   const renderItem = useCallback(({ item }: { item: any }) => {
     return (
