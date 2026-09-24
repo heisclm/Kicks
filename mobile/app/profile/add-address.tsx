@@ -118,11 +118,11 @@ export default function AddAddressScreen() {
       <View style={{ flex: 1 }}>
         <MapView
           ref={mapRef}
-          style={StyleSheet.absoluteFillObject}
+          style={{ width: '100%', height: '100%' }}
           initialRegion={region}
           showsUserLocation={true}
           onRegionChangeComplete={setRegion}
-          provider={Platform.OS === 'android' ? undefined : undefined}
+          
         />
         
         {/* Center Marker Pin */}

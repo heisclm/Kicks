@@ -8,7 +8,10 @@
     "scheme": "kicks",
     "userInterfaceStyle": "automatic",
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "config": {
+        "googleMapsApiKey": "AIzaSyDummyKeyForNow"
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -17,7 +20,12 @@
       },
       "predictiveBackGestureEnabled": false,
       "package": "com.heisclm.Kicks",
-      "backgroundColor": "#FAFAFA"
+      "backgroundColor": "#FAFAFA",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyDummyKeyForNow"
+        }
+      }
     },
     "web": {
       "bundler": "metro",
