@@ -1,7 +1,8 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 import { StyleSheet } from 'react-native';
-import { Tabs } from 'expo-router';
+import { Tabs, Redirect } from 'expo-router';
+import { useAuthStore } from '../../src/store/useAuthStore';
 import { Search, Heart, ShoppingCart, User } from 'lucide-react-native';
 import Svg, { Path } from 'react-native-svg';
 import { BottomTabBar } from '../../src/components/BottomTabBar';
@@ -33,6 +34,15 @@ function CartIconWithBadge({ focused, color, size }: any) {
 }
 
 export default function TabLayout() {
+  const { user, isInitialized } = useAuthStore();
+
+  if (!isInitialized) {
+    return null;
+  }
+
+  if (!user) {
+    return <Redirect href="/(auth)/login" />;
+  }
   return (
     <Tabs
       tabBar={props => <BottomTabBar {...(props as any)} />}
