@@ -1,5 +1,7 @@
-import React, { useState, useMemo } from 'react';
-import { View, Text, TextInput, Pressable, FlatList, KeyboardAvoidingView, Platform, useWindowDimensions, ActivityIndicator, ScrollView } from 'react-native';
+const fs = require('fs');
+
+let content = `import React, { useState, useMemo } from 'react';
+import { View, Text, TextInput, Pressable, FlatList, KeyboardAvoidingView, Platform, useWindowDimensions, ActivityIndicator } from 'react-native';
 import { StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -143,7 +145,7 @@ export default function SearchScreen() {
                 item={item} 
                 onPress={() => {
                   handleSearchSubmit();
-                  router.push(`/details/${item.id}`);
+                  router.push(\`/details/\${item.id}\`);
                 }}
               />
             </View>
@@ -255,3 +257,11 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   }
 });
+`;
+
+fs.writeFileSync('mobile/app/search.tsx', content, 'utf8');
+
+// I also need to add ScrollView to imports if it's missing (yes it was missing).
+content = content.replace("ActivityIndicator } from 'react-native';", "ActivityIndicator, ScrollView } from 'react-native';");
+fs.writeFileSync('mobile/app/search.tsx', content, 'utf8');
+

@@ -49,11 +49,12 @@ export default function PaymentMethodsScreen() {
       <View style={styles.header}>
         <IconButton 
           icon={<ChevronLeft color={colors.textPrimary} size={24} strokeWidth={2.5} />} 
-          onPress={() => router.push('/checkout')} style={styles.backButton} />
+          onPress={() => router.back()} style={styles.backButton} />
         <Text style={styles.headerTitle}>Payments</Text>
         <IconButton 
           icon={<Plus color={colors.textPrimary} size={24} strokeWidth={2.5} />} 
           style={styles.backButton}
+          onPress={() => router.push('/profile/add-payment')}
         />
       </View>
 
