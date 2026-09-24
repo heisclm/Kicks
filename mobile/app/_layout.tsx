@@ -12,6 +12,7 @@ import { useAuthStore } from "../src/store/useAuthStore";
 import { View } from "react-native";
 import * as SystemUI from 'expo-system-ui';
 import { StyleSheet } from 'react-native';
+import { colors } from '../src/theme';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -56,7 +57,7 @@ export default function RootLayout() {
     <View style={{ flex: 1, backgroundColor: colors.backgroundLight }}>
       <GlobalErrorBoundary>
         <QueryClientProvider client={queryClient}>
-          <StatusBar style={'light' === 'dark' ? 'light' : 'dark'} />
+          <StatusBar style={false ? 'light' : 'dark'} />
           <OfflineBanner />
         <Stack
           screenOptions={{ 

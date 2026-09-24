@@ -1,7 +1,9 @@
+import { FlashList } from '@shopify/flash-list';
 import React from 'react';
 import { View, Text, FlatList, Pressable } from 'react-native';
 import { StyleSheet } from 'react-native';
-import { useRouter, Head } from 'expo-router';
+import Head from 'expo-router/head';
+import {  useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ShoppingBag, MoreHorizontal } from 'lucide-react-native';
 import { colors, spacing, radius, typography } from '../../src/theme';

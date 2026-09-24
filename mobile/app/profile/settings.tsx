@@ -77,8 +77,8 @@ export default function SettingsScreen() {
             <SettingToggle 
               icon={<Moon color={colors.textPrimary} size={20} />} 
               title="Dark Mode" 
-              value={'light' === 'dark'} 
-              onValueChange={(val) => {}} 
+              value={false} 
+              onValueChange={(val: boolean) => {}} 
             />
             <View style={styles.divider} />
             <SettingToggle 

@@ -12,8 +12,8 @@ export function AuthGuard({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (!isInitialized || !isOnboardingHydrated) return;
 
-    const inAuthGroup = segments[0] === '(auth)';
-    const isRoot = segments.length === 0 || segments[0] === 'index';
+    const inAuthGroup = (segments[0] as string) === '(auth)';
+    const isRoot = (segments.length as number) === 0 || (segments[0] as string) === 'index';
 
     if (!user) {
       if (!isRoot && !inAuthGroup) {

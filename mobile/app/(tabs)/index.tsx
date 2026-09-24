@@ -3,7 +3,8 @@ import { View, Text, ScrollView, Pressable, Image } from 'react-native';
 import { StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Search, Bell } from 'lucide-react-native';
-import { useRouter, Head } from 'expo-router';
+import Head from 'expo-router/head';
+import {  useRouter } from 'expo-router';
 import { brands } from '../../src/data';
 import { LinearGradient } from 'expo-linear-gradient';
 

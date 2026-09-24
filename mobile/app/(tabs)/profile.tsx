@@ -1,3 +1,4 @@
+import Head from 'expo-router/head';
 import { useRouter } from "expo-router";
 import {
   Bell,
