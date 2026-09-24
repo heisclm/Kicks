@@ -4,7 +4,6 @@ import { StyleSheet } from 'react-native';
 import { useToastStore } from '../../src/store/useToastStore';
 import { useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { usePreferencesStore } from '../../src/store/usePreferencesStore';
 import { ChevronLeft, Bell, Tag, Package, Sparkles } from 'lucide-react-native';
 import { colors, spacing, radius, typography } from '../../src/theme';
 import { useNotifications, useMarkNotificationRead, useMarkAllNotificationsRead } from '../../src/hooks/useNotifications';
@@ -58,14 +57,15 @@ function NotificationCard({ item }: { item: any }) {
 export default function NotificationsScreen() {
   const insets = useSafeAreaInsets();
   const router = useRouter();
-  const { orderUpdates, promotions, priceDrops, newArrivals, setNotificationPreference } = usePreferencesStore();
+  
+  const { data: notifications, isLoading, error } = useNotifications();
+  const { mutate: markAllAsRead, isPending: isMarkingAll } = useMarkAllNotificationsRead();
 
-  const toggle = (key: 'orderUpdates' | 'promotions' | 'priceDrops' | 'newArrivals', value: boolean) => {
-    setNotificationPreference(key, !value);
-  };
+  const hasUnread = notifications?.some(n => !n.isRead);
 
   return (
     <View style={[styles.container, { paddingTop: insets.top }]}>
+      {/* Header */}
       <View style={styles.header}>
         <IconButton 
           icon={<ChevronLeft color={colors.textPrimary} size={24} strokeWidth={2.5} />} 
@@ -73,72 +73,137 @@ export default function NotificationsScreen() {
           style={styles.backButton}
         />
         <Text style={styles.headerTitle}>Notifications</Text>
-        <View style={{ width: 44 }} />
+        {hasUnread ? (
+          <Pressable onPress={() => markAllAsRead()} disabled={isMarkingAll}>
+            {isMarkingAll ? (
+              <ActivityIndicator size="small" color={colors.primary} />
+            ) : (
+              <Text style={styles.markAllText}>Mark all</Text>
+            )}
+          </Pressable>
+        ) : (
+          <View style={{ width: 44 }} />
+        )}
       </View>
 
-      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContent}>
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Orders & Deliveries</Text>
-          <View style={styles.settingItem}>
-            <View style={styles.settingInfo}>
-              <Text style={styles.settingLabel}>Order Updates</Text>
-              <Text style={styles.settingDesc}>Get notified about your order status</Text>
-            </View>
-            <Switch 
-              value={orderUpdates} 
-              onValueChange={() => toggle('orderUpdates', orderUpdates)}
-              trackColor={{ false: colors.border, true: colors.primary }}
-              thumbColor={colors.backgroundLight}
-            />
-          </View>
+      {isLoading ? (
+        <View style={[styles.emptyContainer, { flex: 1, justifyContent: 'center', alignItems: 'center' }]}>
+          <SneakerLoader label="Loading notifications..." transparent />
         </View>
-
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Offers & Updates</Text>
-          <View style={styles.settingItem}>
-            <View style={styles.settingInfo}>
-              <Text style={styles.settingLabel}>Promotions & Sales</Text>
-              <Text style={styles.settingDesc}>Hear about exclusive offers and sales</Text>
-            </View>
-            <Switch 
-              value={promotions} 
-              onValueChange={() => toggle('promotions', promotions)}
-              trackColor={{ false: colors.border, true: colors.primary }}
-              thumbColor={colors.backgroundLight}
-            />
-          </View>
-          
-          <View style={styles.divider} />
-          
-          <View style={styles.settingItem}>
-            <View style={styles.settingInfo}>
-              <Text style={styles.settingLabel}>Price Drops</Text>
-              <Text style={styles.settingDesc}>Get notified when wishlisted items drop in price</Text>
-            </View>
-            <Switch 
-              value={priceDrops} 
-              onValueChange={() => toggle('priceDrops', priceDrops)}
-              trackColor={{ false: colors.border, true: colors.primary }}
-              thumbColor={colors.backgroundLight}
-            />
-          </View>
-          
-          <View style={styles.divider} />
-          
-          <View style={styles.settingItem}>
-            <View style={styles.settingInfo}>
-              <Text style={styles.settingLabel}>New Arrivals</Text>
-              <Text style={styles.settingDesc}>Be the first to know about new sneaker drops</Text>
-            </View>
-            <Switch 
-              value={newArrivals} 
-              onValueChange={() => toggle('newArrivals', newArrivals)}
-              trackColor={{ false: colors.border, true: colors.primary }}
-              thumbColor={colors.backgroundLight}
-            />
-          </View>
+      ) : error ? (
+        <View style={[styles.emptyContainer, { flex: 1, justifyContent: 'center', alignItems: 'center' }]}>
+          <Text style={styles.title}>Error</Text>
+          <Text style={styles.message}>Could not load notifications.</Text>
         </View>
-      </ScrollView>
+      ) : (
+        <FlatList
+          data={notifications || []}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => <NotificationCard item={item} />}
+          contentContainerStyle={styles.listContent}
+          showsVerticalScrollIndicator={false}
+          ListEmptyComponent={
+            <View style={[styles.emptyContainer, { flex: 1, justifyContent: 'center', alignItems: 'center', marginTop: 100 }]}>
+              <Bell color={colors.textMuted} size={48} strokeWidth={1.5} />
+              <Text style={[styles.title, { marginTop: spacing.md, color: colors.textPrimary }]}>No Notifications</Text>
+              <Text style={[styles.message, { marginTop: spacing.xs, textAlign: 'center' }]}>You're all caught up!</Text>
+            </View>
+          }
+        />
+      )}
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: colors.backgroundLight,
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: spacing.sm,
+    paddingVertical: spacing.md,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.border,
+  },
+  backButton: {
+    backgroundColor: 'transparent',
+    shadowOpacity: 0,
+    elevation: 0,
+  },
+  headerTitle: {
+    fontFamily: typography.families.extrabold,
+    fontSize: typography.sizes.lg,
+    color: colors.textPrimary,
+  },
+  listContent: {
+    paddingBottom: spacing.xxxl,
+  },
+  card: {
+    flexDirection: 'row',
+    padding: spacing.xl,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.border,
+    backgroundColor: colors.backgroundLight,
+  },
+  cardUnread: {
+    backgroundColor: '#fff', // Slightly brighter to pop
+  },
+  iconContainer: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    backgroundColor: colors.surface,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: spacing.lg,
+  },
+  iconContainerUnread: {
+    backgroundColor: colors.textPrimary, // Dark contrast for unread
+  },
+  contentContainer: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+  headerRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+    marginBottom: 4,
+  },
+  title: {
+    fontFamily: typography.families.semibold,
+    fontSize: typography.sizes.md,
+    color: colors.textMuted,
+    flex: 1,
+    marginRight: spacing.md,
+  },
+  titleUnread: {
+    fontFamily: typography.families.extrabold,
+    color: colors.textPrimary,
+  },
+  date: {
+    fontFamily: typography.families.semibold,
+    fontSize: 10,
+    color: colors.textMuted,
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
+  },
+  message: {
+    fontFamily: typography.families.regular,
+    fontSize: typography.sizes.sm,
+    color: colors.textMuted,
+    lineHeight: 20,
+  },
+  emptyContainer: {
+    padding: spacing.xl,
+  },
+  markAllText: {
+    fontFamily: typography.families.extrabold,
+    fontSize: typography.sizes.sm,
+    color: colors.primary,
+  }
+});
