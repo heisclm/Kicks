@@ -88,7 +88,7 @@ function ProfileScreenContent() {
     } else {
       await resetOnboarding();
     }
-    router.replace("/");
+    router.replace('/(auth)/login');
   };
 
   const renderHeader = () => (

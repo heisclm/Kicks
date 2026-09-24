@@ -46,7 +46,7 @@ export default function OnboardingScreen() {
 
   useEffect(() => {
     if (isHydrated && hasSeenOnboarding) {
-      router.replace("/(tabs)" as any);
+      router.replace('/(auth)/login');
     }
   }, [isHydrated, hasSeenOnboarding]);
 
@@ -104,7 +104,7 @@ export default function OnboardingScreen() {
 
   const handleGetStarted = async () => {
     await completeOnboarding();
-    router.replace("/(tabs)" as any);
+    router.replace('/(auth)/login');
   };
 
   return (
