@@ -4,7 +4,7 @@ import { StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ChevronLeft, ChevronRight, MessageCircle, PhoneCall, Mail, FileText } from 'lucide-react-native';
-import { colors, spacing, radius, typography } from '../src/theme';
+import { colors, spacing, radius, typography } from '../../src/theme';
 import { IconButton } from '../../src/components/IconButton';
 import { useToastStore } from '../../src/store/useToastStore';
 

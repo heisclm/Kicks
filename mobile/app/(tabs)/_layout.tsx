@@ -5,7 +5,7 @@ import { Tabs } from 'expo-router';
 import { Search, Heart, ShoppingCart, User } from 'lucide-react-native';
 import Svg, { Path } from 'react-native-svg';
 import { BottomTabBar } from '../../src/components/BottomTabBar';
-import { colors, spacing, radius, typography } from '../src/theme';
+import { colors, spacing, radius, typography } from '../../src/theme';
 import { useCartStore } from '../../src/store/useCartStore';
 
 function HouseBlank({ color, size, strokeWidth }: any) {

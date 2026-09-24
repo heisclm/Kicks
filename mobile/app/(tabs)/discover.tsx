@@ -5,7 +5,7 @@ import { StyleSheet } from 'react-native';
 import { useRouter, Head } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Search, SlidersHorizontal } from 'lucide-react-native';
-import { colors, spacing, radius, typography } from '../src/theme';
+import { colors, spacing, radius, typography } from '../../src/theme';
 import { categories } from '../../src/data';
 import { ProductGridCard } from '../../src/components/ProductGridCard';
 import { ProductGridCardSkeleton } from '../../src/components/ProductGridCardSkeleton';

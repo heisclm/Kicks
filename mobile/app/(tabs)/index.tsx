@@ -13,7 +13,7 @@ import { SneakerLoader } from '../../src/components/SneakerLoader';
 import { ErrorState } from '../../src/components/ErrorState';
 import { IconButton } from '../../src/components/IconButton';
 import { BrandPill } from '../../src/components/BrandPill';
-import { colors, spacing, radius, typography } from '../src/theme';
+import { colors, spacing, radius, typography } from '../../src/theme';
 import { useProducts } from '../../src/hooks/useProducts';
 import { useNotifications } from '../../src/hooks/useNotifications';
 

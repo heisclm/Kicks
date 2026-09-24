@@ -5,7 +5,7 @@ import { useToastStore } from '../../src/store/useToastStore';
 import { useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ChevronLeft, Bell, Tag, Package, Sparkles } from 'lucide-react-native';
-import { colors, spacing, radius, typography } from '../src/theme';
+import { colors, spacing, radius, typography } from '../../src/theme';
 import { useNotifications, useMarkNotificationRead, useMarkAllNotificationsRead } from '../../src/hooks/useNotifications';
 import { ActivityIndicator } from 'react-native';
 import { IconButton } from '../../src/components/IconButton';

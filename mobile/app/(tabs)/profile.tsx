@@ -19,7 +19,7 @@ import {
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { IconButton } from "../../src/components/IconButton";
-import { colors, spacing, radius, typography } from '../src/theme';
+import { colors, spacing, radius, typography } from '../../src/theme';
 
 interface MenuItemProps {
   icon: React.ReactNode;
@@ -64,7 +64,6 @@ function MenuItem({
 
 import { useOnboardingStore } from "../../src/store/useOnboardingStore";
 import { useAuthStore } from "../../src/store/useAuthStore";
-import { StyleSheet } from 'react-native';
 
 export default function ProfileScreen() {
   return (

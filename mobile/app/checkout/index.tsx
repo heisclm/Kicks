@@ -21,8 +21,7 @@ import { OrderSuccessModal } from "../../src/components/OrderSuccessModal";
 import { useCartStore } from "../../src/store/useCartStore";
 import { useCheckoutStore } from "../../src/store/useCheckoutStore";
 import { useToastStore } from "../../src/store/useToastStore";
-import { colors, spacing, radius, typography } from '../src/theme';
-import { StyleSheet } from 'react-native';
+import { colors, spacing, radius, typography } from '../../src/theme';
 
 const addressSchema = z.object({
   fullName: z.string().min(2, "Name required"),

@@ -4,7 +4,7 @@ import { StyleSheet } from 'react-native';
 import { useRouter, Head } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ShoppingBag, MoreHorizontal } from 'lucide-react-native';
-import { colors, spacing, radius, typography } from '../src/theme';
+import { colors, spacing, radius, typography } from '../../src/theme';
 import { useProducts } from '../../src/hooks/useProducts';
 import { CartItemCard } from '../../src/components/CartItemCard';
 import { IconButton } from '../../src/components/IconButton';

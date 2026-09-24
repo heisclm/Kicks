@@ -19,8 +19,7 @@ import Svg, { Defs, RadialGradient, Rect, Stop } from "react-native-svg";
 
 import { supabase } from "../../src/api/supabase";
 import { useToastStore } from "../../src/store/useToastStore";
-import { colors, spacing, radius, typography } from '../src/theme';
-import { StyleSheet } from 'react-native';
+import { colors, spacing, radius, typography } from '../../src/theme';
 
 export default function LoginScreen() {
     const theme = { colors, spacing, radius, typography };

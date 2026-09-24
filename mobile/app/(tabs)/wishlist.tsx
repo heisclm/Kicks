@@ -5,7 +5,7 @@ import { StyleSheet } from 'react-native';
 import { useRouter, Head } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Heart } from 'lucide-react-native';
-import { colors, spacing, radius, typography } from '../src/theme';
+import { colors, spacing, radius, typography } from '../../src/theme';
 import { ProductGridCard } from '../../src/components/ProductGridCard';
 import { useWishlistStore } from '../../src/store/useWishlistStore';
 import { useCartStore } from '../../src/store/useCartStore';

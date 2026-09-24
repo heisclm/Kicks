@@ -18,7 +18,7 @@ import { Button } from '../../src/components/Button';
 import { useToastStore } from '../../src/store/useToastStore';
 import { useWishlistStore } from '../../src/store/useWishlistStore';
 import { useCartStore } from '../../src/store/useCartStore';
-import { colors, spacing, radius, typography } from '../src/theme';
+import { colors, spacing, radius, typography } from '../../src/theme';
 import { useReviews, useReviewEligibility, useAddReview } from '../../src/hooks/useReviews';
 import { AddReviewModal } from '../../src/components/AddReviewModal';
 import { useAuthStore } from '../../src/store/useAuthStore';

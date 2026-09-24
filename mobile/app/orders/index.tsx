@@ -7,7 +7,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { IconButton } from "../../src/components/IconButton";
 import { SneakerLoader } from "../../src/components/SneakerLoader";
 import { useOrders } from "../../src/hooks/useOrders";
-import { colors, spacing, radius, typography } from '../src/theme';
+import { colors, spacing, radius, typography } from '../../src/theme';
 
 function OrderCard({ order }: { order: any }) {
     const theme = { colors, spacing, radius, typography };

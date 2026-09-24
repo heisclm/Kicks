@@ -25,7 +25,6 @@ import Svg, {
 } from "react-native-svg";
 
 import { useOnboardingStore } from "../src/store/useOnboardingStore";
-import { StyleSheet } from 'react-native';
 
 export default function OnboardingScreen() {
     const theme = { colors, spacing, radius, typography };

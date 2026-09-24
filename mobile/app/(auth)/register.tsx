@@ -9,7 +9,7 @@ import Svg, { Defs, RadialGradient, Rect, Stop } from 'react-native-svg';
 import { StatusBar } from 'expo-status-bar';
 
 import { supabase } from '../../src/api/supabase';
-import { colors, spacing, radius, typography } from '../src/theme';
+import { colors, spacing, radius, typography } from '../../src/theme';
 import { useToastStore } from '../../src/store/useToastStore';
 
 export default function RegisterScreen() {
