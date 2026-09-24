@@ -52,7 +52,7 @@ function MenuItem({
       </View>
       <View style={styles.menuTextContainer}>
         <Text
-          style={[styles.menuTitle, isDestructive && { color: colors.cardRed }]}
+          style={[styles.menuTitle, isDestructive && { color: colors.error }]}
         >
           {title}
         </Text>
@@ -250,7 +250,7 @@ function ProfileScreenContent() {
       <View style={[styles.section, { marginTop: spacing.lg }]}>
         <View style={styles.menuCard}>
           <MenuItem
-            icon={<LogOut color={colors.cardRed} size={20} strokeWidth={2} />}
+            icon={<LogOut color={colors.error} size={20} strokeWidth={2} />}
             title="Log Out"
             isDestructive
             onPress={handleSignOut}
