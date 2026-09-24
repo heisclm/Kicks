@@ -10,8 +10,11 @@ import {
   Settings,
   ShoppingBag,
 } from "lucide-react-native";
-import React from "react";
+import React from 'react';
+import * as Haptics from 'expo-haptics';
+import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 import {
+  Alert,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -82,13 +85,31 @@ function ProfileScreenContent() {
   const { resetOnboarding } = useOnboardingStore();
   const { user, profile, signOut } = useAuthStore();
 
-  const handleSignOut = async () => {
-    if (user) {
-      await signOut();
-    } else {
-      await resetOnboarding();
-    }
-    router.replace('/(auth)/login');
+  const handleSignOut = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    Alert.alert(
+      "Log Out",
+      "Are you sure you want to log out of your account?",
+      [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        {
+          text: "Log Out",
+          style: "destructive",
+          onPress: async () => {
+            Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+            if (user) {
+              await signOut();
+            } else {
+              await resetOnboarding();
+            }
+            router.replace('/(auth)/login');
+          },
+        },
+      ]
+    );
   };
 
   const renderHeader = () => (
