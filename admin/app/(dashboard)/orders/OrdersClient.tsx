@@ -7,7 +7,7 @@ import {
   createFilteredRowModel, 
   createPaginatedRowModel, 
   createSortedRowModel, 
-  useReactTable, 
+  useTable, 
   SortingState, 
   ColumnFiltersState 
 } from '@tanstack/react-table';
@@ -150,7 +150,7 @@ export function OrdersClient({ data }: { data: Order[] }) {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [globalFilter, setGlobalFilter] = useState('');
 
-  const table = useReactTable({
+  const table = useTable({
     data,
     columns,
     state: {
