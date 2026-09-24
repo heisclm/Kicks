@@ -1,4 +1,6 @@
-import { createServerClient } from '@supabase/ssr'
+const fs = require('fs');
+
+let content = `import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 
 export async function updateSession(request: NextRequest) {
@@ -78,3 +80,6 @@ export async function updateSession(request: NextRequest) {
 
   return supabaseResponse
 }
+`;
+
+fs.writeFileSync('admin/utils/supabase/middleware.ts', content, 'utf8');
