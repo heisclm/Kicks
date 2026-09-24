@@ -26,7 +26,7 @@ export default function ShippingAddressesScreen() {
         <Text style={styles.headerTitle}>Addresses</Text>
         <IconButton 
           icon={<Plus color={colors.textPrimary} size={24} strokeWidth={2.5} />} 
-          onPress={() => router.push('/checkout')} // For now, the only way to add/edit is via Checkout flow
+          onPress={() => router.push('/profile/add-address')} // For now, the only way to add/edit is via Checkout flow
           style={styles.backButton}
         />
       </View>
@@ -49,7 +49,7 @@ export default function ShippingAddressesScreen() {
 {savedAddress.street}
 {savedAddress.city}, {savedAddress.zipCode}
             </Text>
-            <Text style={styles.editLink} onPress={() => router.push('/checkout')}>Edit Address</Text>
+            <Text style={styles.editLink} onPress={() => router.push('/profile/add-address')}>Edit Address</Text>
           </Pressable>
         ) : (
           <View style={styles.emptyContainer}>
@@ -58,7 +58,7 @@ export default function ShippingAddressesScreen() {
             </View>
             <Text style={styles.emptyTitle}>No Addresses Saved</Text>
             <Text style={styles.emptySubtitle}>You haven't saved any shipping addresses yet. Add one during your next checkout!</Text>
-            <Pressable style={styles.addButton} onPress={() => router.push('/checkout')}>
+            <Pressable style={styles.addButton} onPress={() => router.push('/profile/add-address')}>
               <Text style={styles.addButtonText}>ADD ADDRESS</Text>
             </Pressable>
           </View>
