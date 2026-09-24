@@ -3,11 +3,11 @@
 import { useState } from 'react';
 import { 
   flexRender, 
-  createCoreRowModel, 
-  createFilteredRowModel, 
-  createPaginatedRowModel, 
-  createSortedRowModel, 
-  useTable, 
+  getCoreRowModel, 
+  getFilteredRowModel, 
+  getPaginationRowModel, 
+  getSortedRowModel, 
+  useReactTable, 
   SortingState, 
   ColumnFiltersState 
 } from '@tanstack/react-table';
@@ -150,7 +150,7 @@ export function OrdersClient({ data }: { data: Order[] }) {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [globalFilter, setGlobalFilter] = useState('');
 
-  const table = useTable({
+  const table = useReactTable({
     data,
     columns,
     state: {
@@ -161,10 +161,10 @@ export function OrdersClient({ data }: { data: Order[] }) {
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     onGlobalFilterChange: setGlobalFilter,
-    getCoreRowModel: createCoreRowModel(),
-    getFilteredRowModel: createFilteredRowModel(),
-    getPaginationRowModel: createPaginatedRowModel(),
-    getSortedRowModel: createSortedRowModel(),
+    getCoreRowModel: getCoreRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    getSortedRowModel: getSortedRowModel(),
     initialState: {
       pagination: {
         pageSize: 10,
