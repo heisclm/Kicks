@@ -1,4 +1,7 @@
-import React from 'react';
+const fs = require('fs');
+let file = 'mobile/app/profile/addresses.tsx';
+
+let content = `import React from 'react';
 import { View, Text, ScrollView, Pressable } from 'react-native';
 import { StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
@@ -45,9 +48,7 @@ export default function ShippingAddressesScreen() {
               <CheckCircle color={colors.primary} size={20} strokeWidth={2.5} />
             </View>
             <Text style={styles.address}>
-              {savedAddress.fullName}
-{savedAddress.street}
-{savedAddress.city}, {savedAddress.zipCode}
+              {savedAddress.fullName}\n{savedAddress.street}\n{savedAddress.city}, {savedAddress.zipCode}
             </Text>
             <Text style={styles.editLink} onPress={() => router.push('/checkout')}>Edit Address</Text>
           </Pressable>
@@ -179,3 +180,6 @@ const styles = StyleSheet.create({
     letterSpacing: 1,
   }
 });
+`;
+
+fs.writeFileSync(file, content, 'utf8');

@@ -3,8 +3,7 @@ import { CartItem } from '../types';
 
 class CartService {
   async getCart(userId: string): Promise<CartItem[]> {
-    if (process.env.EXPO_PUBLIC_USE_MOCK_DATA !== 'false') return [];
-
+    
     const { data, error } = await supabase
       .from('cart_items')
       .select(`
@@ -37,8 +36,7 @@ class CartService {
   }
 
   async syncCartItem(userId: string, productId: string, size: number, quantity: number): Promise<string | null> {
-    if (process.env.EXPO_PUBLIC_USE_MOCK_DATA !== 'false') return null;
-
+    
     // 1. Get Variant ID
     const { data: variant, error: varError } = await supabase
       .from('product_variants')
@@ -85,8 +83,7 @@ class CartService {
   }
 
   async removeCartItem(cartItemId: string): Promise<boolean> {
-    if (process.env.EXPO_PUBLIC_USE_MOCK_DATA !== 'false') return true;
-
+    
     const { error } = await supabase
       .from('cart_items')
       .delete()
@@ -100,8 +97,7 @@ class CartService {
   }
   
   async removeCartItemByVariant(userId: string, productId: string, size: number): Promise<boolean> {
-      if (process.env.EXPO_PUBLIC_USE_MOCK_DATA !== 'false') return true;
-      
+            
       const { data: variant } = await supabase
         .from('product_variants')
         .select('id')
@@ -121,8 +117,7 @@ class CartService {
   }
 
   async clearCart(userId: string): Promise<boolean> {
-    if (process.env.EXPO_PUBLIC_USE_MOCK_DATA !== 'false') return true;
-
+    
     const { error } = await supabase
       .from('cart_items')
       .delete()

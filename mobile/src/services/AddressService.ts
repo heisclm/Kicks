@@ -4,8 +4,7 @@ import { useAuthStore } from '../store/useAuthStore';
 
 class AddressService {
   async getAddress(userId: string): Promise<Address | null> {
-    if (process.env.EXPO_PUBLIC_USE_MOCK_DATA !== 'false') return null;
-
+    
     const { data: address, error } = await supabase
       .from('addresses')
       .select('*')
@@ -35,8 +34,7 @@ class AddressService {
   }
 
   async saveAddress(userId: string, address: Address): Promise<boolean> {
-    if (process.env.EXPO_PUBLIC_USE_MOCK_DATA !== 'false') return true;
-
+    
     // Check if an address already exists to potentially upsert or just insert
     const { data: existing } = await supabase
       .from('addresses')
