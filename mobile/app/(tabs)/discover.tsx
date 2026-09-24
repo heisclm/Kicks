@@ -7,7 +7,6 @@ import {  useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Search, SlidersHorizontal } from 'lucide-react-native';
 import { colors, spacing, radius, typography } from '../../src/theme';
-import { categories } from '../../src/data';
 import { ProductGridCard } from '../../src/components/ProductGridCard';
 import { ProductGridCardSkeleton } from '../../src/components/ProductGridCardSkeleton';
 import { SneakerLoader } from '../../src/components/SneakerLoader';
@@ -15,6 +14,7 @@ import { ErrorState } from '../../src/components/ErrorState';
 import { IconButton } from '../../src/components/IconButton';
 import { useToastStore } from '../../src/store/useToastStore';
 import { useProducts } from '../../src/hooks/useProducts';
+import { useCategories } from '../../src/hooks/useTaxonomy';
 
 export default function DiscoverScreen() {
   return (
@@ -30,7 +30,8 @@ export default function DiscoverScreen() {
 function DiscoverScreenContent() {
   const insets = useSafeAreaInsets();
   const router = useRouter();
-  const [activeCategory, setActiveCategory] = useState(categories[0].id);
+  const { data: categories = [] } = useCategories();
+  const [activeCategory, setActiveCategory] = useState<string>('all');
 
   const { data: products = [], isLoading, isError, refetch } = useProducts();
   const { width } = useWindowDimensions();
@@ -56,7 +57,7 @@ function DiscoverScreenContent() {
       <FlatList
         horizontal
         showsHorizontalScrollIndicator={false}
-        data={categories}
+        data={[{ id: 'all', name: 'All' }, ...categories]}
         keyExtractor={(item) => item.id}
         contentContainerStyle={styles.categoriesList}
         renderItem={({ item }) => {
@@ -75,6 +76,8 @@ function DiscoverScreenContent() {
       />
     </View>
   );
+
+  const filteredProducts = activeCategory === 'all' ? products : products.filter(p => p.category?.toLowerCase() === categories.find(c => c.id === activeCategory)?.name.toLowerCase() || p.categoryId === activeCategory);
 
   const renderItem = useCallback(({ item }: { item: any }) => {
     return (
@@ -111,7 +114,7 @@ function DiscoverScreenContent() {
     <View style={[styles.container, { paddingTop: insets.top + spacing.md }]}>
       <FlatList
         key={numColumns}
-        data={products}
+        data={filteredProducts}
         keyExtractor={(item) => item.id}
         numColumns={numColumns}
         columnWrapperStyle={styles.row}

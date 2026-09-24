@@ -1,61 +1,21 @@
-import React from 'react';
-import { View, Text, FlatList, Pressable } from 'react-native';
-import { StyleSheet } from 'react-native';
-import { useToastStore } from '../../src/store/useToastStore';
-import { useRouter } from 'expo-router';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { usePreferencesStore } from '../../src/store/usePreferencesStore';
-import { ChevronLeft, Bell, Tag, Package, Sparkles } from 'lucide-react-native';
-import { colors, spacing, radius, typography } from '../../src/theme';
-import { useNotifications, useMarkNotificationRead, useMarkAllNotificationsRead } from '../../src/hooks/useNotifications';
-import { ActivityIndicator } from 'react-native';
-import { IconButton } from '../../src/components/IconButton';
-import { SneakerLoader } from '../../src/components/SneakerLoader';
+const fs = require('fs');
+let file = 'mobile/app/profile/notifications.tsx';
+let content = fs.readFileSync(file, 'utf8');
 
-function NotificationIcon({ type, isRead }: { type: string; isRead: boolean }) {
-  const color = isRead ? colors.textMuted : colors.textInverse;
-  switch(type) {
-    case 'Order': return <Package color={color} size={20} strokeWidth={2} />;
-    case 'Release': return <Sparkles color={color} size={20} strokeWidth={2} />;
-    case 'Promo': return <Tag color={color} size={20} strokeWidth={2} />;
-    default: return <Bell color={color} size={20} strokeWidth={2} />;
-  }
-}
+content = content.replace(/import \{ useSafeAreaInsets \} from 'react-native-safe-area-context';\r?\n/, "import { useSafeAreaInsets } from 'react-native-safe-area-context';\nimport { usePreferencesStore } from '../../src/store/usePreferencesStore';\n");
 
-function NotificationCard({ item }: { item: any }) {
-  const { mutate: markAsRead } = useMarkNotificationRead();
-  
-  const formattedDate = new Date(item.date).toLocaleDateString('en-US', {
-    month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit'
-  });
+content = content.replace(/export default function NotificationsScreen\(\) \{[\s\S]*?const router = useRouter\(\);/, `export default function NotificationsScreen() {
+  const insets = useSafeAreaInsets();
+  const router = useRouter();
+  const prefs = usePreferencesStore();`);
 
-  const handlePress = () => {
-    if (!item.isRead) {
-      markAsRead(item.id);
-    }
-    useToastStore.getState().showToast('Notification', item.title, 'info');
-  };
+content = content.replace(/<Switch\s+value=\{[^}]+\}\s+onValueChange=\{[^}]+\}/g, (match) => {
+  // It's manually doing state. We just replace all of them manually
+  return match;
+});
 
-  return (
-    <Pressable 
-      style={[styles.card, !item.isRead && styles.cardUnread]} 
-      onPress={handlePress}
-    >
-      <View style={[styles.iconContainer, !item.isRead && styles.iconContainerUnread]}>
-        <NotificationIcon type={item.type} isRead={item.isRead} />
-      </View>
-      <View style={styles.contentContainer}>
-        <View style={styles.headerRow}>
-          <Text style={[styles.title, !item.isRead && styles.titleUnread]}>{item.title}</Text>
-          <Text style={styles.date}>{formattedDate}</Text>
-        </View>
-        <Text style={styles.message}>{item.message}</Text>
-      </View>
-    </Pressable>
-  );
-}
-
-export default function NotificationsScreen() {
+// Since the component uses local useState for switches, I'll rewrite the component's body.
+content = content.replace(/export default function NotificationsScreen\(\) \{[\s\S]*?\}\);/m, `export default function NotificationsScreen() {
   const insets = useSafeAreaInsets();
   const router = useRouter();
   const { orderUpdates, promotions, priceDrops, newArrivals, setNotificationPreference } = usePreferencesStore();
@@ -141,4 +101,6 @@ export default function NotificationsScreen() {
       </ScrollView>
     </View>
   );
-}
+}`);
+
+fs.writeFileSync(file, content, 'utf8');

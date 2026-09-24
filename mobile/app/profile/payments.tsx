@@ -7,6 +7,7 @@ import { ChevronLeft, Plus, CheckCircle, CreditCard } from 'lucide-react-native'
 import { colors, spacing, radius, typography, shadows } from '../../src/theme';
 import { IconButton } from '../../src/components/IconButton';
 import { useToastStore } from '../../src/store/useToastStore';
+import { useCheckoutStore } from '../../src/store/useCheckoutStore';
 
 import { ApplePayLogo, MastercardLogo, VisaLogo, GooglePayLogo } from '../../src/components/PaymentLogos';
 
@@ -29,15 +30,26 @@ export default function PaymentMethodsScreen() {
   const insets = useSafeAreaInsets();
   const router = useRouter();
   const { showToast } = useToastStore();
+  const savedPayment = useCheckoutStore(state => state.savedPayment);
+
+  const getCardType = (cardNumber: string) => {
+    if (cardNumber.startsWith('4')) return 'visa';
+    if (cardNumber.startsWith('5')) return 'mastercard';
+    return 'card';
+  };
+
+  const getCardName = (cardNumber: string) => {
+    if (cardNumber.startsWith('4')) return 'Visa';
+    if (cardNumber.startsWith('5')) return 'Mastercard';
+    return 'Credit Card';
+  };
 
   return (
     <View style={[styles.container, { paddingTop: insets.top }]}>
       <View style={styles.header}>
         <IconButton 
           icon={<ChevronLeft color={colors.textPrimary} size={24} strokeWidth={2.5} />} 
-          onPress={() => router.back()} 
-          style={styles.backButton}
-        />
+          onPress={() => router.push('/checkout')} style={styles.backButton} />
         <Text style={styles.headerTitle}>Payments</Text>
         <IconButton 
           icon={<Plus color={colors.textPrimary} size={24} strokeWidth={2.5} />} 
@@ -46,26 +58,30 @@ export default function PaymentMethodsScreen() {
       </View>
 
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContent}>
-        {methods.map((method) => (
+        {savedPayment ? (
           <Pressable 
-            key={method.id} 
-            style={[styles.card, method.isDefault && styles.cardActive]}
-            onPress={() => showToast('Payment Method Selected', method.type, 'success')}
+            style={[styles.card, styles.cardActive]}
+            onPress={() => showToast('Payment Method Selected', 'Default Payment', 'success')}
           >
             <View style={styles.cardHeader}>
               <View style={styles.titleRow}>
                 <View style={styles.iconWrapper}>
-                  {renderLogo(method.id_key)}
+                  {renderLogo(getCardType(savedPayment.cardNumber))}
                 </View>
                 <View>
-                  <Text style={styles.name}>{method.type}</Text>
-                  {method.last4 && <Text style={styles.subtitle}>**** **** **** {method.last4}</Text>}
+                  <Text style={styles.name}>{getCardName(savedPayment.cardNumber)}</Text>
+                  <Text style={styles.subtitle}>**** **** **** {savedPayment.cardNumber.slice(-4)}</Text>
                 </View>
               </View>
-              {method.isDefault && <CheckCircle color={colors.primary} size={20} strokeWidth={2.5} />}
+              <CheckCircle color={colors.primary} size={20} strokeWidth={2.5} />
             </View>
           </Pressable>
-        ))}
+        ) : (
+          <View style={{ alignItems: 'center', marginTop: 40 }}>
+            <Text style={{ fontFamily: typography.families.medium, color: colors.textMuted }}>No saved payment methods</Text>
+            <Text style={{ fontFamily: typography.families.regular, color: colors.textMuted, fontSize: 12, marginTop: 8 }}>Add one during your next checkout</Text>
+          </View>
+        )}
       </ScrollView>
     </View>
   );

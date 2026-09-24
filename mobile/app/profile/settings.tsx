@@ -3,6 +3,7 @@ import { View, Text, ScrollView, Switch, Pressable } from 'react-native';
 import { StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { usePreferencesStore } from '../../src/store/usePreferencesStore';
 import { ChevronLeft, ChevronRight, Bell, Moon, Globe, Shield, Smartphone } from 'lucide-react-native';
 import { colors, spacing, radius, typography } from '../../src/theme';
 import { IconButton } from '../../src/components/IconButton';
@@ -42,11 +43,7 @@ function SettingLink({ icon, title, value, onPress }: any) {
 export default function SettingsScreen() {
   const insets = useSafeAreaInsets();
   const router = useRouter();
-  const { showToast } = useToastStore();
-
-  const [pushEnabled, setPushEnabled] = useState(true);
-  
-  const [biometricsEnabled, setBiometricsEnabled] = useState(true);
+  const { currency, language, location } = usePreferencesStore();
 
   return (
     <View style={[styles.container, { paddingTop: insets.top }]}>

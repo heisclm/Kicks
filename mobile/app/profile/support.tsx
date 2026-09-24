@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, ScrollView, Pressable } from 'react-native';
 import { StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
+import * as Linking from 'expo-linking';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ChevronLeft, ChevronRight, MessageCircle, PhoneCall, Mail, FileText } from 'lucide-react-native';
 import { colors, spacing, radius, typography } from '../../src/theme';
@@ -57,21 +58,21 @@ export default function SupportScreen() {
               icon={<MessageCircle color={colors.textPrimary} size={20} />} 
               title="Live Chat" 
               subtitle="Usually replies in 5 minutes" 
-              onPress={() => showToast('Opening Live Chat...', 'Connecting to an agent', 'info')}
+              onPress={() => Linking.openURL('sms:+18001234567')}
             />
             <View style={styles.divider} />
             <ContactItem 
               icon={<PhoneCall color={colors.textPrimary} size={20} />} 
               title="Phone Support" 
               subtitle="+1 (800) 123-KICKS" 
-              onPress={() => showToast('Calling Support...', '+1 (800) 123-KICKS', 'info')}
+              onPress={() => Linking.openURL('tel:+18001234567')}
             />
             <View style={styles.divider} />
             <ContactItem 
               icon={<Mail color={colors.textPrimary} size={20} />} 
               title="Email Us" 
               subtitle="support@kicks.com" 
-              onPress={() => showToast('Composing Email...', 'support@kicks.com', 'info')}
+              onPress={() => Linking.openURL('mailto:support@kicks.com?subject=Support Request')}
             />
           </View>
         </View>

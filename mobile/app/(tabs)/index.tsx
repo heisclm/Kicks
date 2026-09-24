@@ -5,7 +5,6 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Search, Bell } from 'lucide-react-native';
 import Head from 'expo-router/head';
 import {  useRouter } from 'expo-router';
-import { brands } from '../../src/data';
 import { LinearGradient } from 'expo-linear-gradient';
 
 import { ProductCard } from '../../src/components/ProductCard';
@@ -17,6 +16,7 @@ import { BrandPill } from '../../src/components/BrandPill';
 import { colors, spacing, radius, typography } from '../../src/theme';
 import { useProducts } from '../../src/hooks/useProducts';
 import { useNotifications } from '../../src/hooks/useNotifications';
+import { useBrands } from '../../src/hooks/useTaxonomy';
 
 export default function HomeScreen() {
   return (
@@ -36,6 +36,7 @@ function HomeScreenContent() {
   
   const { data: products = [], isLoading, isError, refetch } = useProducts();
   const { data: notifications } = useNotifications();
+  const { data: brands = [] } = useBrands();
 
   const hasUnread = notifications?.some(n => !n.isRead);
 
@@ -97,30 +98,33 @@ function HomeScreenContent() {
 
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContent}>
         
-        {/* Featured Banner */}
-        <View style={styles.featuredContainer}>
-          <LinearGradient
-            colors={[colors.primary, colors.secondary]}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 1 }}
-            style={styles.featuredBanner}
-          >
-            <View style={styles.featuredContent}>
-              <Text style={styles.featuredLabel}>New Release</Text>
-              <Text style={styles.featuredTitle}>Nike Unveil{'\n'}Joyride</Text>
-              <Pressable style={styles.shopNowButton} onPress={() => router.push('/(tabs)/discover')}>
-                <Text style={styles.shopNowText}>Shop now</Text>
-              </Pressable>
-            </View>
-            <Image 
-              source={require('../../assets/shoe-unveil.png')} 
-              style={styles.featuredImage} 
-              resizeMode="contain"
-            />
-          </LinearGradient>
-        </View>
+        
+          {/* Featured Banner */}
+          {products.length > 0 && (
+          <View style={styles.featuredContainer}>
+            <LinearGradient
+              colors={[colors.primary, colors.secondary]}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 1 }}
+              style={styles.featuredBanner}
+            >
+              <View style={styles.featuredContent}>
+                <Text style={styles.featuredLabel}>Featured</Text>
+                <Text style={styles.featuredTitle} numberOfLines={2}>{products[0].name.replace('Nike ', '')}</Text>
+                <Pressable style={styles.shopNowButton} onPress={() => router.push(`/details/${products[0].id}`)}>
+                  <Text style={styles.shopNowText}>Shop now</Text>
+                </Pressable>
+              </View>
+              <Image 
+                source={products[0].image as any} 
+                style={styles.featuredImage} 
+                resizeMode="contain"
+              />
+            </LinearGradient>
+          </View>
+          )}
 
-        {/* Brands */}
+          {/* Brands */}
         <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.brandsContainer} contentContainerStyle={{ paddingHorizontal: spacing.xxl }}>
           {brands.map((brand) => (
             <BrandPill 
