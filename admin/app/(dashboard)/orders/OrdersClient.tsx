@@ -3,10 +3,10 @@
 import { useState } from 'react';
 import { 
   flexRender, 
-  getCoreRowModel, 
-  getFilteredRowModel, 
-  getPaginationRowModel, 
-  getSortedRowModel, 
+  createCoreRowModel, 
+  createFilteredRowModel, 
+  createPaginatedRowModel, 
+  createSortedRowModel, 
   useReactTable, 
   SortingState, 
   ColumnFiltersState 
@@ -161,10 +161,10 @@ export function OrdersClient({ data }: { data: Order[] }) {
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     onGlobalFilterChange: setGlobalFilter,
-    getCoreRowModel: getCoreRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    getSortedRowModel: getSortedRowModel(),
+    getCoreRowModel: createCoreRowModel(),
+    getFilteredRowModel: createFilteredRowModel(),
+    getPaginationRowModel: createPaginatedRowModel(),
+    getSortedRowModel: createSortedRowModel(),
     initialState: {
       pagination: {
         pageSize: 10,
