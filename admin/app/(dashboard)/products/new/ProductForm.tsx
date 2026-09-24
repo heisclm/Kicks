@@ -99,12 +99,38 @@ export function ProductForm({ brands, categories }: { brands: Brand[], categorie
               <CardTitle className="text-sm">Media</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="border-2 border-dashed border-border rounded-lg p-6 sm:p-8 flex flex-col items-center justify-center text-center bg-muted/20 hover:bg-muted/40 transition-colors cursor-pointer group">
+              <label htmlFor="image-upload" className="block border-2 border-dashed border-border rounded-lg p-6 sm:p-8 flex flex-col items-center justify-center text-center bg-muted/20 hover:bg-muted/40 transition-colors cursor-pointer group relative overflow-hidden">
                 <div className="h-12 w-12 rounded-full bg-brand-primary/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                   <Upload className="text-brand-primary" size={20} />
                 </div>
                 <p className="text-sm font-medium text-foreground mb-1">Click to upload or drag and drop</p>
                 <p className="text-xs text-muted-foreground">SVG, PNG, JPG or GIF (max. 5MB)</p>
+                <input 
+                  type="file" 
+                  id="image-upload" 
+                  name="image" 
+                  accept="image/*" 
+                  className="absolute inset-0 opacity-0 cursor-pointer" 
+                  onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    if (file) {
+                      const img = document.getElementById('image-preview') as HTMLImageElement;
+                      if (img) img.src = URL.createObjectURL(file);
+                      document.getElementById('preview-container')?.classList.remove('hidden');
+                    }
+                  }}
+                />
+              </label>
+              
+              <div id="preview-container" className="hidden mt-4 relative rounded-md overflow-hidden border border-border h-48">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img id="image-preview" src="" alt="Preview" className="w-full h-full object-cover" />
+                <button type="button" className="absolute top-2 right-2 bg-background/80 p-1.5 rounded-full" onClick={() => {
+                  (document.getElementById('image-upload') as HTMLInputElement).value = '';
+                  document.getElementById('preview-container')?.classList.add('hidden');
+                }}>
+                  <X size={16} className="text-foreground" />
+                </button>
               </div>
             </CardContent>
           </Card>
@@ -120,7 +146,7 @@ export function ProductForm({ brands, categories }: { brands: Brand[], categorie
                   <Label htmlFor="price">Price</Label>
                   <div className="relative">
                     <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground text-sm">$</span>
-                    <Input id="price" type="number" placeholder="0.00" className="pl-7 tabular-nums" />
+                    <Input id="price" name="base_price" type="number" step="0.01" required placeholder="0.00" className="pl-7 tabular-nums" />
                   </div>
                 </div>
                 <div className="space-y-2">
@@ -176,10 +202,10 @@ export function ProductForm({ brands, categories }: { brands: Brand[], categorie
             <CardContent className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="status">Product Status</Label>
-                <Select id="status">
-                  <option className="bg-background text-foreground" value="draft">Draft</option>
-                  <option className="bg-background text-foreground" value="active">Active</option>
-                  <option className="bg-background text-foreground" value="archived">Archived</option>
+                <Select id="status" name="is_active">
+                  <option className="bg-background text-foreground" value="false">Draft</option>
+                  <option className="bg-background text-foreground" value="true">Active</option>
+                  <option className="bg-background text-foreground" value="false">Archived</option>
                 </Select>
               </div>
               <p className="text-[11px] text-muted-foreground">

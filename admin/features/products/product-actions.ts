@@ -1,4 +1,4 @@
-﻿'use server';
+'use server';
 import { requirePermission } from '../../lib/auth/guards';
 import { ProductRepository } from './product-repository';
 import { Product } from './product-types';
@@ -17,8 +17,32 @@ export async function createProductAction(formData: FormData): Promise<ActionSta
       brand_id: formData.get('brand_id'),
       category_id: formData.get('category_id'),
       base_price: formData.get('base_price'),
-      is_active: formData.get('is_active') === 'true'
+      is_active: formData.get('is_active') === 'true',
+      image_url: undefined as string | undefined
     };
+
+    // Handle File upload if present
+    const imageFile = formData.get('image') as File | null;
+    if (imageFile && imageFile.size > 0) {
+      const { createClient } = await import('../../utils/supabase/server');
+      const supabase = await createClient();
+      
+      const fileExt = imageFile.name.split('.').pop();
+      const fileName = `${Date.now()}-${Math.random().toString(36).substring(2, 9)}.${fileExt}`;
+      
+      const { data: uploadData, error: uploadError } = await supabase.storage
+        .from('product-images')
+        .upload(fileName, imageFile);
+        
+      if (uploadError) throw new Error(`Image upload failed: ${uploadError.message}`);
+      
+      const { data: { publicUrl } } = supabase.storage
+        .from('product-images')
+        .getPublicUrl(fileName);
+        
+      rawData.image_url = publicUrl;
+    }
+
     const validated = CreateProductSchema.safeParse(rawData);
     if (!validated.success) return { success: false, error: validated.error.issues[0].message };
     const product = await ProductRepository.createProduct(validated.data);

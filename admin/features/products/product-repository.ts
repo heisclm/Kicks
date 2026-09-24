@@ -109,6 +109,17 @@ export class ProductRepository {
       .single();
 
     if (error) throw new Error(error.message);
+    
+    // Insert image if provided
+    if (input.image_url) {
+      await supabase.from('product_images').insert([{
+        product_id: data.id,
+        image_url: input.image_url,
+        is_primary: true,
+        display_order: 0
+      }]);
+    }
+
     return data as unknown as Product; // Using bypass to match existing pattern for insert returns
   }
 
