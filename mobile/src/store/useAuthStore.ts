@@ -20,6 +20,7 @@ interface AuthState {
   isInitialized: boolean;
   initializeAuth: () => Promise<void>;
   signOut: () => Promise<void>;
+  updateProfile: (updates: Partial<Profile>) => Promise<boolean>;
 }
 
 export const useAuthStore = create<AuthState>((set, get) => ({
@@ -75,6 +76,28 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       console.error('Auth initialization error:', err);
       set({ isLoading: false, isInitialized: true });
     }
+  },
+
+  updateProfile: async (updates) => {
+    const user = get().user;
+    if (!user) return false;
+    
+    set({ isLoading: true });
+    const { data, error } = await supabase
+      .from('profiles')
+      .update(updates)
+      .eq('id', user.id)
+      .select()
+      .single();
+      
+    if (error) {
+      console.error('Error updating profile:', error);
+      set({ isLoading: false });
+      return false;
+    }
+    
+    set({ profile: data, isLoading: false });
+    return true;
   },
 
   signOut: async () => {

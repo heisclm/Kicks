@@ -1,4 +1,7 @@
-import React, { useState, useEffect } from 'react';
+const fs = require('fs');
+let file = 'mobile/app/profile/edit.tsx';
+
+let content = `import React, { useState, useEffect } from 'react';
 import { View, Text, ScrollView, TextInput, Pressable, KeyboardAvoidingView, Platform } from 'react-native';
 import { StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
@@ -24,7 +27,7 @@ export default function EditProfileScreen() {
   useEffect(() => {
     if (user) setEmail(user.email || '');
     if (profile) {
-      const fullName = profile.first_name ? `${profile.first_name} ${profile.last_name || ''}`.trim() : '';
+      const fullName = profile.first_name ? \`\${profile.first_name} \${profile.last_name || ''}\`.trim() : '';
       setName(fullName);
     }
   }, [user, profile]);
@@ -234,3 +237,5 @@ const styles = StyleSheet.create({
     letterSpacing: 1,
   }
 });
+`;
+fs.writeFileSync(file, content, 'utf8');
