@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { View, Text, TextInput, Pressable, ActivityIndicator, Alert, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import { StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
+import * as Haptics from 'expo-haptics';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ArrowLeft, Mail, Lock, User, ChevronRight } from 'lucide-react-native';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -47,8 +48,18 @@ export default function RegisterScreen() {
     if (error) {
       useToastStore.getState().showToast('Registration Failed', error.message, 'error');
     } else {
-      useToastStore.getState().showToast('Success', 'Account created! Please log in.', 'success');
-      router.back();
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+      Alert.alert(
+        "Verify Your Email",
+        `We've sent a verification link to ${email}.\n\nPlease check your inbox (and spam folder) to verify your account before logging in.`,
+        [
+          {
+            text: "I'll check it",
+            style: "default",
+            onPress: () => router.back(),
+          }
+        ]
+      );
     }
   }
 
