@@ -1,7 +1,8 @@
 import { Image as ExpoImage } from "expo-image";
 import { useRouter } from "expo-router";
 import { CheckCircle, ChevronLeft, Clock, Package } from "lucide-react-native";
-import { FlatList, Pressable, Text, View } from 'react-native';
+import { FlatList, Pressable, Text, View, RefreshControl } from 'react-native';
+import { useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { IconButton } from "../../src/components/IconButton";
@@ -107,7 +108,14 @@ export default function OrdersScreen() {
   const insets = useSafeAreaInsets();
   const router = useRouter();
 
-  const { data: orders, isLoading, error } = useOrders();
+  const { data: orders, isLoading, error, refetch } = useOrders();
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await refetch();
+    setRefreshing(false);
+  };
 
   return (
     <View style={[styles.container, { paddingTop: insets.top }]}>
