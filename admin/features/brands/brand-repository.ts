@@ -63,7 +63,8 @@ export class BrandRepository {
         name: input.name,
         slug: slug,
         description: input.description,
-        logo_url: input.logo_url
+        logo_url: input.logo_url,
+        ...(input.is_active !== undefined && { is_active: input.is_active })
       })
       .eq('id', input.id)
       .select()

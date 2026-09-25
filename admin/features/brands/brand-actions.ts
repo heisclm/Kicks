@@ -45,7 +45,8 @@ export async function updateBrandAction(formData: FormData): Promise<ActionState
       id: (formData.get('id') as string) || undefined, 
       name: (formData.get('name') as string) || undefined, 
       description: (formData.get('description') as string) || undefined, 
-      logo_url: (formData.get('logo_url') as string) || undefined
+      logo_url: (formData.get('logo_url') as string) || undefined,
+      is_active: formData.get('is_active') === 'on'
     };
 
     // Handle File upload if present

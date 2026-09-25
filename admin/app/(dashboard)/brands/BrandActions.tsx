@@ -88,7 +88,11 @@ export function BrandActions({ brand }: { brand: Brand }) {
               <img id={`edit-brand-preview-${brand.id}`} src={brand.logo_url || undefined} alt="Logo Preview" className={brand.logo_url ? "h-16 object-contain mx-auto" : "hidden h-16 object-contain mx-auto"} />
             </div>
           </div>
-          <div className="flex justify-end gap-2 mt-6">
+          <div className="flex items-center gap-2 pt-2 pb-2">
+            <input type="checkbox" name="is_active" id={`is_active_${brand.id}`} defaultChecked={brand.is_active} className="rounded border-border accent-brand-primary h-4 w-4" />
+            <Label htmlFor={`is_active_${brand.id}`} className="font-medium cursor-pointer">Active Brand</Label>
+          </div>
+          <div className="flex justify-end gap-2 mt-2">
             <Button type="button" variant="outline" onClick={() => setIsEditOpen(false)}>Cancel</Button>
             <Button type="submit" disabled={isPending} className="bg-brand-primary text-white hover:bg-brand-primary-hover min-w-[100px]">{isPending ? 'Saving...' : 'Save'}</Button>
           </div>
