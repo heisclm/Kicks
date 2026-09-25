@@ -10,7 +10,7 @@ import {
   Settings,
   ShoppingBag,
 } from "lucide-react-native";
-import React from 'react';
+import React, { useState } from 'react';
 import * as Haptics from 'expo-haptics';
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 import {
@@ -23,6 +23,7 @@ import {
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { IconButton } from "../../src/components/IconButton";
+import { LogoutModal } from "../../src/components/LogoutModal";
 import { colors, spacing, radius, typography } from '../../src/theme';
 
 interface MenuItemProps {
@@ -85,31 +86,25 @@ function ProfileScreenContent() {
   const { resetOnboarding } = useOnboardingStore();
   const { user, profile, signOut } = useAuthStore();
 
+  const [isLogoutModalVisible, setIsLogoutModalVisible] = useState(false);
+
   const handleSignOut = () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-    Alert.alert(
-      "Log Out",
-      "Are you sure you want to log out of your account?",
-      [
-        {
-          text: "Cancel",
-          style: "cancel",
-        },
-        {
-          text: "Log Out",
-          style: "destructive",
-          onPress: async () => {
-            Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-            if (user) {
-              await signOut();
-            } else {
-              await resetOnboarding();
-            }
-            router.replace('/(auth)/login');
-          },
-        },
-      ]
-    );
+    setIsLogoutModalVisible(true);
+  };
+  
+  const confirmSignOut = async () => {
+    setIsLogoutModalVisible(false);
+    // give time for modal to close before unmounting screens
+    setTimeout(async () => {
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+      if (user) {
+        await signOut();
+      } else {
+        await resetOnboarding();
+      }
+      router.replace('/(auth)/login');
+    }, 200);
   };
 
   const renderHeader = () => (
@@ -170,7 +165,7 @@ function ProfileScreenContent() {
   };
 
   return (
-    <ScrollView
+    <><ScrollView
       style={[styles.container, { paddingTop: insets.top + spacing.md }]}
       contentContainerStyle={[styles.scrollContent, { paddingBottom: 120 }]}
       showsVerticalScrollIndicator={false}
@@ -257,7 +252,7 @@ function ProfileScreenContent() {
           />
         </View>
       </View>
-    </ScrollView>
+    </ScrollView><LogoutModal visible={isLogoutModalVisible} onClose={() => setIsLogoutModalVisible(false)} onConfirm={confirmSignOut} /></>
   );
 }
 
