@@ -33,12 +33,21 @@ export default function HomeScreen() {
 function HomeScreenContent() {
   const router = useRouter();
   const [selectedBrand, setSelectedBrand] = useState('all');
+  const [refreshing, setRefreshing] = useState(false);
   
-  const { data: products = [], isLoading, isError, refetch } = useProducts();
-  const { data: notifications } = useNotifications();
-  const { data: brands = [] } = useBrands();
+  const { data: products = [], isLoading, isError, refetch: refetchProducts } = useProducts();
+  const { data: notifications, refetch: refetchNotifications } = useNotifications();
+  const { data: brands = [], refetch: refetchBrands } = useBrands();
 
   const hasUnread = notifications?.some(n => !n.isRead);
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+    if (refetchProducts) await refetchProducts();
+    if (refetchNotifications) await refetchNotifications();
+    if (refetchBrands) await refetchBrands();
+    setRefreshing(false);
+  };
 
   const renderContent = () => {
     if (isLoading) {
