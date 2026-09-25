@@ -4,6 +4,7 @@ import { createClient } from '../../utils/supabase/server';
 export interface Brand {
   id: string;
   name: string;
+  slug?: string;
   description?: string;
   logo_url?: string;
   is_active: boolean;
@@ -30,10 +31,13 @@ export class BrandRepository {
 
   static async createBrand(input: CreateBrandInput): Promise<Brand> {
     const supabase = await createClient();
+    const slug = input.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+    
     const { data, error } = await supabase
       .from('brands')
       .insert([{
         name: input.name,
+        slug: slug,
         description: input.description,
         logo_url: input.logo_url
       }])
@@ -50,10 +54,13 @@ export class BrandRepository {
 
   static async updateBrand(input: UpdateBrandInput): Promise<Brand> {
     const supabase = await createClient();
+    const slug = input.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+    
     const { data, error } = await supabase
       .from('brands')
       .update({
         name: input.name,
+        slug: slug,
         description: input.description,
         logo_url: input.logo_url
       })
