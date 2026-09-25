@@ -1,13 +1,11 @@
-import * as fs from 'fs';
-
-const fileContent = `'use client';
+'use client';
 import { Brand } from '../../../../features/brands/brand-repository';
 import { Category } from '../../../../features/categories/category-repository';
 
 import Link from 'next/link';
 import { ArrowLeft, Upload, X, Tag, Info, Image as ImageIcon, DollarSign, Package, Settings, Sparkles } from 'lucide-react';
 import { Button } from '../../../../components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '../../../../components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '../../../../components/ui/card';
 import { Input } from '../../../../components/ui/input';
 import { Label } from '../../../../components/ui/label';
 import { Textarea } from '../../../../components/ui/textarea';
@@ -158,11 +156,11 @@ export function ProductForm({ brands, categories }: { brands: Brand[], categorie
                     const file = e.target.files?.[0];
                     if (file) {
                       const reader = new FileReader();
-                      reader.onload = (e) => {
+                      reader.onload = (ev) => {
                         const preview = document.getElementById('image-preview') as HTMLImageElement;
                         const container = document.getElementById('preview-container');
-                        if (preview && container && e.target?.result) {
-                          preview.src = e.target.result as string;
+                        if (preview && container && ev.target?.result) {
+                          preview.src = ev.target.result as string;
                           container.classList.remove('hidden');
                         }
                       };
@@ -258,9 +256,9 @@ export function ProductForm({ brands, categories }: { brands: Brand[], categorie
               <div className="space-y-3">
                 <Label htmlFor="status" className="sr-only">Product Status</Label>
                 <Select id="status" name="is_active" className="h-11 text-base font-medium">
-                  <option className="bg-background text-foreground" value="false">🔴 Draft (Hidden)</option>
-                  <option className="bg-background text-foreground" value="true">🟢 Active (Published)</option>
-                  <option className="bg-background text-foreground" value="false">⚪ Archived</option>
+                  <option className="bg-background text-foreground" value="false">?? Draft (Hidden)</option>
+                  <option className="bg-background text-foreground" value="true">?? Active (Published)</option>
+                  <option className="bg-background text-foreground" value="false">? Archived</option>
                 </Select>
               </div>
               <p className="text-[12px] text-muted-foreground leading-relaxed">
@@ -359,11 +357,11 @@ export function ProductForm({ brands, categories }: { brands: Brand[], categorie
                         key={size}
                         type="button"
                         onClick={() => toggleSize(size)}
-                        className={\`px-4 py-2 text-sm font-semibold rounded-lg border transition-all \${
+                        className={`px-4 py-2 text-sm font-semibold rounded-lg border transition-all ${
                           isSelected 
                             ? 'bg-brand-primary border-brand-primary text-white shadow-md' 
                             : 'bg-background border-border text-foreground hover:border-brand-primary/50 hover:bg-muted/30'
-                        }\`}
+                        }`}
                       >
                         {size}
                       </button>
@@ -378,6 +376,3 @@ export function ProductForm({ brands, categories }: { brands: Brand[], categorie
     </form>
   );
 }
-`;
-
-fs.writeFileSync('C:/Users/CLm/Desktop/Kicks/admin/app/(dashboard)/products/new/ProductForm.tsx', fileContent);
