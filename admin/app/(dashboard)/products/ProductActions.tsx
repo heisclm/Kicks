@@ -9,6 +9,7 @@ import { Product } from '../../../features/products/product-types';
 import { Brand } from '../../../features/brands/brand-repository';
 import { Category } from '../../../features/categories/category-repository';
 import { updateProductAction, deleteProductAction } from '../../../features/products/product-actions';
+import { Loader2 } from 'lucide-react';
 
 export function ProductActions({ product, brands, categories }: { product: Product, brands: Brand[], categories: Category[] }) {
   const [isEditOpen, setIsEditOpen] = useState(false);
@@ -101,8 +102,8 @@ export function ProductActions({ product, brands, categories }: { product: Produ
                 </div>
               </div>
               <div className="flex justify-end gap-2 mt-6">
-                <Button type="button" variant="ghost" onClick={() => setIsEditOpen(false)}>Cancel</Button>
-                <Button type="submit" disabled={isPending}>{isPending ? 'Saving...' : 'Save'}</Button>
+                <Button type="button" variant="ghost" onClick={() => setIsEditOpen(false)} disabled={isPending}>Cancel</Button>
+                <Button type="submit" disabled={isPending}>{isPending ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Saving...</> : 'Save'}</Button>
               </div>
             </form>
           </div>
@@ -117,7 +118,7 @@ export function ProductActions({ product, brands, categories }: { product: Produ
             {error && <div className="text-sm text-destructive mb-4 p-3 bg-destructive/10 rounded-md">{error}</div>}
             <div className="flex justify-end gap-2">
               <Button type="button" variant="ghost" onClick={() => setIsDeleteOpen(false)}>Cancel</Button>
-              <Button type="button" variant="destructive" onClick={handleDelete} disabled={isPending}>{isPending ? 'Deleting...' : 'Delete'}</Button>
+              <Button type="button" variant="destructive" onClick={handleDelete} disabled={isPending}>{isPending ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Deleting...</> : 'Delete'}</Button>
             </div>
           </div>
         </div>

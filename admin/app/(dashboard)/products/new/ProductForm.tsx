@@ -3,7 +3,7 @@ import { Brand } from '../../../../features/brands/brand-repository';
 import { Category } from '../../../../features/categories/category-repository';
 
 import Link from 'next/link';
-import { ArrowLeft, Upload, X, Tag, Info, Image as ImageIcon, DollarSign, Package, Settings, Sparkles } from 'lucide-react';
+import { ArrowLeft, Upload, X, Tag, Info, Image as ImageIcon, DollarSign, Package, Settings, Sparkles, Loader2 } from 'lucide-react';
 import { Button } from '../../../../components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '../../../../components/ui/card';
 import { Input } from '../../../../components/ui/input';
@@ -89,11 +89,11 @@ export function ProductForm({ brands, categories }: { brands: Brand[], categorie
         </div>
         
         <div className="flex items-center gap-3 w-full sm:w-auto">
-          <Button variant="outline" className="flex-1 sm:flex-none h-10 px-6 rounded-full font-medium" type="button">
+          <Button variant="outline" className="flex-1 sm:flex-none h-10 px-6 rounded-full font-medium" type="button" disabled={isPending}>
             Save as Draft
           </Button>
           <Button className="flex-1 sm:flex-none h-10 px-6 rounded-full font-medium shadow-md hover:shadow-lg transition-all" disabled={isPending}>
-            {isPending ? 'Publishing...' : 'Publish Product'}
+            {isPending ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Publishing...</> : 'Publish Product'}
             {!isPending && <Sparkles size={16} className="ml-2" />}
           </Button>
         </div>
