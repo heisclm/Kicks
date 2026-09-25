@@ -10,7 +10,7 @@ export type ActionState<T> = { success: boolean; data?: T; error?: string; };
 export async function createCategoryAction(formData: FormData): Promise<ActionState<Category>> {
   try {
     await requirePermission('categories.create');
-    const rawData = { name: formData.get('name'), description: formData.get('description'), parent_id: formData.get('parent_id') };
+    const rawData = { name: formData.get('name'), description: formData.get('description') || '', parent_id: formData.get('parent_id') || undefined };
     const validated = CreateCategorySchema.safeParse(rawData);
     if (!validated.success) return { success: false, error: validated.error.issues[0].message };
     const category = await CategoryRepository.createCategory(validated.data);
@@ -23,7 +23,7 @@ export async function createCategoryAction(formData: FormData): Promise<ActionSt
 export async function updateCategoryAction(formData: FormData): Promise<ActionState<Category>> {
   try {
     await requirePermission('categories.update');
-    const rawData = { id: formData.get('id'), name: formData.get('name'), description: formData.get('description'), parent_id: formData.get('parent_id') };
+    const rawData = { id: formData.get('id'), name: formData.get('name'), description: formData.get('description') || '', parent_id: formData.get('parent_id') || undefined };
     const validated = UpdateCategorySchema.safeParse(rawData);
     if (!validated.success) return { success: false, error: validated.error.issues[0].message };
     const category = await CategoryRepository.updateCategory(validated.data);
