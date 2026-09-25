@@ -4,7 +4,7 @@ import { useTransition, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../../../components/ui/card";
 import { Input } from "../../../components/ui/input";
 import { Button } from "../../../components/ui/button";
-import { Save } from "lucide-react";
+import { Save, Loader2 } from "lucide-react";
 import { updateSettingsAction } from "../../../features/settings/settings-actions";
 import { StoreSettings } from "../../../features/settings/settings-types";
 
@@ -13,7 +13,10 @@ export function SettingsForm({ initialSettings }: { initialSettings: StoreSettin
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
 
-  function onSubmit(formData: FormData) {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+
     setError("");
     setSuccess(false);
     startTransition(async () => {
@@ -28,7 +31,7 @@ export function SettingsForm({ initialSettings }: { initialSettings: StoreSettin
   }
 
   return (
-    <form action={onSubmit} className="space-y-6">
+    <form onSubmit={handleSubmit} className="space-y-6">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 animate-fade-in-up" style={{ animationDelay: '0ms', opacity: 0 }}>
         <div>
           <h1 className="text-2xl font-bold tracking-tight text-foreground">Settings</h1>

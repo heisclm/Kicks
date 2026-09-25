@@ -1,7 +1,7 @@
-'use client';
+﻿'use client';
 
-import { useState } from 'react';
-import { Plus, X } from 'lucide-react';
+import { useState, useTransition } from 'react';
+import { Plus, X, Loader2 } from 'lucide-react';
 import { Button } from '../../../components/ui/button';
 import { Input } from '../../../components/ui/input';
 import { Card } from '../../../components/ui/card';
@@ -9,23 +9,22 @@ import { createCategoryAction } from '../../../features/categories/category-acti
 
 export function AddCategoryForm() {
   const [isOpen, setIsOpen] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
 
-  async function handleSubmit(formData: FormData) {
-    setIsSubmitting(true);
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     setError(null);
-    
-    const result = await createCategoryAction(formData);
-    
-    if (result.success) {
-      setIsOpen(false);
-    } else {
-      setError(result.error || 'Failed to create category');
-    }
-    
-    setIsSubmitting(false);
-  }
+    const formData = new FormData(e.currentTarget);
+    startTransition(async () => {
+      const result = await createCategoryAction(formData);
+      if (result.success) {
+        setIsOpen(false);
+      } else {
+        setError(result.error || 'Failed to create category');
+      }
+    });
+  };
 
   if (!isOpen) {
     return (
@@ -54,7 +53,7 @@ export function AddCategoryForm() {
         </div>
       )}
 
-      <form action={handleSubmit} className="flex flex-col sm:flex-row gap-3">
+      <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3">
         <div className="flex-1">
           <Input 
             name="name" 
@@ -71,10 +70,10 @@ export function AddCategoryForm() {
         </div>
         <Button 
           type="submit" 
-          disabled={isSubmitting}
+          disabled={isPending}
           className="bg-brand-primary text-white hover:bg-brand-primary-hover"
         >
-          {isSubmitting ? 'Saving...' : 'Save Category'}
+          {isPending ? 'Saving...' : 'Save Category'}
         </Button>
       </form>
     </Card>

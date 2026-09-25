@@ -1,6 +1,6 @@
-'use client'
+﻿'use client'
 
-import { useState } from 'react'
+import { useState, useTransition } from 'react'
 import Image from 'next/image'
 import { login } from './actions'
 import { Input } from '../../components/ui/input'
@@ -10,24 +10,24 @@ import { cn } from '../../lib/utils'
 
 export default function LoginPage() {
   const [error, setError] = useState<string | null>(null)
-  const [isLoading, setIsLoading] = useState(false)
+  const [isPending, startTransition] = useTransition()
   const [showPassword, setShowPassword] = useState(false)
 
-  async function handleSubmit(formData: FormData) {
-    setIsLoading(true)
-    setError(null)
-    
-    try {
-      const result = await login(formData)
-      if (result?.error) {
-        setError(result.error)
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    startTransition(async () => {
+      setError(null);
+      try {
+        const result = await login(formData);
+        if (result?.error) {
+          setError(result.error);
+        }
+      } catch (err) {
+        setError("Something went wrong. Please try again.");
       }
-    } catch (err) {
-      setError('Something went wrong. Please try again.')
-    } finally {
-      setIsLoading(false)
-    }
-  }
+    });
+  };
 
   return (
     <div className="relative min-h-screen w-full flex items-center justify-center bg-background overflow-hidden selection:bg-brand-primary/20">
@@ -58,7 +58,7 @@ export default function LoginPage() {
           {/* Subtle inner highlight for 3D effect */}
           <div className="absolute inset-0 rounded-3xl ring-1 ring-inset ring-white/10 dark:ring-white/5 pointer-events-none" />
           
-          <form action={handleSubmit} className="space-y-5 relative z-10">
+          <form onSubmit={handleSubmit} className="space-y-5 relative z-10">
             <div className="space-y-1.5">
               <label htmlFor="email" className="text-[13px] font-medium text-foreground/80 pl-1">
                 Email Address
@@ -71,7 +71,7 @@ export default function LoginPage() {
                 required
                 className="h-12 bg-background/50 border-border/50 focus-visible:ring-1 focus-visible:ring-brand-primary rounded-xl px-4 text-[15px] transition-all" 
                 placeholder="name@kicks.com"
-                disabled={isLoading}
+                disabled={isPending}
               />
             </div>
 
@@ -89,8 +89,8 @@ export default function LoginPage() {
                   autoComplete="current-password"
                   required
                   className="h-12 bg-background/50 border-border/50 focus-visible:ring-1 focus-visible:ring-brand-primary rounded-xl px-4 pr-12 text-[15px] transition-all" 
-                  placeholder="••••••••"
-                  disabled={isLoading}
+                  placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢"
+                  disabled={isPending}
                 />
                 <button 
                   type="button"
@@ -117,11 +117,11 @@ export default function LoginPage() {
               className={cn(
                 "w-full h-12 rounded-xl text-[15px] font-medium transition-all group relative overflow-hidden",
                 "bg-brand-primary text-white hover:bg-brand-primary-hover shadow-md shadow-brand-primary/20",
-                isLoading && "opacity-90 cursor-not-allowed"
+                isPending && "opacity-90 cursor-not-allowed"
               )}
-              disabled={isLoading}
+              disabled={isPending}
             >
-              {isLoading ? (
+              {isPending ? (
                 <span className="flex items-center gap-2">
                   <Loader2 className="h-4 w-4 animate-spin" />
                   Authenticating...

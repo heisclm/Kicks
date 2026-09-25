@@ -1,11 +1,13 @@
-'use client';
-import { useState, useTransition } from 'react';
+﻿'use client';
+import { useState, useTransition, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { Button } from '../../../components/ui/button';
 import { Input } from '../../../components/ui/input';
 import { Label } from '../../../components/ui/label';
 import { Textarea } from '../../../components/ui/textarea';
 import { Category } from '../../../features/categories/category-repository';
 import { updateCategoryAction, deleteCategoryAction } from '../../../features/categories/category-actions';
+import { Loader2 } from 'lucide-react';
 import { Select } from '../../../components/ui/select'; // Just using native select wrapper since we don't have Radix components
 
 export function CategoryActions({ category, allCategories }: { category: Category, allCategories: Category[] }) {
@@ -13,6 +15,11 @@ export function CategoryActions({ category, allCategories }: { category: Categor
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const handleEditSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -50,7 +57,7 @@ export function CategoryActions({ category, allCategories }: { category: Categor
         <Button variant="ghost" size="sm" onClick={() => setIsDeleteOpen(true)} className="text-destructive hover:bg-destructive/10 hover:text-destructive">Delete</Button>
       </div>
 
-      {isEditOpen && (
+      {isEditOpen && mounted && createPortal(
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/80 backdrop-blur-sm">
           <div className="w-full max-w-md bg-card p-6 rounded-lg shadow-lg border border-border">
             <h2 className="text-lg font-bold mb-4">Edit Category</h2>
@@ -74,15 +81,15 @@ export function CategoryActions({ category, allCategories }: { category: Categor
                 </select>
               </div>
               <div className="flex justify-end gap-2 mt-6">
-                <Button type="button" variant="ghost" onClick={() => setIsEditOpen(false)}>Cancel</Button>
-                <Button type="submit" disabled={isPending}>{isPending ? 'Saving...' : 'Save'}</Button>
+                <Button type="button" variant="ghost" onClick={() => setIsEditOpen(false)} disabled={isPending}>Cancel</Button>
+                <Button type="submit" disabled={isPending}>{isPending ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Saving...</> : 'Save'}</Button>
               </div>
             </form>
           </div>
         </div>
-      )}
+      , document.body)}
 
-      {isDeleteOpen && (
+      {isDeleteOpen && mounted && createPortal(
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/80 backdrop-blur-sm">
           <div className="w-full max-w-md bg-card p-6 rounded-lg shadow-lg border border-border">
             <h2 className="text-lg font-bold mb-2">Delete Category</h2>
@@ -90,11 +97,11 @@ export function CategoryActions({ category, allCategories }: { category: Categor
             {error && <div className="text-sm text-destructive mb-4">{error}</div>}
             <div className="flex justify-end gap-2">
               <Button type="button" variant="ghost" onClick={() => setIsDeleteOpen(false)}>Cancel</Button>
-              <Button type="button" variant="destructive" onClick={handleDelete} disabled={isPending}>{isPending ? 'Deleting...' : 'Delete'}</Button>
+              <Button type="button" variant="destructive" onClick={handleDelete} disabled={isPending}>{isPending ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Deleting...</> : 'Delete'}</Button>
             </div>
           </div>
         </div>
-      )}
+      , document.body)}
     </>
   );
 }

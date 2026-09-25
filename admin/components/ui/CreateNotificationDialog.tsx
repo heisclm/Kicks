@@ -1,7 +1,7 @@
 ﻿"use client";
 
 import { useState, useTransition } from "react";
-import { Plus } from "lucide-react";
+import { Plus, Loader2 } from "lucide-react";
 import { Button } from "./button";
 import { Input } from "./input";
 import { createNotificationAction } from "../../features/notifications/notification-actions";
@@ -12,7 +12,10 @@ export function CreateNotificationDialog() {
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState("");
 
-  async function onSubmit(formData: FormData) {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+
     setError("");
     startTransition(async () => {
       const result = await createNotificationAction(formData);
@@ -42,7 +45,7 @@ export function CreateNotificationDialog() {
         <h2 className="text-xl font-bold mb-4">Send System Notification</h2>
         {error && <div className="p-3 mb-4 text-sm text-red-500 bg-red-500/10 rounded-md">{error}</div>}
         
-        <form action={onSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="text-sm font-medium">Target User ID (Optional)</label>
             <Input name="user_id" placeholder="Leave blank to broadcast to all" className="mt-1" />

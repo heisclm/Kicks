@@ -1,8 +1,8 @@
-"use client";
+﻿"use client";
 
 import { useState, useTransition, useEffect } from "react";
 import { createPortal } from "react-dom";
-import { Plus } from "lucide-react";
+import { Plus, Loader2 } from "lucide-react";
 import { Button } from "./button";
 import { Input } from "./input";
 import { Select } from "./select";
@@ -18,7 +18,10 @@ export function CreatePromotionDialog() {
     setMounted(true);
   }, []);
 
-  async function onSubmit(formData: FormData) {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+
     setError("");
     startTransition(async () => {
       const result = await createPromotionAction(formData);
@@ -48,7 +51,7 @@ export function CreatePromotionDialog() {
         <h2 className="text-xl font-bold mb-4">Create Promotion</h2>
         {error && <div className="p-3 mb-4 text-sm text-red-500 bg-red-500/10 rounded-md">{error}</div>}
         
-        <form action={onSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="text-sm font-medium">Code (e.g. SUMMER20)</label>
             <Input name="code" required minLength={3} className="mt-1" />

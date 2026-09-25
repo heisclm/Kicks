@@ -2,6 +2,7 @@
 import { useState, useTransition } from 'react';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
+import { Loader2 } from 'lucide-react';
 import { Label } from '../ui/label';
 import { adjustInventoryAction } from '../../features/inventory/inventory-actions';
 import { InventoryItem } from '../../features/inventory/inventory-types';
@@ -52,7 +53,7 @@ export function StockAdjustmentDialog({ item, onClose }: { item: InventoryItem, 
               <div className="text-xl font-medium">{item.stock_quantity}</div>
             </div>
             <div className="p-3 flex items-center justify-center">
-              <div className="text-xl text-muted-foreground">→</div>
+              <div className="text-xl text-muted-foreground">?</div>
             </div>
             <div className={`p-3 rounded-md border ${newStock < 0 ? 'bg-destructive/10 border-destructive text-destructive' : 'bg-emerald-100 border-emerald-500 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-400'}`}>
               <div className="text-xs uppercase mb-1 opacity-80">New</div>
@@ -95,7 +96,7 @@ export function StockAdjustmentDialog({ item, onClose }: { item: InventoryItem, 
           <div className="flex justify-end gap-2 mt-6">
             <Button type="button" variant="ghost" onClick={onClose} disabled={isPending}>Cancel</Button>
             <Button type="submit" disabled={isPending || newStock < 0 || adjustment === 0}>
-              {isPending ? 'Adjusting...' : 'Adjust Stock'}
+              {isPending ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Adjusting...</> : 'Adjust Stock'}
             </Button>
           </div>
         </form>
