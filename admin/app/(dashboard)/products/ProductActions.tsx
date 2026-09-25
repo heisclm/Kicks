@@ -1,5 +1,6 @@
 'use client';
-import { useState, useTransition } from 'react';
+import { useState, useTransition, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { Button } from '../../../components/ui/button';
 import { Input } from '../../../components/ui/input';
 import { Label } from '../../../components/ui/label';
@@ -14,6 +15,11 @@ export function ProductActions({ product, brands, categories }: { product: Produ
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const handleEditSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -51,7 +57,7 @@ export function ProductActions({ product, brands, categories }: { product: Produ
         <Button variant="ghost" size="sm" onClick={() => setIsDeleteOpen(true)} className="text-destructive hover:bg-destructive/10 hover:text-destructive">Delete</Button>
       </div>
 
-      {isEditOpen && (
+      {isEditOpen && mounted && createPortal(
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/80 backdrop-blur-sm p-4">
           <div className="w-full max-w-lg bg-card p-6 rounded-lg shadow-lg border border-border max-h-[90vh] overflow-y-auto">
             <h2 className="text-lg font-bold mb-4">Edit Product</h2>
@@ -101,9 +107,9 @@ export function ProductActions({ product, brands, categories }: { product: Produ
             </form>
           </div>
         </div>
-      )}
+      , document.body)}
 
-      {isDeleteOpen && (
+      {isDeleteOpen && mounted && createPortal(
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/80 backdrop-blur-sm">
           <div className="w-full max-w-md bg-card p-6 rounded-lg shadow-lg border border-border">
             <h2 className="text-lg font-bold mb-2">Delete Product</h2>
@@ -115,7 +121,7 @@ export function ProductActions({ product, brands, categories }: { product: Produ
             </div>
           </div>
         </div>
-      )}
+      , document.body)}
     </>
   );
 }
