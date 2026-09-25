@@ -29,8 +29,9 @@ export function BrandPill({ brand, isSelected, onPress }: BrandPillProps) {
       {hasCustomLogo ? (
         <Image 
           source={{ uri: brand.logo_url }} 
-          style={{ width: 24, height: 24, opacity: isSelected ? 1 : 0.7 }}
+          style={{ width: 24, height: 24, opacity: isSelected ? 1 : 0.7, backgroundColor: 'transparent' }}
           contentFit="contain"
+          tintColor={iconColor}
           transition={200}
         />
       ) : (
