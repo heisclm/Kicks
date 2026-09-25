@@ -1,5 +1,5 @@
 import React from 'react';
-import { Pressable, Text } from 'react-native';
+import { Pressable, Text, Image } from 'react-native';
 import { StyleSheet } from 'react-native';
 import { Brand } from '../types';
 import { colors, spacing, radius, typography } from '../theme';
@@ -14,6 +14,9 @@ import { NikeLogo, AdidasLogo, PumaLogo, ReebokLogo, NewBalanceLogo } from './Br
 
 export function BrandPill({ brand, isSelected, onPress }: BrandPillProps) {
   const iconColor = isSelected ? colors.surface : colors.textPrimary;
+  
+  const hasCustomLogo = !!brand.logo_url;
+  
   return (
     <Pressable 
       style={[
@@ -22,11 +25,20 @@ export function BrandPill({ brand, isSelected, onPress }: BrandPillProps) {
       ]}
       onPress={onPress}
     >
-      {brand.name === 'Nike' && <NikeLogo color={iconColor} size={20} />}
-      {brand.name === 'Adidas' && <AdidasLogo color={iconColor} size={20} />}
-      {brand.name === 'Puma' && <PumaLogo color={iconColor} size={20} />}
-      {brand.name === 'Reebok' && <ReebokLogo color={iconColor} size={20} />}
-      {brand.name === 'New Balance' && <NewBalanceLogo color={iconColor} size={20} />}
+      {hasCustomLogo ? (
+        <Image 
+          source={{ uri: brand.logo_url }} 
+          style={{ width: 24, height: 24, resizeMode: 'contain', opacity: isSelected ? 1 : 0.7 }}
+        />
+      ) : (
+        <>
+          {brand.name === 'Nike' && <NikeLogo color={iconColor} size={20} />}
+          {brand.name === 'Adidas' && <AdidasLogo color={iconColor} size={20} />}
+          {brand.name === 'Puma' && <PumaLogo color={iconColor} size={20} />}
+          {brand.name === 'Reebok' && <ReebokLogo color={iconColor} size={20} />}
+          {brand.name === 'New Balance' && <NewBalanceLogo color={iconColor} size={20} />}
+        </>
+      )}
       
       <Text style={[styles.text, isSelected && styles.textSelected, { marginLeft: brand.name === 'All' ? 0 : spacing.sm }]}>
         {brand.name}
