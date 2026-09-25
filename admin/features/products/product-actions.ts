@@ -12,11 +12,11 @@ export async function createProductAction(formData: FormData): Promise<ActionSta
   try {
     await requirePermission('products.create');
     const rawData = { 
-      name: formData.get('name'), 
-      description: formData.get('description'), 
-      brand_id: formData.get('brand_id'),
-      category_id: formData.get('category_id'),
-      base_price: formData.get('base_price'),
+      name: (formData.get('name') as string) || undefined, 
+      description: (formData.get('description') as string) || undefined, 
+      brand_id: (formData.get('brand_id') as string) || undefined,
+      category_id: (formData.get('category_id') as string) || undefined,
+      base_price: (formData.get('base_price') as string) || undefined,
       is_active: formData.get('is_active') === 'true',
       image_url: undefined as string | undefined,
       tags: formData.getAll('tags') as string[]
@@ -56,12 +56,12 @@ export async function updateProductAction(formData: FormData): Promise<ActionSta
   try {
     await requirePermission('products.update');
     const rawData = { 
-      id: formData.get('id'),
-      name: formData.get('name'), 
-      description: formData.get('description'), 
-      brand_id: formData.get('brand_id'),
-      category_id: formData.get('category_id'),
-      base_price: formData.get('base_price'),
+      id: (formData.get('id') as string) || undefined,
+      name: (formData.get('name') as string) || undefined, 
+      description: (formData.get('description') as string) || undefined, 
+      brand_id: (formData.get('brand_id') as string) || undefined,
+      category_id: (formData.get('category_id') as string) || undefined,
+      base_price: (formData.get('base_price') as string) || undefined,
       is_active: formData.get('is_active') === 'true',
       tags: formData.getAll('tags') as string[]
     };

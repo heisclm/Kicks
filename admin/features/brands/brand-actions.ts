@@ -11,9 +11,9 @@ export async function createBrandAction(formData: FormData): Promise<ActionState
   try {
     await requirePermission('brands.create');
     const rawData = { 
-      name: formData.get('name'), 
-      description: formData.get('description'), 
-      logo_url: formData.get('logo_url') as string | undefined
+      name: (formData.get('name') as string) || undefined, 
+      description: (formData.get('description') as string) || undefined, 
+      logo_url: (formData.get('logo_url') as string) || undefined
     };
 
     // Handle File upload if present
@@ -42,10 +42,10 @@ export async function updateBrandAction(formData: FormData): Promise<ActionState
   try {
     await requirePermission('brands.update');
     const rawData = { 
-      id: formData.get('id'), 
-      name: formData.get('name'), 
-      description: formData.get('description'), 
-      logo_url: formData.get('logo_url') as string | undefined
+      id: (formData.get('id') as string) || undefined, 
+      name: (formData.get('name') as string) || undefined, 
+      description: (formData.get('description') as string) || undefined, 
+      logo_url: (formData.get('logo_url') as string) || undefined
     };
 
     // Handle File upload if present

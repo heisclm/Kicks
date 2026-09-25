@@ -86,8 +86,7 @@ export function BrandActions({ brand }: { brand: Brand }) {
                     <span className="block font-medium text-foreground mb-1">Upload New Logo</span>
                     Click to browse
                   </div>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img id={`edit-brand-preview-${brand.id}`} src={brand.logo_url || ""} alt="Logo Preview" className={brand.logo_url ? "h-12 object-contain mx-auto" : "hidden h-12 object-contain mx-auto"} />
+                  <img id={`edit-brand-preview-${brand.id}`} src={brand.logo_url || undefined} alt="Logo Preview" className={brand.logo_url ? "h-12 object-contain mx-auto" : "hidden h-12 object-contain mx-auto"} />
                 </div>
               </div>
               <div className="flex justify-end gap-2 mt-6">

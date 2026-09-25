@@ -81,8 +81,7 @@ export function AddBrandForm() {
                 <span className="block font-medium text-foreground mb-1">Brand Logo</span>
                 Click to upload
               </div>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img id="new-brand-preview" src="" alt="Logo Preview" className="hidden h-12 object-contain mx-auto" />
+              <img id="new-brand-preview" alt="Logo Preview" className="hidden h-12 object-contain mx-auto" />
             </div>
           </div>
         </div>
