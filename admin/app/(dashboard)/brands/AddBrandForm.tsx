@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useTransition } from 'react';
 import { createPortal } from 'react-dom';
 import { Plus, X, Loader2 } from 'lucide-react';
 import { Button } from '../../../components/ui/button';
@@ -9,7 +9,7 @@ import { createBrandAction } from '../../../features/brands/brand-actions';
 
 export function AddBrandForm() {
   const [isOpen, setIsOpen] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
   const [mounted, setMounted] = useState(false);
 
@@ -17,20 +17,20 @@ export function AddBrandForm() {
     setMounted(true);
   }, []);
 
-  async function handleSubmit(formData: FormData) {
-    setIsSubmitting(true);
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     setError(null);
+    const formData = new FormData(e.currentTarget);
     
-    const result = await createBrandAction(formData);
-    
-    if (result.success) {
-      setIsOpen(false);
-    } else {
-      setError(result.error || 'Failed to create brand');
-    }
-    
-    setIsSubmitting(false);
-  }
+    startTransition(async () => {
+      const result = await createBrandAction(formData);
+      if (result.success) {
+        setIsOpen(false);
+      } else {
+        setError(result.error || 'Failed to create brand');
+      }
+    });
+  };
 
   if (!isOpen) {
     return (
@@ -60,7 +60,7 @@ export function AddBrandForm() {
           </div>
         )}
 
-        <form action={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="text-sm font-medium mb-1 block">Brand Name</label>
             <Input name="name" placeholder="e.g. Nike" required autoFocus />
@@ -102,11 +102,11 @@ export function AddBrandForm() {
           <div className="flex items-center justify-between pt-2">
             <label className="text-sm text-muted-foreground">Will be active immediately</label>
             <div className="flex gap-2">
-              <Button type="button" variant="outline" onClick={() => setIsOpen(false)} disabled={isSubmitting}>
+              <Button type="button" variant="outline" onClick={() => setIsOpen(false)} disabled={isPending}>
                 Cancel
               </Button>
-              <Button type="submit" disabled={isSubmitting} className="bg-brand-primary text-white hover:bg-brand-primary-hover min-w-[100px]">
-                {isSubmitting ? (
+              <Button type="submit" disabled={isPending} className="bg-brand-primary text-white hover:bg-brand-primary-hover min-w-[100px]">
+                {isPending ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin inline" />
                     Saving...
