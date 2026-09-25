@@ -9,16 +9,15 @@ export interface Brand {
   logo_url?: string;
   is_active: boolean;
   created_at: string;
+  products?: { count: number }[];
 }
-
-
 
 export class BrandRepository {
   static async getBrands(): Promise<Brand[]> {
     const supabase = await createClient();
     const { data, error } = await supabase
       .from('brands')
-      .select('*')
+      .select('*, products(count)')
       .order('name', { ascending: true });
 
     if (error) {

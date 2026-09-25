@@ -10,6 +10,19 @@ import { AddBrandForm } from "./AddBrandForm";
 export default async function BrandsPage() {
   const brands = await BrandRepository.getBrands();
 
+  const activeBrands = brands.filter(b => b.is_active).length;
+  
+  const totalProducts = brands.reduce((acc, brand) => {
+    const count = brand.products?.[0]?.count || 0;
+    return acc + count;
+  }, 0);
+
+  const topPerformer = brands.length > 0 ? [...brands].sort((a, b) => {
+    const countA = a.products?.[0]?.count || 0;
+    const countB = b.products?.[0]?.count || 0;
+    return countB - countA;
+  })[0] : null;
+
   return (
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 animate-fade-in-up" style={{ animationDelay: '0ms', opacity: 0 }}>
@@ -23,16 +36,16 @@ export default async function BrandsPage() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 animate-fade-in-up" style={{ animationDelay: '100ms', opacity: 0 }}>
         <Card className="p-5">
           <div className="text-sm font-medium text-muted-foreground uppercase tracking-wider mb-1">Active Brands</div>
-          <div className="text-3xl font-bold tabular-nums">{brands.length}</div>
+          <div className="text-3xl font-bold tabular-nums">{activeBrands}</div>
         </Card>
         <Card className="p-5">
           <div className="text-sm font-medium text-muted-foreground uppercase tracking-wider mb-1">Top Performer</div>
-          <div className="text-3xl font-bold">{brands.length > 0 ? brands[0].name : '-'}</div>
-          <div className="text-xs text-emerald-500 mt-2 font-medium flex items-center gap-1"><TrendingUp size={12}/> Based on inventory</div>
+          <div className="text-3xl font-bold">{topPerformer ? topPerformer.name : '-'}</div>
+          <div className="text-xs text-emerald-500 mt-2 font-medium flex items-center gap-1"><TrendingUp size={12}/> Based on product catalog</div>
         </Card>
         <Card className="p-5">
           <div className="text-sm font-medium text-muted-foreground uppercase tracking-wider mb-1">Total Products</div>
-          <div className="text-3xl font-bold tabular-nums">-</div>
+          <div className="text-3xl font-bold tabular-nums">{totalProducts}</div>
         </Card>
       </div>
 
@@ -77,7 +90,9 @@ export default async function BrandsPage() {
                         <span className="font-medium text-sm text-foreground">{brand.name}</span>
                       </div>
                     </TableCell>
-                    <TableCell className="text-right tabular-nums text-muted-foreground">-</TableCell>
+                    <TableCell className="text-right tabular-nums text-muted-foreground font-medium">
+                      {brand.products?.[0]?.count || 0}
+                    </TableCell>
                     <TableCell className="text-right tabular-nums font-medium text-foreground truncate max-w-[200px]">
                       {brand.description || '-'}
                     </TableCell>
