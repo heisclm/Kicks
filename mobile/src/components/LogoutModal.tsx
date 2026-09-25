@@ -87,14 +87,14 @@ export function LogoutModal({ visible, onClose, onConfirm }: LogoutModalProps) {
           <View style={styles.actions}>
             <View style={styles.buttonWrapper}>
               <Button 
-                title="Cancel" 
+                label="Cancel" 
                 variant="outline" 
                 onPress={onClose} 
               />
             </View>
             <View style={styles.buttonWrapper}>
               <Button 
-                title="Log Out" 
+                label="Log Out" 
                 variant="primary" 
                 onPress={handleConfirm}
                 style={{ backgroundColor: colors.error }}
