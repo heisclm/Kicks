@@ -1,16 +1,21 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { Plus, X } from 'lucide-react';
 import { Button } from '../../../components/ui/button';
 import { Input } from '../../../components/ui/input';
-import { Card } from '../../../components/ui/card';
 import { createBrandAction } from '../../../features/brands/brand-actions';
 
 export function AddBrandForm() {
   const [isOpen, setIsOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   async function handleSubmit(formData: FormData) {
     setIsSubmitting(true);
@@ -39,7 +44,7 @@ export function AddBrandForm() {
     );
   }
 
-  return (
+  const modalContent = (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm animate-in fade-in duration-200">
       <div className="bg-card w-full max-w-md rounded-xl p-6 shadow-2xl relative border border-border">
         <div className="flex justify-between items-center mb-6">
@@ -109,4 +114,6 @@ export function AddBrandForm() {
       </div>
     </div>
   );
+
+  return mounted ? createPortal(modalContent, document.body) : null;
 }

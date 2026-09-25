@@ -1,6 +1,7 @@
-﻿"use client";
+"use client";
 
-import { useState, useTransition } from "react";
+import { useState, useTransition, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { Plus } from "lucide-react";
 import { Button } from "./button";
 import { Input } from "./input";
@@ -11,6 +12,11 @@ export function CreatePromotionDialog() {
   const [isOpen, setIsOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState("");
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   async function onSubmit(formData: FormData) {
     setError("");
@@ -36,7 +42,7 @@ export function CreatePromotionDialog() {
     );
   }
 
-  return (
+  const modalContent = (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
       <div className="bg-card w-full max-w-md rounded-lg p-6 shadow-xl relative">
         <h2 className="text-xl font-bold mb-4">Create Promotion</h2>
@@ -95,4 +101,6 @@ export function CreatePromotionDialog() {
       </div>
     </div>
   );
+
+  return mounted ? createPortal(modalContent, document.body) : null;
 }
