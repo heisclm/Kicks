@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import { Plus, X } from 'lucide-react';
+import { Plus, X, Loader2 } from 'lucide-react';
 import { Button } from '../../../components/ui/button';
 import { Input } from '../../../components/ui/input';
 import { createBrandAction } from '../../../features/brands/brand-actions';
@@ -106,7 +106,14 @@ export function AddBrandForm() {
                 Cancel
               </Button>
               <Button type="submit" disabled={isSubmitting} className="bg-brand-primary text-white hover:bg-brand-primary-hover min-w-[100px]">
-                {isSubmitting ? 'Saving...' : 'Save Brand'}
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin inline" />
+                    Saving...
+                  </>
+                ) : (
+                  'Save Brand'
+                )}
               </Button>
             </div>
           </div>

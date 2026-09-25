@@ -1,6 +1,7 @@
 'use client';
 import { useState, useTransition, useEffect } from 'react';
 import { createPortal } from 'react-dom';
+import { Loader2 } from 'lucide-react';
 import { Button } from '../../../components/ui/button';
 import { Input } from '../../../components/ui/input';
 import { Label } from '../../../components/ui/label';
@@ -94,7 +95,16 @@ export function BrandActions({ brand }: { brand: Brand }) {
           </div>
           <div className="flex justify-end gap-2 mt-2">
             <Button type="button" variant="outline" onClick={() => setIsEditOpen(false)}>Cancel</Button>
-            <Button type="submit" disabled={isPending} className="bg-brand-primary text-white hover:bg-brand-primary-hover min-w-[100px]">{isPending ? 'Saving...' : 'Save'}</Button>
+            <Button type="submit" disabled={isPending} className="bg-brand-primary text-white hover:bg-brand-primary-hover min-w-[100px]">
+              {isPending ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin inline" />
+                  Saving...
+                </>
+              ) : (
+                'Save'
+              )}
+            </Button>
           </div>
         </form>
       </div>
@@ -109,7 +119,16 @@ export function BrandActions({ brand }: { brand: Brand }) {
         {error && <div className="text-sm text-red-500 bg-red-500/10 p-3 rounded-md mb-4">{error}</div>}
         <div className="flex justify-end gap-2 pt-2 border-t border-border mt-2">
           <Button type="button" variant="outline" onClick={() => setIsDeleteOpen(false)}>Cancel</Button>
-          <Button type="button" variant="destructive" onClick={handleDelete} disabled={isPending}>{isPending ? 'Deleting...' : 'Delete'}</Button>
+          <Button type="button" variant="destructive" onClick={handleDelete} disabled={isPending}>
+            {isPending ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin inline" />
+                Deleting...
+              </>
+            ) : (
+              'Delete'
+            )}
+          </Button>
         </div>
       </div>
     </div>
