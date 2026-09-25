@@ -26,7 +26,8 @@ export interface Product {
 export interface Brand {
   id: string;
   name: string;
-  logo: any;
+  logo?: any;
+  logo_url?: string | null;
 }
 
 export interface Category {

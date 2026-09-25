@@ -1,5 +1,5 @@
 import React from 'react';
-import { Pressable, Text, Image } from 'react-native';
+import { Pressable, Text, Image, View } from 'react-native';
 import { StyleSheet } from 'react-native';
 import { Brand } from '../types';
 import { colors, spacing, radius, typography } from '../theme';
@@ -37,6 +37,18 @@ export function BrandPill({ brand, isSelected, onPress }: BrandPillProps) {
           {brand.name === 'Puma' && <PumaLogo color={iconColor} size={20} />}
           {brand.name === 'Reebok' && <ReebokLogo color={iconColor} size={20} />}
           {brand.name === 'New Balance' && <NewBalanceLogo color={iconColor} size={20} />}
+          {brand.name !== 'All' && 
+           !['Nike', 'Adidas', 'Puma', 'Reebok', 'New Balance'].includes(brand.name) && (
+            <View style={{ 
+              width: 24, height: 24, borderRadius: 12, 
+              backgroundColor: isSelected ? 'rgba(255,255,255,0.2)' : colors.border, 
+              alignItems: 'center', justifyContent: 'center' 
+            }}>
+               <Text style={{ color: iconColor, fontSize: 12, fontWeight: 'bold' }}>
+                 {brand.name.charAt(0).toUpperCase()}
+               </Text>
+            </View>
+          )}
         </>
       )}
       

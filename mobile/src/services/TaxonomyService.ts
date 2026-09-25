@@ -17,7 +17,14 @@ class TaxonomyService {
   async getBrands(): Promise<Brand[]> {
     const { data, error } = await supabase.from('brands').select('*');
     if (error) console.error('Error fetching brands:', error);
-    return data || [];
+    
+    const brands = data || [];
+    
+    // Add "All" option at the beginning
+    return [
+      { id: 'all', name: 'All', slug: 'all', logo_url: null },
+      ...brands
+    ];
   }
 
   async getCategories(): Promise<Category[]> {
