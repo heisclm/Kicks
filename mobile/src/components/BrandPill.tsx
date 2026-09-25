@@ -1,5 +1,6 @@
 import React from 'react';
-import { Pressable, Text, Image, View } from 'react-native';
+import { Pressable, Text, View } from 'react-native';
+import { Image } from 'expo-image';
 import { StyleSheet } from 'react-native';
 import { Brand } from '../types';
 import { colors, spacing, radius, typography } from '../theme';
@@ -28,7 +29,9 @@ export function BrandPill({ brand, isSelected, onPress }: BrandPillProps) {
       {hasCustomLogo ? (
         <Image 
           source={{ uri: brand.logo_url }} 
-          style={{ width: 24, height: 24, resizeMode: 'contain', opacity: isSelected ? 1 : 0.7 }}
+          style={{ width: 24, height: 24, opacity: isSelected ? 1 : 0.7 }}
+          contentFit="contain"
+          transition={200}
         />
       ) : (
         <>
