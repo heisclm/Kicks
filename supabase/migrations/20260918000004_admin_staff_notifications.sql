@@ -1,7 +1,7 @@
-﻿-- =======================================================================================
+-- =======================================================================================
 -- NOTIFICATIONS SCHEMA
 -- =======================================================================================
-CREATE TABLE notifications (
+CREATE TABLE IF NOT EXISTS notifications (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id UUID REFERENCES profiles(id) ON DELETE CASCADE,
     title TEXT NOT NULL,
@@ -88,3 +88,4 @@ BEGIN
   RETURN TRUE;
 END;
 $$;
+

@@ -34,6 +34,7 @@ export class CategoryRepository {
       .from('categories')
       .insert([{
         name: input.name,
+        slug: input.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, ''),
         description: input.description,
         parent_id: input.parent_id
       }])
@@ -54,6 +55,7 @@ export class CategoryRepository {
       .from('categories')
       .update({
         name: input.name,
+        slug: input.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, ''),
         description: input.description,
         parent_id: input.parent_id
       })

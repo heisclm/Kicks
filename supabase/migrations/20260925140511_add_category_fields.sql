@@ -1,0 +1,4 @@
+ALTER TABLE categories
+ADD COLUMN description TEXT,
+ADD COLUMN parent_id UUID REFERENCES categories(id) ON DELETE SET NULL,
+ADD COLUMN is_active BOOLEAN NOT NULL DEFAULT true;
