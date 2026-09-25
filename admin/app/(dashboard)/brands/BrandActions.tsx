@@ -50,28 +50,28 @@ export function BrandActions({ brand }: { brand: Brand }) {
       </div>
 
       {isEditOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/80 backdrop-blur-sm">
-          <div className="w-full max-w-md bg-card p-6 rounded-lg shadow-lg border border-border">
-            <h2 className="text-lg font-bold mb-4">Edit Brand</h2>
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm animate-in fade-in duration-200">
+          <div className="bg-card w-full max-w-md rounded-xl p-6 shadow-2xl relative border border-border">
+            <h2 className="text-xl font-bold mb-6">Edit Brand</h2>
             <form onSubmit={handleEditSubmit} className="space-y-4">
-              {error && <div className="text-sm text-destructive">{error}</div>}
+              {error && <div className="mb-4 p-3 bg-red-500/10 text-red-500 text-sm rounded-md border border-red-500/20">{error}</div>}
               <div>
-                <Label htmlFor="name">Name</Label>
+                <Label htmlFor="name" className="mb-1 block">Brand Name</Label>
                 <Input id="name" name="name" defaultValue={brand.name} required />
               </div>
               <div>
-                <Label htmlFor="description">Description</Label>
-                <Textarea id="description" name="description" defaultValue={brand.description} />
+                <Label htmlFor="description" className="mb-1 block">Description</Label>
+                <Textarea id="description" name="description" defaultValue={brand.description} className="min-h-[80px]" />
               </div>
               <div>
-                <Label htmlFor="image-edit">Brand Logo</Label>
-                <div className="mt-1 border border-dashed border-border rounded-md p-4 text-center cursor-pointer hover:bg-muted/30 transition-colors relative">
+                <Label htmlFor="image-edit" className="mb-1 block">Brand Logo</Label>
+                <div className="mt-1 border-2 border-dashed border-border rounded-lg p-6 text-center cursor-pointer hover:bg-muted/50 hover:border-brand-primary/50 transition-all relative group">
                   <input 
                     type="file" 
                     id="image-edit"
                     name="image" 
                     accept="image/*" 
-                    className="absolute inset-0 opacity-0 cursor-pointer"
+                    className="absolute inset-0 opacity-0 cursor-pointer z-10"
                     onChange={(e) => {
                       const file = e.target.files?.[0];
                       if (file) {
@@ -82,16 +82,16 @@ export function BrandActions({ brand }: { brand: Brand }) {
                       }
                     }}
                   />
-                  <div id={`edit-brand-placeholder-${brand.id}`} className={brand.logo_url ? "hidden" : "text-xs text-muted-foreground pt-2"}>
-                    <span className="block font-medium text-foreground mb-1">Upload New Logo</span>
+                  <div id={`edit-brand-placeholder-${brand.id}`} className={brand.logo_url ? "hidden" : "text-sm text-muted-foreground flex flex-col items-center justify-center gap-2 group-hover:text-foreground transition-colors"}>
+                    <span className="block font-medium mb-1">Upload New Logo</span>
                     Click to browse
                   </div>
-                  <img id={`edit-brand-preview-${brand.id}`} src={brand.logo_url || undefined} alt="Logo Preview" className={brand.logo_url ? "h-12 object-contain mx-auto" : "hidden h-12 object-contain mx-auto"} />
+                  <img id={`edit-brand-preview-${brand.id}`} src={brand.logo_url || undefined} alt="Logo Preview" className={brand.logo_url ? "h-16 object-contain mx-auto" : "hidden h-16 object-contain mx-auto"} />
                 </div>
               </div>
               <div className="flex justify-end gap-2 mt-6">
-                <Button type="button" variant="ghost" onClick={() => setIsEditOpen(false)}>Cancel</Button>
-                <Button type="submit" disabled={isPending}>{isPending ? 'Saving...' : 'Save'}</Button>
+                <Button type="button" variant="outline" onClick={() => setIsEditOpen(false)}>Cancel</Button>
+                <Button type="submit" disabled={isPending} className="bg-brand-primary text-white hover:bg-brand-primary-hover min-w-[100px]">{isPending ? 'Saving...' : 'Save'}</Button>
               </div>
             </form>
           </div>

@@ -40,33 +40,40 @@ export function AddBrandForm() {
   }
 
   return (
-    <Card className="p-4 border-brand-primary/50 shadow-md">
-      <div className="flex justify-between items-center mb-4">
-        <h3 className="font-medium">Add New Brand</h3>
-        <Button variant="ghost" size="icon" onClick={() => setIsOpen(false)} className="h-8 w-8">
-          <X size={16} />
-        </Button>
-      </div>
-      
-      {error && (
-        <div className="mb-4 p-2 bg-red-50 text-red-500 text-sm rounded">
-          {error}
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm animate-in fade-in duration-200">
+      <div className="bg-card w-full max-w-md rounded-xl p-6 shadow-2xl relative border border-border">
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-xl font-bold">Add New Brand</h2>
+          <Button variant="ghost" size="icon" onClick={() => setIsOpen(false)} className="h-8 w-8 text-muted-foreground hover:text-foreground">
+            <X size={16} />
+          </Button>
         </div>
-      )}
-
-      <form action={handleSubmit} className="flex flex-col gap-4">
-        <div className="flex flex-col sm:flex-row gap-3">
-          <div className="flex-1 space-y-2">
-            <Input name="name" placeholder="Brand Name (e.g. Nike)" required autoFocus />
-            <Input name="description" placeholder="Description (optional)" />
+        
+        {error && (
+          <div className="mb-4 p-3 bg-red-500/10 text-red-500 text-sm rounded-md border border-red-500/20">
+            {error}
           </div>
-          <div className="flex-1">
-            <div className="border border-dashed border-border rounded-md p-4 text-center cursor-pointer hover:bg-muted/30 transition-colors relative">
+        )}
+
+        <form action={handleSubmit} className="space-y-4">
+          <div>
+            <label className="text-sm font-medium mb-1 block">Brand Name</label>
+            <Input name="name" placeholder="e.g. Nike" required autoFocus />
+          </div>
+          
+          <div>
+            <label className="text-sm font-medium mb-1 block">Description</label>
+            <Input name="description" placeholder="Optional description" />
+          </div>
+          
+          <div>
+            <label className="text-sm font-medium mb-1 block">Brand Logo</label>
+            <div className="mt-1 border-2 border-dashed border-border rounded-lg p-6 text-center cursor-pointer hover:bg-muted/50 hover:border-brand-primary/50 transition-all relative group">
               <input 
                 type="file" 
                 name="image" 
                 accept="image/*" 
-                className="absolute inset-0 opacity-0 cursor-pointer"
+                className="absolute inset-0 opacity-0 cursor-pointer z-10"
                 onChange={(e) => {
                   const file = e.target.files?.[0];
                   if (file) {
@@ -77,20 +84,29 @@ export function AddBrandForm() {
                   }
                 }}
               />
-              <div id="new-brand-placeholder" className="text-xs text-muted-foreground pt-3">
-                <span className="block font-medium text-foreground mb-1">Brand Logo</span>
-                Click to upload
+              <div id="new-brand-placeholder" className="text-sm text-muted-foreground flex flex-col items-center justify-center gap-2 group-hover:text-foreground transition-colors">
+                <div className="p-3 rounded-full bg-muted group-hover:bg-brand-primary/10 group-hover:text-brand-primary">
+                  <Plus size={24} />
+                </div>
+                <span>Click to upload logo</span>
               </div>
-              <img id="new-brand-preview" alt="Logo Preview" className="hidden h-12 object-contain mx-auto" />
+              <img id="new-brand-preview" alt="Logo Preview" className="hidden h-16 object-contain mx-auto" />
             </div>
           </div>
-        </div>
-        <div className="flex justify-end">
-          <Button type="submit" disabled={isSubmitting} className="bg-brand-primary text-white hover:bg-brand-primary-hover">
-            {isSubmitting ? 'Saving...' : 'Save Brand'}
-          </Button>
-        </div>
-      </form>
-    </Card>
+
+          <div className="flex items-center justify-between pt-2">
+            <label className="text-sm text-muted-foreground">Will be active immediately</label>
+            <div className="flex gap-2">
+              <Button type="button" variant="outline" onClick={() => setIsOpen(false)} disabled={isSubmitting}>
+                Cancel
+              </Button>
+              <Button type="submit" disabled={isSubmitting} className="bg-brand-primary text-white hover:bg-brand-primary-hover min-w-[100px]">
+                {isSubmitting ? 'Saving...' : 'Save Brand'}
+              </Button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
   );
 }

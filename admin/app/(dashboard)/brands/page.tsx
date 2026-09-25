@@ -66,9 +66,14 @@ export default async function BrandsPage() {
                   <TableRow key={brand.id} className="group cursor-pointer hover:bg-muted/30 transition-colors animate-fade-in-up" style={{ animationDelay: `${300 + (index * 50)}ms`, opacity: 0 }}>
                     <TableCell>
                       <div className="flex items-center gap-3">
-                        <div className="h-10 w-10 rounded-xl bg-muted border border-border flex items-center justify-center font-bold text-lg text-foreground shrink-0 uppercase">
-                          {brand.name[0]}
-                        </div>
+                        {brand.logo_url ? (
+                          /* eslint-disable-next-line @next/next/no-img-element */
+                          <img src={brand.logo_url} alt={brand.name} className="h-10 w-10 rounded-xl object-contain border border-border bg-white shrink-0 p-1" />
+                        ) : (
+                          <div className="h-10 w-10 rounded-xl bg-muted border border-border flex items-center justify-center font-bold text-lg text-foreground shrink-0 uppercase">
+                            {brand.name[0]}
+                          </div>
+                        )}
                         <span className="font-medium text-sm text-foreground">{brand.name}</span>
                       </div>
                     </TableCell>

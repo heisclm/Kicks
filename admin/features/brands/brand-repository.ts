@@ -39,7 +39,8 @@ export class BrandRepository {
         name: input.name,
         slug: slug,
         description: input.description,
-        logo_url: input.logo_url
+        logo_url: input.logo_url,
+        is_active: true
       }])
       .select()
       .single();
