@@ -140,8 +140,7 @@ export function ProductForm({ brands, categories }: { brands: Brand[], categorie
               </label>
               
               <div id="preview-container" className="hidden mt-4 relative rounded-md overflow-hidden border border-border h-48">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img id="image-preview" src="" alt="Preview" className="w-full h-full object-cover" />
+                <img id="image-preview" alt="Preview" className="w-full h-full object-cover" />
                 <button type="button" className="absolute top-2 right-2 bg-background/80 p-1.5 rounded-full" onClick={() => {
                   (document.getElementById('image-upload') as HTMLInputElement).value = '';
                   document.getElementById('preview-container')?.classList.add('hidden');
